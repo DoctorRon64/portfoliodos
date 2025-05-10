@@ -1,5 +1,11 @@
 //@use "../abstracts/theme" as tm; include files like this
 
+//color
+$dark: #345DA7;
+$primary-color: #3b8ac4;
+$secondary-color: #4bb4de;
+$light: #efdbcb;
+
 // Fonts
 @use "./fonts";
 $font-family-primary: 'CalSans', sans-serif;

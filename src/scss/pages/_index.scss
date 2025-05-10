@@ -1,20 +1,24 @@
-@use "../abstracts/theme" as tm;
+@use "../abstracts/theme" as *;
 
 .home-body {
     margin: 0;
     overflow: hidden;
-    background: #d8cfc4;
+    background: $primary-color;
 }
 
-.home-container {}
+.home-container {
+    background-color: $secondary-color;
+}
 
 .home-title {
-    font-family: tm.$font-family-primary;
-    font-size: 100px;
+    font-family: $font-family-primary;
+    color: $light;
+    font-size: clamp(3rem, 8vw, 10rem);
 }
 
 .home-subtitle {
-    font-family: tm.$font-family-secondary;
-    font-weight: 200;
-    font-size: 40px;
+    font-family: $font-family-secondary;
+    color: $light;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 400;
 }
