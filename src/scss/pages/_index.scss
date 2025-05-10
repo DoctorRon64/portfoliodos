@@ -1,0 +1,20 @@
+@use "../abstracts/theme" as tm;
+
+.home-body {
+    margin: 0;
+    overflow: hidden;
+    background: #d8cfc4;
+}
+
+.home-container {}
+
+.home-title {
+    font-family: tm.$font-family-primary;
+    font-size: 100px;
+}
+
+.home-subtitle {
+    font-family: tm.$font-family-secondary;
+    font-weight: 200;
+    font-size: 40px;
+}

@@ -1,1 +1,9 @@
 //@use "../abstracts/theme" as tm; include files like this
+
+// Fonts
+@use "./fonts";
+$font-family-primary: 'CalSans', sans-serif;
+$font-family-secondary: 'AlbertSans', sans-serif;
+$text-size-large: 35px;
+$text-size-medium: 20px;
+$text-size-small: 5px;
