@@ -1,0 +1,145 @@
+[
+  {
+    "title": "Jo",
+    "description": "teseting",
+    "mainvisual": "image.png",
+    "extravisuals": [
+      "iamge2.png"
+    ],
+    "link": [
+      "itch.io",
+      "philipdeveloper.com"
+    ],
+    "date": "15/04/2024",
+    "duration": "8 Weeks",
+    "teamSize": 5,
+    "role": "Developer",
+    "status": "Finished school project",
+    "tags": [
+      "C++",
+      "CMake",
+      "OpenGL",
+      "GLM",
+      "GLFW",
+      "stb_image",
+      "Assimp",
+      "unity",
+      "unreal"
+    ]
+  },
+  {
+    "title": "Graphics Programming",
+    "description": "Some description",
+    "mainvisual": "../assets/img/image.png",
+    "extravisuals": [
+      "../assets/img/image2.png"
+    ],
+    "link": [
+      "itch.io",
+      "philipsdeveloper.com"
+    ],
+    "date": "15/04/2025",
+    "duration": "8 weken",
+    "teamSize": null,
+    "role": "Developer, Designer, Artist",
+    "status": "Running",
+    "tags": [
+      "C++",
+      "SFML",
+      "OpenGL",
+      "H"
+    ]
+  },
+  {
+    "title": "Graphics Programming",
+    "description": "Some description",
+    "mainvisual": "../assets/img/image.png",
+    "extravisuals": [
+      "../assets/img/image2.png"
+    ],
+    "link": [
+      "itch.io",
+      "philipsdeveloper.com"
+    ],
+    "date": "15/04/2025",
+    "duration": "8 weken",
+    "teamSize": null,
+    "role": "Developer, Designer, Artist",
+    "status": "Running",
+    "tags": [
+      "C++",
+      "SFML",
+      "OpenGL",
+      "H"
+    ]
+  },
+  {
+    "title": "Graphics Programming",
+    "description": "Some description",
+    "mainvisual": "../assets/img/image.png",
+    "extravisuals": [
+      "../assets/img/image2.png"
+    ],
+    "link": [
+      "itch.io",
+      "philipsdeveloper.com"
+    ],
+    "date": "15/04/2025",
+    "duration": "8 weken",
+    "teamSize": null,
+    "role": "Developer, Designer, Artist",
+    "status": "Running",
+    "tags": [
+      "C++",
+      "SFML",
+      "OpenGL",
+      "H"
+    ]
+  },
+  {
+    "title": "Graphics Programming",
+    "description": "A Solo school Assingment to learn OpenGL and make a small scene",
+    "mainvisual": "../assets/img/img.png",
+    "extravisuals": [
+      "../assets/img/img.png",
+      "../assets/img/img.png"
+    ],
+    "link": [
+      "itch.io",
+      "philipsdeveloper.com"
+    ],
+    "date": "11/09/2022",
+    "duration": "5 weeks",
+    "teamSize": null,
+    "role": "Developer",
+    "status": "Completed",
+    "tags": [
+      "OpenGL",
+      "C++",
+      "ASSIMP"
+    ]
+  },
+  {
+    "title": "Graphics Programming",
+    "description": "A Solo school Assignment to learn OpenGL and make a small scene",
+    "mainvisual": "../assets/img/img.png",
+    "extravisuals": [
+      "../assets/img/img.png",
+      "../assets/img/img.png"
+    ],
+    "link": [
+      "itch.io",
+      "philipsdeveloper.com"
+    ],
+    "date": "11/09/2022",
+    "duration": "5 weeks",
+    "teamSize": null,
+    "role": "Developer",
+    "status": "Completed",
+    "tags": [
+      "OpenGL",
+      "C++",
+      "ASSIMP"
+    ]
+  }
+]

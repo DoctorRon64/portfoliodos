@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Project</title>
+    <link rel="icon" href="/assets/img/websiteicon.gif" type="image/x-icon" />
+    <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+
+<body class="editorbody">
+    <form id="projectForm">
+        <label>Title: <input type="text" id="title" placeholder="Project Title" required></label><br>
+        <label>Description: <textarea id="description" placeholder="Write a summery Description"></textarea></label><br>
+        <label>Main Visual: <input type="text" id="mainvisual" placeholder="../assets/img/[file]"></label><br>
+        <label>Extra Visuals (comma): <input type="text" id="extravisuals" placeholder="../assets/img/[file], ../assets/img/[file]"></label><br>
+        <label>Links (comma): <input type="text" id="link" placeholder="pornhub.com, itch.io, github.com"></label><br>
+        <label>Date: <input type="text" id="date" placeholder="11/09/2001"></label><br>
+        <label>Duration: <input type="text" id="duration" placeholder="5 weeks 2 days 1 month"></label><br>
+        <label>Team Size: <input type="number" id="teamSize" placeholder="solo"></label><br>
+        <label>Role: <input type="text" id="role" placeholder="Devloper"></label><br>
+        <label>Status: <input type="text" id="status" placeholder="Running"></label><br>
+        <label>Tags (comma): <input type="text" id="tags" placeholder="Unity, C#"></label><br>
+
+        <button type="submit">Add Project</button>
+    </form>
+
+    <pre id="output"></pre>
+    <div id="status"></div>
+
+    <script>
+        const form = document.getElementById("projectForm");
+        const output = document.getElementById("output");
+        const status = document.getElementById("status");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const getVal = id => document.getElementById(id).value.trim();
+
+            const data = {
+                title: getVal("title"),
+                description: getVal("description"),
+                mainvisual: getVal("mainvisual"),
+                extravisuals: getVal("extravisuals").split(",").map(v => v.trim()).filter(Boolean),
+                link: getVal("link").split(",").map(v => v.trim()).filter(Boolean),
+                date: getVal("date"),
+                duration: getVal("duration"),
+                teamSize: parseInt(getVal("teamSize"), 10),
+                role: getVal("role"),
+                status: getVal("status"),
+                tags: getVal("tags").split(",").map(v => v.trim()).filter(Boolean)
+            };
+
+            output.textContent = JSON.stringify(data, null, 2);
+            status.textContent = "Sending...";
+
+            console.log("Sending to server:", data);
+
+            fetch("http://localhost:3000/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(result => {
+                    status.textContent = result.message || "Saved!";
+                    form.reset();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                })
+                .catch(err => {
+                    status.textContent = "Error saving project.";
+                    console.error("Fetch error:", err);
+                });
+        });
+    </script>
+</body>
+
+</html>
