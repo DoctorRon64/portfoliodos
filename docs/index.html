@@ -11,7 +11,7 @@
 
 <body class="home-body">
 
-        <!-- Navbar -->
+    <!-- Navbar -->
     <div class="home-container">
         <div class="home-title">Philip's Portfolio</div>
         <div class="home-subtitle">Game Developer & Audio Composer</div>
@@ -20,7 +20,9 @@
 
     <div class="home-projects" id="project-list"></div>
 
-    <script>
+    <script type="module">
+        import { tagsMap } from '../assets/js/tagsMap.js';
+
         fetch('/data/projects.json') // fixed relative path
             .then(response => response.json())
             .then(projects => {
@@ -29,25 +31,30 @@
                 projects.forEach((project, index) => {
                     const projectDiv = document.createElement('div');
                     projectDiv.className = 'thumbnail';
+                    const mainImageId = `main-image-${index}`;
+
+                    const tagHTML = project.tags.map(tag => {
+                        const color = tagsMap[tag] || '#3b8ac4';
+                        return `<span class="tag" style="background-color: ${color}">${tag}</span>`;
+                    }).join('');
+
                     projectDiv.innerHTML = `
                     <div class="project-title">${project.title}</div>
                     <div class="subtitle">${project.description}</div>
-                    <img id="main-image-${index}" src="${project.mainvisual}" alt="Main Project Image">
+                    <img id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image">
                     <div class="small-thumbnails">
                         ${project.extravisuals.map(img => `
-                            <img class="small" src="${img}" onclick="document.getElementById('main-image-${index}').src='${img}'">`
-                    ).join('')}
+                        <img class="small" src="${img}" onclick="document.getElementById('${mainImageId}').src='${img}'">`
+                                ).join('')}
                     </div>
-                    <div class="tags">
-                        ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
+                    <div class="tags">${tagHTML}</div>
                     <button onclick="openProject(${index})">Open Project</button>
                 `;
                     container.appendChild(projectDiv);
                 });
             });
 
-        function openProject(projectId) {
+        window.openProject = function (projectId) {
             window.location.href = 'cell.html?id=' + projectId;
         }
     </script>

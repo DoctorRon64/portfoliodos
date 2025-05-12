@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project Details</title>
   <link rel="stylesheet" href="/assets/css/app.css" />
 </head>
+
 <body class="cell-body">
   <div class="project-details">
     <h1 class="project-title" id="project-title"></h1>
@@ -23,7 +25,7 @@
       <div class="info">
         <h2>Project Info</h2>
         <ul>
-          <li><strong>Tags:</strong> <span id="project-tags"></span></li>
+          <li><strong>Tags:</strong> <div id="project-tags"></div></li>
           <li><strong>Date:</strong> <span id="project-date"></span></li>
           <li><strong>Duration:</strong> <span id="project-duration"></span></li>
           <li><strong>Role:</strong> <span id="project-role"></span></li>
@@ -34,7 +36,10 @@
     </div>
   </div>
 
-  <script>
+  <script type="module">
+    import { tagsMap } from '/assets/js/tagsMap.js';
+    console.log("tagsMap: ", tagsMap); // Check if the map is loaded
+
     function getProjectId() {
       const params = new URLSearchParams(window.location.search);
       return parseInt(params.get('id'));
@@ -59,7 +64,16 @@
           document.getElementById('project-title').innerText = project.title;
           document.getElementById('big-image').src = project.mainvisual;
           document.getElementById('project-description').innerText = project.description;
-          document.getElementById('project-tags').innerText = project.tags.join(', ');
+
+          const tagsContainer = document.getElementById('project-tags');
+          project.tags.forEach(tag => {
+            const span = document.createElement('span');
+            span.innerText = tag;
+            span.className = 'tag'; // Apply the tag styles from CSS
+            span.style.backgroundColor = tagsMap[tag] || '#3b8ac4'; // Dynamically set the color
+            tagsContainer.appendChild(span);
+          });
+
           document.getElementById('project-date').innerText = project.date || 'N/A';
           document.getElementById('project-duration').innerText = project.duration || 'N/A';
           document.getElementById('project-role').innerText = project.role || 'N/A';
@@ -96,4 +110,5 @@
     window.onload = loadProject;
   </script>
 </body>
+
 </html>

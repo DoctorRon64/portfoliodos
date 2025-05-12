@@ -115,6 +115,22 @@
           }
         }
       }
+
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.4rem;
+        margin-bottom: 1rem;
+      }
+
+      .tag {
+        color: white; // Change text color to white
+        padding: 0.35rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-family: $font-family-thirdly;
+        white-space: nowrap;
+      }
     }
   }
 
