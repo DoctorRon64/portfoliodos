@@ -1,49 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Details</title>
-    <link rel="stylesheet" href="/assets/css/app.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Details</title>
+  <link rel="stylesheet" href="/assets/css/app.css" />
 </head>
 <body class="cell-body">
-    <div class="project-details">
-        <h1 class="project-title">Project Title</h1>
-        
-        <div class="image-section">
-            <img id="big-image" src="/assets/img/thumb/appdev.png" alt="Big Project Image">
-            <div class="thumbnail-options">
-                <img class="thumbnail" src="/assets/img/thumb/architecture.png" alt="Thumbnail 1" onclick="updateBigImage('/assets/img/thumb/architecture.png')">
-                <img class="thumbnail" src="/assets/img/thumb/astar.png" alt="Thumbnail 2" onclick="updateBigImage('/assets/img/thumb/astar.png')">
-                <img class="thumbnail" src="/assets/img/thumb/boids.png" alt="Thumbnail 3" onclick="updateBigImage('/assets/img/thumb/boids.png')">
-            </div>
-        </div>
+  <div class="project-details">
+    <h1 class="project-title" id="project-title"></h1>
 
-        <div class="info-section">
-            <div class="description">
-                <h2>Description</h2>
-                <p>This is where the project description will go. You can provide detailed information about the project, its objectives, and any other relevant details.</p>
-            </div>
-            <div class="info">
-                <h2>Project Info</h2>
-                <ul>
-                    <li><strong>Tags:</strong> Tag1, Tag2, Tag3</li>
-                    <li><strong>Badges:</strong> Badge1, Badge2</li>
-                    <li><strong>People:</strong> Person A, Person B</li>
-                    <li><strong>Duration:</strong> 3 months</li>
-                    <li><strong>Role:</strong> Developer</li>
-                    <li><strong>Status:</strong> Completed</li>
-                    <li><strong>Links:</strong> <a href="https://github.com/your-repo" target="_blank">GitHub</a>, <a href="https://yourprojectlink.com" target="_blank">Live Demo</a></li>
-                </ul>
-            </div>
-        </div>
+    <div class="image-section">
+      <img id="big-image" src="" alt="Big Project Image" />
+      <div class="thumbnail-options" id="thumbnail-options"></div>
     </div>
 
-    <script>
-        function updateBigImage(imageSrc) {
-            const bigImage = document.getElementById('big-image');
-            bigImage.src = imageSrc;
-        }
-    </script>
+    <div class="info-section">
+      <div class="description">
+        <h2>Description</h2>
+        <p id="project-description"></p>
+      </div>
+      <div class="info">
+        <h2>Project Info</h2>
+        <ul>
+          <li><strong>Tags:</strong> <span id="project-tags"></span></li>
+          <li><strong>Date:</strong> <span id="project-date"></span></li>
+          <li><strong>Duration:</strong> <span id="project-duration"></span></li>
+          <li><strong>Role:</strong> <span id="project-role"></span></li>
+          <li><strong>Status:</strong> <span id="project-status"></span></li>
+        </ul>
+      </div>
+      <div class="links" id="project-links"></div>
+    </div>
+  </div>
+
+  <script>
+    function getProjectId() {
+      const params = new URLSearchParams(window.location.search);
+      return parseInt(params.get('id'));
+    }
+
+    function updateBigImage(imageSrc) {
+      document.getElementById('big-image').src = imageSrc;
+    }
+
+    function loadProject() {
+      const projectId = getProjectId();
+
+      fetch('/data/projects.json')
+        .then(response => response.json())
+        .then(projects => {
+          const project = projects[projectId];
+          if (!project) {
+            document.body.innerHTML = '<p>Project not found.</p>';
+            return;
+          }
+
+          document.getElementById('project-title').innerText = project.title;
+          document.getElementById('big-image').src = project.mainvisual;
+          document.getElementById('project-description').innerText = project.description;
+          document.getElementById('project-tags').innerText = project.tags.join(', ');
+          document.getElementById('project-date').innerText = project.date || 'N/A';
+          document.getElementById('project-duration').innerText = project.duration || 'N/A';
+          document.getElementById('project-role').innerText = project.role || 'N/A';
+          document.getElementById('project-status').innerText = project.status || 'N/A';
+
+          const thumbContainer = document.getElementById('thumbnail-options');
+          [project.mainvisual, ...(project.extravisuals || [])].forEach(img => {
+            const imgElem = document.createElement('img');
+            imgElem.src = img;
+            imgElem.className = 'thumbnail';
+            imgElem.alt = "Thumbnail";
+            imgElem.onclick = () => updateBigImage(img);
+            thumbContainer.appendChild(imgElem);
+          });
+
+          const linkContainer = document.getElementById('project-links');
+          if (project.link && Array.isArray(project.link)) {
+            project.link.forEach(url => {
+              const a = document.createElement('a');
+              a.href = url.startsWith('http') ? url : 'https://' + url;
+              a.target = "_blank";
+              a.innerText = url;
+              linkContainer.appendChild(a);
+              linkContainer.appendChild(document.createElement('br'));
+            });
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          document.body.innerHTML = '<p>Error loading project.</p>';
+        });
+    }
+
+    window.onload = loadProject;
+  </script>
 </body>
 </html>
