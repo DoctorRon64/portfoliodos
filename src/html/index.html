@@ -15,4 +15,35 @@
         <div class="home-title">Philip's Portfolio</div>
         <div class="home-subtitle">Game Developer & Audio Composer</div>
     </div>
+
+    <div class="home-projects">
+        <div class="thumbnail">
+            <div class="project-title">Project Title</div>
+            <div class="subtitle">Subtitle or Brief Description</div>
+            <img id="main-image" src="/assets/img/thumb/appdev.png" alt="Main Project Image">
+            <div class="small-thumbnails">
+                <img class="small" src="/assets/img/thumb/architecture.png" alt="Thumbnail 1"
+                    onclick="updateImage('thumb1.jpg')">
+                <img class="small" src="/assets/img/thumb/astar.png" alt="Thumbnail 2"
+                    onclick="updateImage('thumb2.jpg')">
+                <img class="small" src="/assets/img/thumb/boids.png" alt="Thumbnail 3"
+                    onclick="updateImage('thumb3.jpg')">
+            </div>
+            <div class="tags">
+                <span class="tag">Tag1</span>
+                <span class="tag">Tag2</span>
+                <span class="tag">Tag3</span>
+            </div>
+            <a href="cell.html">Open Project</a>
+            <a href="https://github.com/" target="_blank">GitHub Link</a>
+        </div>
+    </div>
+
+    <script>
+        function updateBigImage(imageSrc) {
+            const bigImage = document.getElementById('big-image');
+            bigImage.src = imageSrc;
+        }
+    </script>
+    <script src="script.js"></script>
 </html>
