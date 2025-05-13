@@ -76,8 +76,17 @@
           project.tags.forEach(tag => {
             const span = document.createElement('span');
             span.innerText = tag;
-            span.className = 'tag'; // Apply the tag styles from CSS
-            span.style.backgroundColor = tagsMap[tag] || '#3b8ac4'; // Dynamically set the color
+            span.className = 'tag';
+
+            const color = tagsMap[tag];
+            if (color) {
+              if (color.startsWith('linear-gradient')) {
+                span.style.backgroundImage = color;
+              } else {
+                span.style.backgroundColor = color;
+              }
+            }
+
             tagsContainer.appendChild(span);
           });
 

@@ -39,20 +39,6 @@
             };
         }
 
-        // Function to render video thumbnail (first frame or custom thumbnail)
-        function renderVideoThumbnail(videoUrl, targetEl) {
-            const video = document.createElement("video");
-            video.src = videoUrl;
-            video.muted = true; // Mute the video to prevent sound from playing
-            video.currentTime = 0; // Set the video to the first frame
-            video.width = targetEl.width; // Match the target element's width
-            video.height = targetEl.height; // Match the target element's height
-
-            video.onloadeddata = () => {
-                targetEl.src = video.src;
-            };
-        }
-
         fetch('/data/projects.json')
             .then(response => response.json())
             .then(projects => {
@@ -65,7 +51,10 @@
 
                     const tagHTML = project.tags.map(tag => {
                         const color = tagsMap[tag] || '#3b8ac4';
-                        return `<span class="tag" style="background-color: ${color}">${tag}</span>`;
+                        const style = color.startsWith('linear-gradient')
+                            ? `background-image: ${color}`
+                            : `background-color: ${color}`;
+                        return `<span class="tag" style="${style}">${tag}</span>`;
                     }).join('');
 
                     // Initialize an empty string to store the thumbnail HTML
