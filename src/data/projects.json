@@ -23,5 +23,111 @@
       "stbi",
       "assimp"
     ]
+  },
+  {
+    "title": "DrRon's Showdowns",
+    "description": "A 2D boss-fight game inspired by Cuphead and Terraria, where I contributed as the lead artist and UI designer.",
+    "mainvisual": "../assets/img/gifs/vrij2.gif",
+    "extravisuals": [
+      "../assets/img/thumb/vrij2.png"
+    ],
+    "link": [],
+    "date": "15 April 2024",
+    "duration": "8 Weeks",
+    "teamSize": 3,
+    "role": "Artist",
+    "status": "Finished Demo",
+    "tags": [
+      "Unity",
+      "C#",
+      "Animate",
+      "Photoshop",
+      "Illustrator"
+    ]
+  },
+  {
+    "title": "Tune Tap Studio",
+    "description": "A solo project where I created a custom Digital Audio Workstation (DAW) in Unity, focusing on intuitive UI and efficient data handling.",
+    "mainvisual": "../assets/img/gifs/tool.gif",
+    "extravisuals": [
+      "../assets/img/thumb/tool.png"
+    ],
+    "link": [
+      "https://github.com/DoctorRon64/Kernmodule-Production-Tools",
+      "https://github.com/DoctorRon64/dev-tools/releases"
+    ],
+    "date": "12 February 2024",
+    "duration": "6 Weeks",
+    "teamSize": 1,
+    "role": "Developer, UI Designer",
+    "status": "Finished Tool",
+    "tags": [
+      "Unity",
+      "C#",
+      "JSON"
+    ]
+  },
+  {
+    "title": "Designing a Boss Battle",
+    "description": "A solo project focused on designing a complex boss battle using NodeCanvas, a behavior tree tool, while enhancing my artistic and animation abilities.",
+    "mainvisual": "../assets/img/thumb/keuzeai.png",
+    "extravisuals": [
+      "../assets/img/thumb/keuzeai.png"
+    ],
+    "link": [
+      "https://github.com/DoctorRon64/Keuzemodule-Designing-AI"
+    ],
+    "date": "13 September 2023",
+    "duration": "4 Weeks",
+    "teamSize": 1,
+    "role": "Developer, Artist, Designer",
+    "status": "Finished Demo",
+    "tags": [
+      "Unity",
+      "C#"
+    ]
+  },
+  {
+    "title": "Coding Behaviour Tree",
+    "description": "A project focused on coding a custom behavior tree system, strengthening my understanding of AI programming and pixel art.",
+    "mainvisual": "../assets/img/gifs/behaviourtree.gif",
+    "extravisuals": [
+      "../assets/img/thumb/behaviourtree.png"
+    ],
+    "link": [
+      "https://github.com/DoctorRon64/Kernmodule-AI-BehaviourTree",
+      "https://github.com/DoctorRon64/dev-ai-behaviour-tree/releases/tag/release"
+    ],
+    "date": "13 November 2023",
+    "duration": "4 Weeks",
+    "teamSize": 1,
+    "role": "Developer, Artist",
+    "status": "Finished Demo",
+    "tags": [
+      "Unity",
+      "C#",
+      "Aseprite"
+    ]
+  },
+  {
+    "title": "Planet Destroyer",
+    "description": "A project focused on code architecture and design patterns, emphasizing clean, maintainable code and system integration.",
+    "mainvisual": "../assets/img/gifs/architecture.gif",
+    "extravisuals": [
+      "../assets/img/thumb/architecture.png"
+    ],
+    "link": [
+      "https://github.com/DoctorRon64/GameArchitecture-IntegratedGameplaySystems"
+    ],
+    "date": "4 September 2023",
+    "duration": "5 Weeks",
+    "teamSize": 2,
+    "role": "Developer, Artist",
+    "status": "Finished Demo",
+    "tags": [
+      "Unity",
+      "C#",
+      "Aseprite"
+    ]
   }
 ]

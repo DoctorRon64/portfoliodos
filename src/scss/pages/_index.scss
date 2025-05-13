@@ -3,11 +3,13 @@
 .home-body {
     margin: 0;
     overflow: hidden;
+    overflow-y: auto;
     background: $primary-color;
 }
 
 .home-container {
     background-color: $secondary-color;
+    
 }
 
 .home-title {
