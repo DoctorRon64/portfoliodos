@@ -35,6 +35,7 @@
       border-radius: 1rem;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
       transition: transform 0.3s ease;
+      aspect-ratio: 16 / 9;
 
       &:hover {
         transform: scale(1.01);
@@ -106,7 +107,7 @@
         padding: 0;
 
         li {
-          margin-bottom: 0.8rem;
+          margin-bottom: 0.05rem;
           font-family: $font-family-thirdly;
 
           strong {
@@ -114,22 +115,6 @@
             font-weight: 600;
           }
         }
-      }
-
-      .project-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.4rem;
-        margin-bottom: 1rem;
-      }
-
-      .tag {
-        color: white; // Change text color to white
-        padding: 0.35rem 0.75rem;
-        border-radius: 1rem;
-        font-size: 0.75rem;
-        font-family: $font-family-thirdly;
-        white-space: nowrap;
       }
     }
   }
@@ -150,5 +135,27 @@
         color: darken($link-color, 10%);
       }
     }
+  }
+
+  .back-button-container {
+    margin-top: 20px;
+  }
+
+  #back-button {
+    font-family: $font-family-thirdly;
+    padding: 10px 20px;
+    background-color: $secondary-color;
+    color: white;
+    border: none;
+    border-radius: 35px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  #back-button:hover {
+    background-color: darken($secondary-color, 10%);
+    transform: scale(1.05);
+    transition: transform 0.3s ease, background-color 0.3s ease;
   }
 }

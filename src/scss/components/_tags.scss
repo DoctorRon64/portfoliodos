@@ -1,0 +1,18 @@
+@use "../abstracts/theme" as *;
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+
+    .tag {
+        background-color: $primary-color;
+        color: white;
+        padding: 0.35rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-family: $font-family-thirdly;
+        white-space: nowrap;
+    }
+}

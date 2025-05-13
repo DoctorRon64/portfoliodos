@@ -73,22 +73,7 @@
       }
     }
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
-
-      .tag {
-        background-color: $primary-color;
-        color: white;
-        padding: 0.35rem 0.75rem;
-        border-radius: 1rem;
-        font-size: 0.75rem;
-        font-family: $font-family-thirdly;
-        white-space: nowrap;
-      }
-    }
+    
 
     button {
       align-self: flex-start;
@@ -97,7 +82,7 @@
       font-family: $font-family-secondary;
       border: none;
       padding: 0.6rem 1.2rem;
-      border-radius: 0.8rem;
+      border-radius: 35px;
       cursor: pointer;
       transition: background-color 0.2s, transform 0.15s;
 

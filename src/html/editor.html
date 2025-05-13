@@ -12,8 +12,14 @@
     <form id="projectForm">
         <label>Title: <input type="text" id="title" placeholder="Project Title" required></label><br>
         <label>Description: <textarea id="description" placeholder="Write a summery Description"></textarea></label><br>
-        <label>Main Visual: <input type="text" id="mainvisual" placeholder="../assets/img/[file]"></label><br>
-        <label>Extra Visuals (comma): <input type="text" id="extravisuals" placeholder="../assets/img/[file], ../assets/img/[file]"></label><br>
+        <label>Main Visual:
+            <input type="text" id="mainvisual" placeholder="../assets/img/[file]">
+            <input type="file" id="mainvisualFile" accept="image/*">
+        </label><br>
+        <label>Extra Visuals:
+            <input type="text" id="extravisuals" placeholder="../assets/img/[file], ../assets/img/[file]">
+            <input type="file" id="extravisualsFile" accept="image/*" multiple>
+        </label><br>
         <label>Links (comma): <input type="text" id="link" placeholder="pornhub.com, itch.io, github.com"></label><br>
         <label>Date: <input type="text" id="date" placeholder="11/09/2001"></label><br>
         <label>Duration: <input type="text" id="duration" placeholder="5 weeks 2 days 1 month"></label><br>
@@ -33,6 +39,40 @@
         const output = document.getElementById("output");
         const status = document.getElementById("status");
 
+        // Handle mainvisual file input
+        document.getElementById("mainvisualFile").addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const fileName = file.name;
+                const isGif = fileName.toLowerCase().endsWith('.gif');
+                const folder = isGif ? 'gifs' : 'thumb';
+                document.getElementById("mainvisual").value = `../assets/img/${folder}/${fileName}`;
+            }
+        });
+
+        // Handle extravisuals file input
+        document.getElementById("extravisualsFile").addEventListener("change", function (e) {
+            const files = Array.from(e.target.files);
+            const paths = files.map(file => {
+                const isGif = file.name.toLowerCase().endsWith('.gif');
+                const folder = isGif ? 'gifs' : 'thumb';
+                return `../assets/img/${folder}/${file.name}`;
+            });
+
+            const input = document.getElementById("extravisuals");
+            const existing = input.value.trim();
+
+            const combined = existing
+                ? existing.split(",").map(p => p.trim()).concat(paths).filter(Boolean)
+                : paths;
+
+            const uniquePaths = [...new Set(combined)];
+
+            input.value = uniquePaths.join(", ");
+        });
+
+
+        // Form submit logic
         form.addEventListener("submit", function (e) {
             e.preventDefault();
 

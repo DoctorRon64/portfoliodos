@@ -25,7 +25,9 @@
       <div class="info">
         <h2>Project Info</h2>
         <ul>
-          <li><strong>Tags:</strong> <div id="project-tags"></div></li>
+          <li><strong>Tags:</strong>
+            <div id="project-tags" class="tags"></div>
+          </li>
           <li><strong>Date:</strong> <span id="project-date"></span></li>
           <li><strong>Duration:</strong> <span id="project-duration"></span></li>
           <li><strong>Role:</strong> <span id="project-role"></span></li>
@@ -34,7 +36,12 @@
       </div>
       <div class="links" id="project-links"></div>
     </div>
+    <div class="back-button-container">
+      <button id="back-button" onclick="window.location.href='/index.html'">Back to Home</button>
+    </div>
   </div>
+
+
 
   <script type="module">
     import { tagsMap } from '/assets/js/tagsMap.js';
@@ -106,7 +113,6 @@
           document.body.innerHTML = '<p>Error loading project.</p>';
         });
     }
-
     window.onload = loadProject;
   </script>
 </body>

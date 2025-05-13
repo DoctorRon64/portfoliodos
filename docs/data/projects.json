@@ -1,47 +1,27 @@
 [
   {
     "title": "Graphics Programming",
-    "description": "Some description",
-    "mainvisual": "../assets/img/thumb/appdev.png",
+    "description": "A school assignment focused on developing a 3D scene using OpenGL and C++, where I explored rendering and post-processing effects.",
+    "mainvisual": "../assets/img/gifs/graphics.gif",
     "extravisuals": [
-      "../assets/img/thumb/architecture.png",
-      "../assets/img/thumb/appdev.png",
-      "../assets/img/thumb/boids.png",
-      "../assets/img/thumb/context1.png"
+      "../assets/img/thumb/graphics.png"
     ],
     "link": [
-      "itch.io",
-      "jor.com"
+      "https://github.com/DoctorRon64/kern-graphics"
     ],
-    "date": "15/04/2025",
-    "duration": "8 weken",
-    "teamSize": null,
-    "role": "Developer, Designer, Artist",
-    "status": "Running",
+    "date": "15 April 2024",
+    "duration": "8 Weeks",
+    "teamSize": 1,
+    "role": "Developer",
+    "status": "Finished",
     "tags": [
       "C++",
-      "SFML",
       "OpenGL",
-      "H"
-    ]
-  },
-  {
-    "title": "5",
-    "description": "5",
-    "mainvisual": "5",
-    "extravisuals": [
-      "5"
-    ],
-    "link": [
-      "5"
-    ],
-    "date": "5",
-    "duration": "5",
-    "teamSize": 5,
-    "role": "5",
-    "status": "5",
-    "tags": [
-      "5"
+      "CMake",
+      "glm",
+      "GLFW",
+      "stbi",
+      "assimp"
     ]
   }
 ]

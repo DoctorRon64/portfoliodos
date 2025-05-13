@@ -23,7 +23,37 @@
     <script type="module">
         import { tagsMap } from '../assets/js/tagsMap.js';
 
-        fetch('/data/projects.json') // fixed relative path
+        // Function to render GIF preview as the first frame
+        function renderGifPreview(gifUrl, targetImgEl) {
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = gifUrl;
+
+            img.onload = function () {
+                const canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+                targetImgEl.src = canvas.toDataURL("image/png");
+            };
+        }
+
+        // Function to render video thumbnail (first frame or custom thumbnail)
+        function renderVideoThumbnail(videoUrl, targetEl) {
+            const video = document.createElement("video");
+            video.src = videoUrl;
+            video.muted = true; // Mute the video to prevent sound from playing
+            video.currentTime = 0; // Set the video to the first frame
+            video.width = targetEl.width; // Match the target element's width
+            video.height = targetEl.height; // Match the target element's height
+
+            video.onloadeddata = () => {
+                targetEl.src = video.src;
+            };
+        }
+
+        fetch('/data/projects.json')
             .then(response => response.json())
             .then(projects => {
                 const container = document.getElementById('project-list');
@@ -38,25 +68,49 @@
                         return `<span class="tag" style="background-color: ${color}">${tag}</span>`;
                     }).join('');
 
+                    // Initialize an empty string to store the thumbnail HTML
+                    let thumbnailsHTML = '';
+
+                    // Process main visual and extra visuals
+                    [project.mainvisual, ...(project.extravisuals || [])].forEach((img, i) => {
+                        const isGif = img.toLowerCase().endsWith('.gif');
+                        const thumbId = `thumb-${index}-${i}`;
+
+                        // Generate thumbnail image HTML
+                        thumbnailsHTML += `
+                        <img class="small" id="${thumbId}" src="${img}" onclick="document.getElementById('${mainImageId}').src='${img}'">
+                    `;
+
+                        // If the image is a GIF, render the preview for the thumbnail
+                        if (isGif) {
+                            // Wait for the DOM element to be added before calling renderGifPreview
+                            setTimeout(() => {
+                                const targetEl = document.getElementById(thumbId);
+                                if (targetEl) {
+                                    renderGifPreview(img, targetEl);
+                                }
+                            }, 0);
+                        }
+                    });
+
+                    // Set up the content for the project div
                     projectDiv.innerHTML = `
                     <div class="project-title">${project.title}</div>
                     <div class="subtitle">${project.description}</div>
                     <img id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image">
-                    <div class="small-thumbnails">
-                        ${project.extravisuals.map(img => `
-                        <img class="small" src="${img}" onclick="document.getElementById('${mainImageId}').src='${img}'">`
-                                ).join('')}
-                    </div>
+                    <div class="small-thumbnails">${thumbnailsHTML}</div>
                     <div class="tags">${tagHTML}</div>
                     <button onclick="openProject(${index})">Open Project</button>
                 `;
+
+                    // Append the project div to the container
                     container.appendChild(projectDiv);
                 });
             });
 
         window.openProject = function (projectId) {
             window.location.href = 'cell.html?id=' + projectId;
-        }
+        };
     </script>
 
     <script>
