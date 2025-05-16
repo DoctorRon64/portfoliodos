@@ -57,24 +57,23 @@ export function createProjectLink(url) {
   const a = document.createElement('a');
   a.href = url.startsWith('http') ? url : 'https://' + url;
   a.target = "_blank";
+  a.rel = "noopener noreferrer";
 
   const urlLower = url.toLowerCase();
 
   if (urlLower.includes('github')) {
     a.className = 'btn btn-github';
-
-    if (urlLower.includes('release')) {
-      a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-github.svg" alt="GitHub Build" class="icon" /> Build`;
-    } else {
-      a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-github.svg" alt="GitHub Source" class="icon" /> Source`;
-    }
+    a.title = urlLower.includes('release') ? "GitHub Build" : "GitHub Source";
+    a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-github.svg" alt="GitHub icon" class="icon" /> ${a.title.split(' ')[1]}`;
 
   } else if (urlLower.includes('itch.io') || urlLower.includes('itchio')) {
     a.className = 'btn btn-itchio';
-    a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-itch.svg" alt="itch.io Build" class="icon" /> Build`;
+    a.title = "itch.io Build";
+    a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-itch.svg" alt="itch.io icon" class="icon" /> Build`;
 
   } else {
-    a.innerText = url;
+    a.textContent = url;
+    a.title = url;
   }
 
   return a;

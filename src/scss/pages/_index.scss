@@ -6,6 +6,40 @@ body {
   color: $dark;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: $secondary-color;
+  color: white;
+  font-family: $font-family-secondary;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+  .nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+  }
+
+  .nav-links a {
+    margin-left: 2rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: lighten(white, 20%);
+    }
+  }
 }
 
 .home-container {
@@ -27,8 +61,18 @@ body {
 }
 
 .home-projects {
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    padding: 1rem;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
   gap: 2rem;
   padding: 2rem;
 
@@ -46,8 +90,8 @@ body {
     animation-delay: calc(var(--i) * 0.1s);
 
     &:hover {
-      transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
     }
 
     .main-image {
@@ -99,6 +143,28 @@ body {
           text-transform: uppercase;
           letter-spacing: 0.5px;
         }
+
+        &[data-title]:hover::after {
+          content: attr(data-title);
+          position: absolute;
+          bottom: -1.5rem;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(0, 0, 0, 0.75);
+          color: white;
+          font-size: 0.65rem;
+          padding: 2px 6px;
+          border-radius: 4px;
+          white-space: nowrap;
+          opacity: 1;
+          pointer-events: none;
+          transition: opacity 0.2s ease;
+        }
+
+        &[data-title]::after {
+          content: '';
+          opacity: 0;
+        }
       }
 
       .small {
@@ -116,42 +182,125 @@ body {
       }
     }
 
-    .tags {
+    .project-links {
       display: flex;
+      justify-content: flex-start; // Aligns links to the left
       flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
+      gap: 0.5rem; // Smaller space between links
+      margin-bottom: 0.75rem;
 
-      .tag {
-        padding: 0.3rem 0.8rem;
-        border-radius: 50px;
-        color: white;
-        font-size: 0.75rem;
-        font-weight: 500;
-        white-space: nowrap;
+      .icon {
+        width: 0.9rem;
+        height: 0.9rem;
+        margin-right: 0.3rem;
+        vertical-align: middle;
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: $font-family-thirdly;
+        font-size: 0.85rem; // Slightly smaller font
+        text-decoration: none;
+        padding: 0.35rem 0.75rem; // Smaller padding
+        border-radius: 0.4rem;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        &.btn {
+          font-weight: 500;
+          cursor: pointer;
+          user-select: none;
+
+          img.icon {
+            width: 16px;
+            height: 16px;
+            filter: brightness(0) invert(1);
+          }
+        }
+
+        &.btn-github {
+          background-color: #000;
+          color: #fff;
+
+          &:hover,
+          &:focus {
+            background-color: #333;
+            color: #fff;
+            outline: none;
+          }
+        }
+
+        &.btn-itchio {
+          background-color: #fa5c5c;
+          color: white;
+
+          &:hover,
+          &:focus {
+            background-color: #e04444;
+            outline: none;
+          }
+        }
       }
     }
 
-    button {
-      align-self: flex-start;
-      background: linear-gradient(135deg, $secondary-color, lighten($secondary-color, 8%));
-      color: white;
-      border: none;
-      border-radius: 30px;
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      font-weight: 600;
-      font-family: $font-family-secondary;
+    .small {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 0.5rem;
       cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.2s ease;
+      border: 2px solid transparent;
+      transition: border-color 0.2s ease;
 
       &:hover {
-        background-color: darken($secondary-color, 8%);
-        transform: scale(1.05);
+        border-color: $primary-color;
       }
     }
   }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+
+    .tag {
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+  }
+
+  button {
+    align-self: flex-start;
+    background: linear-gradient(135deg, $secondary-color, lighten($secondary-color, 8%));
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: $font-family-secondary;
+    margin-top: auto;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      background-color: darken($secondary-color, 8%);
+      transform: scale(1.05);
+    }
+  }
 }
+
 
 @keyframes fadeInUp {
   to {

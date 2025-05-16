@@ -11,6 +11,15 @@
 
 <body class="home-body">
 
+    <nav class="navbar">
+        <a href="/" class="nav-logo">Philipdeveloper.com</a>
+        <div class="nav-links">
+            <a href="#project-list">Projects</a>
+            <a href="#about">About</a>
+            <a href="#Contact">Contact</a>
+        </div>
+    </nav>
+
     <!-- Header -->
     <header class="home-container">
         <div class="home-title">Philip's Portfolio</div>
@@ -45,30 +54,24 @@
                         `document.getElementById('${mainImageId}').src='{img}'`
                     );
 
-                    const linkContainer = document.createElement('div');
-                    linkContainer.className = 'project-links';
-
-                    if (project.link && Array.isArray(project.link)) {
-                        project.link.forEach(url => {
-                            const linkElement = createProjectLink(url);
-                            linkContainer.appendChild(linkElement);
-                            linkContainer.appendChild(document.createElement('br'));
-                        });
-                    }
-
                     projectDiv.innerHTML = `
-                    <img id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image" class="main-image" />
-                    <h2 class="project-title">${project.title}</h2>
-                    <p class="subtitle">${project.description}</p>
+                    <img loading="lazy" id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image" class="main-image" />
                     <div class="small-thumbnails">${thumbnailsHTML}</div>
+                    <h2 class="project-title">${project.title}</h2>
+                    <div class="project-links"></div>
+                    <div class="subtitle">${project.description}</div>
                     <div class="tags">${tagHTML}</div>
                     <button onclick="openProject(${index})">Open Project</button>
                     `;
 
-                    const tagsDiv = projectDiv.querySelector('.tags');
-                    tagsDiv.insertAdjacentElement('afterend', linkContainer);
+                    const linkContainer = projectDiv.querySelector('.project-links');
+                    if (Array.isArray(project.link)) {
+                        project.link.forEach(url => {
+                            const linkElement = createProjectLink(url);
+                            linkContainer.appendChild(linkElement);
+                        });
+                    }
 
-                    projectDiv.appendChild(linkContainer);
                     container.appendChild(projectDiv);
                 });
             });

@@ -100,7 +100,6 @@
           });
 
           const linkContainer = document.getElementById('project-links');
-
           if (project.link && Array.isArray(project.link)) {
             project.link.forEach(url => {
               const a = document.createElement('a');
@@ -119,7 +118,7 @@
                 }
               } else if (urlLower.includes('itch.io') || urlLower.includes('itchio')) {
                 a.className = 'btn btn-itchio';
-                a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-itch" alt="itch.io Build" class="icon" /> Build`;
+                a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-itch.svg" alt="itch.io Build" class="icon" /> Build`;
               } else {
                 a.innerText = url;
               }

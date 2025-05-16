@@ -170,6 +170,13 @@
         flex-wrap: wrap;
         gap: 1rem;
 
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.4rem;
+            vertical-align: middle;
+        }
+
         a {
             display: inline-flex;
             align-items: center;

@@ -31,7 +31,9 @@
     "extravisuals": [
       "../assets/img/thumb/vrij2.png"
     ],
-    "link": [],
+    "link": [
+      "https://postghants.itch.io/dr-rons-showdowns"
+    ],
     "date": "15 April 2024",
     "duration": "8 Weeks",
     "teamSize": 3,
