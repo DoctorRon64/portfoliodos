@@ -1,4 +1,5 @@
 // renderProjectDetails.js
+import { tagsMap } from './tagsMap';
 
 export function renderProjectDetails(project, containerId, isThumbnailPage) {
   const container = document.getElementById(containerId);

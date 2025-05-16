@@ -1,26 +1,161 @@
 @use "../abstracts/theme" as *;
 
-.home-body {
-    margin: 0;
-    overflow: hidden;
-    overflow-y: auto;
-    background: $primary-color;
+body {
+  font-family: $font-family-primary;
+  background: $light;
+  color: $dark;
+  margin: 0;
+  padding: 0;
 }
 
 .home-container {
-    background-color: $secondary-color;
-    
-}
+  text-align: center;
+  padding: 4rem 2rem;
 
-.home-title {
-    font-family: $font-family-primary;
-    color: $light;
-    font-size: clamp(3rem, 8vw, 10rem);
-}
+  .home-title {
+    font-size: $title-size-large;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: $primary-color;
+  }
 
-.home-subtitle {
+  .home-subtitle {
+    font-size: $title-size-medium;
+    color: $primary-color;
     font-family: $font-family-secondary;
-    color: $light;
-    font-size: clamp(1.5rem, 4vw, 3rem);
-    font-weight: 400;
+  }
+}
+
+.home-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+
+  .thumbnail {
+    background-color: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+    transform: translateY(10px);
+    animation-delay: calc(var(--i) * 0.1s);
+
+    &:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .main-image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: filter 0.3s ease;
+
+      &:hover {
+        filter: brightness(1.05);
+      }
+    }
+
+    .project-title {
+      font-size: 1.5rem;
+      margin: 0.5rem 0 0.3rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: $text-color;
+    }
+
+    .small-thumbnails {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+
+      .small-thumb-wrapper {
+        position: relative;
+        display: inline-block;
+
+        .gif-badge {
+          position: absolute;
+          bottom: 4px;
+          right: 4px;
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          font-size: 10px;
+          font-weight: bold;
+          padding: 2px 6px;
+          border-radius: 4px;
+          pointer-events: none;
+          font-family: $font-family-secondary;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      .small {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.2s ease;
+
+        &:hover {
+          border-color: $primary-color;
+        }
+      }
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+
+      .tag {
+        padding: 0.3rem 0.8rem;
+        border-radius: 50px;
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+    }
+
+    button {
+      align-self: flex-start;
+      background: linear-gradient(135deg, $secondary-color, lighten($secondary-color, 8%));
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: $font-family-secondary;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+
+      &:hover {
+        background-color: darken($secondary-color, 8%);
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

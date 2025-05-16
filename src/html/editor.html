@@ -2,60 +2,274 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Add Project</title>
     <link rel="icon" href="/assets/img/websiteicon.gif" type="image/x-icon" />
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/app.css" />
+    <style>
+        :root {
+            --color-primary: #007bff;
+            --color-secondary: #0056b3;
+            --color-light: #f9f9f9;
+            --color-dark: #222;
+            --color-success: #28a745;
+            --color-error: #dc3545;
+            --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-secondary: 'Georgia', serif;
+            --border-radius: 6px;
+            --transition-speed: 0.3s;
+        }
+
+        body.editorbody {
+            margin: 0;
+            padding: 2rem 1rem;
+            font-family: var(--font-primary);
+            background: var(--color-light);
+            color: var(--color-dark);
+            font-size: 1rem;
+            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+        }
+
+        form#projectForm {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        form fieldset {
+            border: 1px solid #ddd;
+            padding: 1rem 1.5rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--border-radius);
+        }
+
+        form legend {
+            font-weight: 700;
+            padding: 0 0.5rem;
+            color: var(--color-primary);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: var(--color-dark);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            border: 1px solid #bbb;
+            border-radius: var(--border-radius);
+            box-sizing: border-box;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: border-color var(--transition-speed);
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            border-color: var(--color-primary);
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: var(--font-primary);
+            font-style: normal;
+        }
+
+        /* File input with label styled as button */
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-input-label {
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            background: transparent;
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            user-select: none;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            font-size: 0.9rem;
+        }
+
+        .file-input-label:hover {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        button[type="submit"] {
+            display: inline-block;
+            background-color: var(--color-primary);
+            color: white;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color var(--transition-speed);
+            margin-top: 1rem;
+        }
+
+        button[type="submit"]:hover {
+            background-color: var(--color-secondary);
+        }
+
+        #status {
+            margin-top: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        #status.success {
+            color: var(--color-success);
+        }
+
+        #status.error {
+            color: var(--color-error);
+        }
+
+        #output {
+            background: #f0f0f0;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 250px;
+            overflow-y: auto;
+            margin-top: 1rem;
+            box-shadow: inset 0 0 5px #ccc;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            body.editorbody {
+                padding: 1rem;
+            }
+
+            form#projectForm {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 
 <body class="editorbody">
-    <form id="projectForm">
-        <label>Title: <input type="text" id="title" placeholder="Project Title" required></label><br>
-        <label>Description: <textarea id="description" placeholder="Write a summery Description"></textarea></label><br>
-        <label>Main Visual:
-            <input type="text" id="mainvisual" placeholder="../assets/img/[file]">
-            <input type="file" id="mainvisualFile" accept="image/*">
-        </label><br>
-        <label>Extra Visuals:
-            <input type="text" id="extravisuals" placeholder="../assets/img/[file], ../assets/img/[file]">
-            <input type="file" id="extravisualsFile" accept="image/*" multiple>
-        </label><br>
-        <label>Links (comma): <input type="text" id="link" placeholder="pornhub.com, itch.io, github.com"></label><br>
-        <label>Date: <input type="text" id="date" placeholder="11/09/2001"></label><br>
-        <label>Duration: <input type="text" id="duration" placeholder="5 weeks 2 days 1 month"></label><br>
-        <label>Team Size: <input type="number" id="teamSize" placeholder="solo"></label><br>
-        <label>Role: <input type="text" id="role" placeholder="Devloper"></label><br>
-        <label>Status: <input type="text" id="status" placeholder="Running"></label><br>
-        <label>Tags (comma): <input type="text" id="tags" placeholder="Unity, C#"></label><br>
+    <form id="projectForm" novalidate>
+        <fieldset>
+            <legend>Basic Info</legend>
+
+            <label for="title">Title <span aria-hidden="true" style="color: red;">*</span></label>
+            <input type="text" id="title" placeholder="Project Title" required aria-required="true" />
+
+            <label for="description">Description</label>
+            <textarea id="description" placeholder="Write a summary description"></textarea>
+        </fieldset>
+
+        <fieldset>
+            <legend>Visuals</legend>
+
+            <label for="mainvisual">Main Visual (URL or file)</label>
+            <input type="text" id="mainvisual" placeholder="../assets/img/[file]" aria-describedby="mainVisualHelp" />
+            <div class="file-input-wrapper">
+                <label class="file-input-label" for="mainvisualFile">Choose File</label>
+                <input type="file" id="mainvisualFile" accept="image/*" />
+            </div>
+
+            <label for="extravisuals">Extra Visuals (comma separated URLs)</label>
+            <input type="text" id="extravisuals" placeholder="../assets/img/[file], ../assets/img/[file]" aria-describedby="extraVisualHelp" />
+            <div class="file-input-wrapper">
+                <label class="file-input-label" for="extravisualsFile">Choose Files</label>
+                <input type="file" id="extravisualsFile" accept="image/*" multiple />
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Additional Info</legend>
+
+            <label for="link">Links (comma separated)</label>
+            <input type="text" id="link" placeholder="example.com, github.com" />
+
+            <label for="date">Date</label>
+            <input type="text" id="date" placeholder="11/09/2001" />
+
+            <label for="duration">Duration</label>
+            <input type="text" id="duration" placeholder="5 weeks, 2 days, 1 month" />
+
+            <label for="teamSize">Team Size</label>
+            <input type="number" id="teamSize" placeholder="e.g. 1" min="1" />
+
+            <label for="role">Role</label>
+            <input type="text" id="role" placeholder="Developer" />
+
+            <label for="status">Status</label>
+            <input type="text" id="statusInput" placeholder="Running" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Tags</legend>
+
+            <label for="tags">Tags (comma separated)</label>
+            <input type="text" id="tags" placeholder="Unity, C#" />
+        </fieldset>
 
         <button type="submit">Add Project</button>
-    </form>
 
-    <pre id="output"></pre>
-    <div id="status"></div>
+        <div id="status" role="alert" aria-live="polite"></div>
+        <pre id="output" aria-live="polite"></pre>
+    </form>
 
     <script>
         const form = document.getElementById("projectForm");
         const output = document.getElementById("output");
         const status = document.getElementById("status");
 
-        // Handle mainvisual file input
-        document.getElementById("mainvisualFile").addEventListener("change", function (e) {
+        // File input handlers
+        document.getElementById("mainvisualFile").addEventListener("change", e => {
             const file = e.target.files[0];
             if (file) {
                 const fileName = file.name;
-                const isGif = fileName.toLowerCase().endsWith('.gif');
-                const folder = isGif ? 'gifs' : 'thumb';
+                const isGif = fileName.toLowerCase().endsWith(".gif");
+                const folder = isGif ? "gifs" : "thumb";
                 document.getElementById("mainvisual").value = `../assets/img/${folder}/${fileName}`;
             }
         });
 
-        // Handle extravisuals file input
-        document.getElementById("extravisualsFile").addEventListener("change", function (e) {
+        document.getElementById("extravisualsFile").addEventListener("change", e => {
             const files = Array.from(e.target.files);
             const paths = files.map(file => {
-                const isGif = file.name.toLowerCase().endsWith('.gif');
-                const folder = isGif ? 'gifs' : 'thumb';
+                const isGif = file.name.toLowerCase().endsWith(".gif");
+                const folder = isGif ? "gifs" : "thumb";
                 return `../assets/img/${folder}/${file.name}`;
             });
 
@@ -71,13 +285,12 @@
             input.value = uniquePaths.join(", ");
         });
 
-
-        // Form submit logic
-        form.addEventListener("submit", function (e) {
+        form.addEventListener("submit", e => {
             e.preventDefault();
 
             const getVal = id => document.getElementById(id).value.trim();
 
+            // Use "statusInput" for status field (to avoid id clash)
             const data = {
                 title: getVal("title"),
                 description: getVal("description"),
@@ -86,16 +299,15 @@
                 link: getVal("link").split(",").map(v => v.trim()).filter(Boolean),
                 date: getVal("date"),
                 duration: getVal("duration"),
-                teamSize: parseInt(getVal("teamSize"), 10),
+                teamSize: parseInt(getVal("teamSize"), 10) || 0,
                 role: getVal("role"),
-                status: getVal("status"),
+                status: getVal("statusInput"),
                 tags: getVal("tags").split(",").map(v => v.trim()).filter(Boolean)
             };
 
             output.textContent = JSON.stringify(data, null, 2);
             status.textContent = "Sending...";
-
-            console.log("Sending to server:", data);
+            status.className = "";
 
             fetch("http://localhost:3000/add", {
                 method: "POST",
@@ -105,15 +317,16 @@
                 .then(res => res.json())
                 .then(result => {
                     status.textContent = result.message || "Saved!";
+                    status.className = "success";
                     form.reset();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                 })
                 .catch(err => {
                     status.textContent = "Error saving project.";
+                    status.className = "error";
                     console.error("Fetch error:", err);
                 });
         });
     </script>
 </body>
-
 </html>

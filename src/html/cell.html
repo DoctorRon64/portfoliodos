@@ -13,7 +13,9 @@
     <h1 class="project-title" id="project-title"></h1>
 
     <div class="image-section">
-      <img id="big-image" src="" alt="Big Project Image" />
+      <div class="image-wrapper">
+        <img id="big-image" src="" alt="Main Project Image" />
+      </div>
       <div class="thumbnail-options" id="thumbnail-options"></div>
     </div>
 
@@ -32,20 +34,20 @@
           <li><strong>Duration:</strong> <span id="project-duration"></span></li>
           <li><strong>Role:</strong> <span id="project-role"></span></li>
           <li><strong>Status:</strong> <span id="project-status"></span></li>
+          <li><strong>Team Size:</strong> <span id="project-teamsize"></span></li>
         </ul>
       </div>
-      <div class="links" id="project-links"></div>
     </div>
+
+    <div class="links" id="project-links"></div>
+
     <div class="back-button-container">
       <button id="back-button" onclick="window.location.href='/index.html'">Back to Home</button>
     </div>
   </div>
 
-
-
   <script type="module">
-    import { tagsMap } from '/assets/js/tagsMap.js';
-    console.log("tagsMap: ", tagsMap); // Check if the map is loaded
+    import { generateThumbnails, renderGifPreview, renderTags } from '../assets/js/uiUtils.js';
 
     function getProjectId() {
       const params = new URLSearchParams(window.location.search);
@@ -71,57 +73,68 @@
           document.getElementById('project-title').innerText = project.title;
           document.getElementById('big-image').src = project.mainvisual;
           document.getElementById('project-description').innerText = project.description;
-
-          const tagsContainer = document.getElementById('project-tags');
-          project.tags.forEach(tag => {
-            const span = document.createElement('span');
-            span.innerText = tag;
-            span.className = 'tag';
-
-            const color = tagsMap[tag];
-            if (color) {
-              if (color.startsWith('linear-gradient')) {
-                span.style.backgroundImage = color;
-              } else {
-                span.style.backgroundColor = color;
-              }
-            }
-
-            tagsContainer.appendChild(span);
-          });
-
+          document.getElementById('project-tags').innerHTML = renderTags(project.tags);
           document.getElementById('project-date').innerText = project.date || 'N/A';
           document.getElementById('project-duration').innerText = project.duration || 'N/A';
           document.getElementById('project-role').innerText = project.role || 'N/A';
           document.getElementById('project-status').innerText = project.status || 'N/A';
+          document.getElementById('project-teamsize').innerText = project.teamSize === 1 ? 'Solo' : (project.teamSize || 'N/A');
 
           const thumbContainer = document.getElementById('thumbnail-options');
           [project.mainvisual, ...(project.extravisuals || [])].forEach(img => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'thumb-wrapper';
+
             const imgElem = document.createElement('img');
             imgElem.src = img;
             imgElem.className = 'thumbnail';
             imgElem.alt = "Thumbnail";
             imgElem.onclick = () => updateBigImage(img);
-            thumbContainer.appendChild(imgElem);
+
+            wrapper.appendChild(imgElem);
+            thumbContainer.appendChild(wrapper);
+
+            if (img.toLowerCase().endsWith('.gif')) {
+              renderGifPreview(img, imgElem);
+            }
           });
 
           const linkContainer = document.getElementById('project-links');
+
           if (project.link && Array.isArray(project.link)) {
             project.link.forEach(url => {
               const a = document.createElement('a');
               a.href = url.startsWith('http') ? url : 'https://' + url;
               a.target = "_blank";
-              a.innerText = url;
+
+              const urlLower = url.toLowerCase();
+
+              if (urlLower.includes('github')) {
+                a.className = 'btn btn-github';
+
+                if (urlLower.includes('release')) {
+                  a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-github.svg" alt="GitHub Build" class="icon" /> Build`;
+                } else {
+                  a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-github.svg" alt="GitHub Source" class="icon" /> Source`;
+                }
+              } else if (urlLower.includes('itch.io') || urlLower.includes('itchio')) {
+                a.className = 'btn btn-itchio';
+                a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-itch" alt="itch.io Build" class="icon" /> Build`;
+              } else {
+                a.innerText = url;
+              }
+
               linkContainer.appendChild(a);
-              linkContainer.appendChild(document.createElement('br'));
             });
           }
+
         })
         .catch(err => {
           console.error(err);
           document.body.innerHTML = '<p>Error loading project.</p>';
         });
     }
+
     window.onload = loadProject;
   </script>
 </body>

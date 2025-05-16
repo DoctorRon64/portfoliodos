@@ -2,41 +2,27 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Philip Portfolio</title>
     <link rel="icon" href="/assets/img/websiteicon.gif" type="image/x-icon" />
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/app.css" />
 </head>
 
 <body class="home-body">
 
-    <!-- Navbar -->
-    <div class="home-container">
+    <!-- Header -->
+    <header class="home-container">
         <div class="home-title">Philip's Portfolio</div>
         <div class="home-subtitle">Game Developer & Audio Composer</div>
-    </div>
+    </header>
 
-    <div class="home-projects" id="project-list"></div>
+    <!-- Projects -->
+    <section class="home-projects" id="project-list"></section>
 
+    <!-- Script -->
     <script type="module">
-        import { tagsMap } from '../assets/js/tagsMap.js';
-
-        // Function to render GIF preview as the first frame
-        function renderGifPreview(gifUrl, targetImgEl) {
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-            img.src = gifUrl;
-
-            img.onload = function () {
-                const canvas = document.createElement("canvas");
-                canvas.width = img.width;
-                canvas.height = img.height;
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0);
-                targetImgEl.src = canvas.toDataURL("image/png");
-            };
-        }
+        import { createProjectLink, renderGifPreview, renderTags, generateThumbnails } from '../assets/js/uiUtils.js';
 
         fetch('/data/projects.json')
             .then(response => response.json())
@@ -46,52 +32,43 @@
                 projects.forEach((project, index) => {
                     const projectDiv = document.createElement('div');
                     projectDiv.className = 'thumbnail';
+                    projectDiv.style.setProperty('--i', index);
+
                     const mainImageId = `main-image-${index}`;
+                    const tagHTML = renderTags(project.tags);
 
-                    const tagHTML = project.tags.map(tag => {
-                        const color = tagsMap[tag] || '#3b8ac4';
-                        const style = color.startsWith('linear-gradient')
-                            ? `background-image: ${color}`
-                            : `background-color: ${color}`;
-                        return `<span class="tag" style="${style}">${tag}</span>`;
-                    }).join('');
+                    const allVisuals = [project.mainvisual, ...(project.extravisuals || [])];
+                    const thumbnailsHTML = generateThumbnails(
+                        allVisuals,
+                        mainImageId,
+                        index,
+                        `document.getElementById('${mainImageId}').src='{img}'`
+                    );
 
-                    // Initialize an empty string to store the thumbnail HTML
-                    let thumbnailsHTML = '';
+                    const linkContainer = document.createElement('div');
+                    linkContainer.className = 'project-links';
 
-                    // Process main visual and extra visuals
-                    [project.mainvisual, ...(project.extravisuals || [])].forEach((img, i) => {
-                        const isGif = img.toLowerCase().endsWith('.gif');
-                        const thumbId = `thumb-${index}-${i}`;
+                    if (project.link && Array.isArray(project.link)) {
+                        project.link.forEach(url => {
+                            const linkElement = createProjectLink(url);
+                            linkContainer.appendChild(linkElement);
+                            linkContainer.appendChild(document.createElement('br'));
+                        });
+                    }
 
-                        // Generate thumbnail image HTML
-                        thumbnailsHTML += `
-                        <img class="small" id="${thumbId}" src="${img}" onclick="document.getElementById('${mainImageId}').src='${img}'">
-                    `;
-
-                        // If the image is a GIF, render the preview for the thumbnail
-                        if (isGif) {
-                            // Wait for the DOM element to be added before calling renderGifPreview
-                            setTimeout(() => {
-                                const targetEl = document.getElementById(thumbId);
-                                if (targetEl) {
-                                    renderGifPreview(img, targetEl);
-                                }
-                            }, 0);
-                        }
-                    });
-
-                    // Set up the content for the project div
                     projectDiv.innerHTML = `
-                    <div class="project-title">${project.title}</div>
-                    <div class="subtitle">${project.description}</div>
-                    <img id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image">
+                    <img id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image" class="main-image" />
+                    <h2 class="project-title">${project.title}</h2>
+                    <p class="subtitle">${project.description}</p>
                     <div class="small-thumbnails">${thumbnailsHTML}</div>
                     <div class="tags">${tagHTML}</div>
                     <button onclick="openProject(${index})">Open Project</button>
-                `;
+                    `;
 
-                    // Append the project div to the container
+                    const tagsDiv = projectDiv.querySelector('.tags');
+                    tagsDiv.insertAdjacentElement('afterend', linkContainer);
+
+                    projectDiv.appendChild(linkContainer);
                     container.appendChild(projectDiv);
                 });
             });
@@ -100,12 +77,6 @@
             window.location.href = 'cell.html?id=' + projectId;
         };
     </script>
-
-    <script>
-        function updateBigImage(imageSrc) {
-            const bigImage = document.getElementById('big-image');
-            bigImage.src = imageSrc;
-        }
-    </script>
+</body>
 
 </html>

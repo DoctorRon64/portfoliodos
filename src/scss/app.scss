@@ -1,11 +1,6 @@
-//Put all of your .scss files in
-//@forward "folder/test";
-
 //pages
 @forward "pages/index";
-@forward "pages/editor";
+@forward "pages/cell";
 
 //components
-@forward "components/projects-detail";
-@forward "components/projects";
 @forward "components/tags";

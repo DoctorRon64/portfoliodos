@@ -2,7 +2,7 @@
   {
     "title": "Graphics Programming",
     "description": "A school assignment focused on developing a 3D scene using OpenGL and C++, where I explored rendering and post-processing effects.",
-    "mainvisual": "../assets/img/gifs/graphics.gif",
+    "mainvisual": "../assets/img/thumb/test.jpg",
     "extravisuals": [
       "../assets/img/thumb/graphics.png"
     ],
