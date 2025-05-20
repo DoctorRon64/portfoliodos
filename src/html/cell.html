@@ -56,6 +56,14 @@
 
     function updateBigImage(imageSrc) {
       document.getElementById('big-image').src = imageSrc;
+
+      const thumbnails = document.querySelectorAll('.thumbnail');
+      thumbnails.forEach((thumb) => {
+        thumb.classList.remove('active-thumb');
+        if (thumb.src === imageSrc) {
+          thumb.classList.add('active-thumb');
+        }
+      });
     }
 
     function loadProject() {
@@ -66,6 +74,10 @@
         .then(projects => {
           const project = projects[projectId];
           if (!project) {
+            document.querySelector('.project-details').innerHTML = `
+            <h2 style="text-align:center;">Project not found</h2>
+            <p style="text-align:center;">Please check the URL or go back to the <a href="/index.html">home page</a>.</p>
+          `;
             document.body.innerHTML = '<p>Project not found.</p>';
             return;
           }
@@ -79,6 +91,8 @@
           document.getElementById('project-role').innerText = project.role || 'N/A';
           document.getElementById('project-status').innerText = project.status || 'N/A';
           document.getElementById('project-teamsize').innerText = project.teamSize === 1 ? 'Solo' : (project.teamSize || 'N/A');
+
+
 
           const thumbContainer = document.getElementById('thumbnail-options');
           [project.mainvisual, ...(project.extravisuals || [])].forEach(img => {
@@ -112,13 +126,13 @@
                 a.className = 'btn btn-github';
 
                 if (urlLower.includes('release')) {
-                  a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-github.svg" alt="GitHub Build" class="icon" /> Build`;
+                  a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-github.svg" aria-label="View GitHub release page" alt="GitHub Build" class="icon" /> Build`;
                 } else {
-                  a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-github.svg" alt="GitHub Source" class="icon" /> Source`;
+                  a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-github.svg" aria-label="View GitHub source code" alt="GitHub Source" class="icon" /> Source`;
                 }
               } else if (urlLower.includes('itch.io') || urlLower.includes('itchio')) {
                 a.className = 'btn btn-itchio';
-                a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-itch.svg" alt="itch.io Build" class="icon" /> Build`;
+                a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-itch.svg" alt="itch.io Build" aria-label="View itch.io Build" class="icon" /> Build`;
               } else {
                 a.innerText = url;
               }

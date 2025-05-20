@@ -55,14 +55,14 @@
                     );
 
                     projectDiv.innerHTML = `
-                    <img loading="lazy" id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image" class="main-image" />
-                    <div class="small-thumbnails">${thumbnailsHTML}</div>
-                    <h2 class="project-title">${project.title}</h2>
-                    <div class="project-links"></div>
-                    <div class="subtitle">${project.description}</div>
-                    <div class="tags">${tagHTML}</div>
-                    <button onclick="openProject(${index})">Open Project</button>
-                    `;
+                        <img loading="lazy" id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image" class="main-image" />
+                        <div class="small-thumbnails">${thumbnailsHTML}</div>
+                        <h2 class="project-title">${project.title}</h2>
+                        <div class="project-links"></div> <!-- Moved here -->
+                        <div class="subtitle">${project.description}</div>
+                        <div class="tags">${tagHTML}</div>
+                        <button onclick="openProject(${index})">Open Project</button>
+                        `;
 
                     const linkContainer = projectDiv.querySelector('.project-links');
                     if (Array.isArray(project.link)) {
