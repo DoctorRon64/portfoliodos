@@ -31,26 +31,48 @@ export function renderTags(tags) {
     }).join('');
 }
 
-export function generateThumbnails(images, mainImageIdPrefix, index, onClick = null) {
-    return images.map((img, i) => {
-        const thumbId = `thumb-${index}-${i}`;
-        const isGif = img.toLowerCase().endsWith('.gif');
-        const clickHandler = onClick ? `onclick="${onClick.replace('{img}', img)}"` : '';
+// uiUtils.js
+export function generateThumbnails(images, mainImageId, index, clickHandlerTemplate) {
+  return images.map((img, i) => {
+    const isGif = img.toLowerCase().endsWith('.gif');
+    const isVideo = /\.(mp4|webm|ogg)$/i.test(img);
+    const thumbId = `thumb-${index}-${i}`;
+    let badgeHTML = '';
 
-        const thumbnailHTML = `
-            <div class="small-thumb-wrapper">
-                <img class="small" id="${thumbId}" src="${img}" ${clickHandler} />
-            </div>
-        `;
+    if (isGif) badgeHTML = '<span class="gif-badge">GIF</span>';
+    if (isVideo) badgeHTML = '<span class="play-badge">▶</span>';
 
-        // You must call renderGifPreview after the DOM is mounted, not here
-        setTimeout(() => {
-            const targetEl = document.getElementById(thumbId);
-            if (targetEl && isGif) renderGifPreview(img, targetEl);
-        }, 0);
+    const clickHandler = clickHandlerTemplate.replace('{img}', img);
 
-        return thumbnailHTML;
-    }).join('');
+    let thumbnailHTML = `
+      <div class="small-thumb-wrapper" data-title="${isVideo ? 'Video' : isGif ? 'GIF' : 'Image'}">
+        <img class="small-thumb" id="${thumbId}" src="${isVideo ? '' : img}" onclick="${clickHandler}">
+        ${badgeHTML}
+      </div>
+    `;
+
+    // Lazy render previews for videos and GIFs
+    setTimeout(() => {
+      const el = document.getElementById(thumbId);
+      if (isGif && el) {
+        renderGifPreview(img, el);
+      } else if (isVideo && el) {
+        const video = document.createElement('video');
+        video.src = img;
+        video.crossOrigin = "anonymous";
+        video.addEventListener("loadeddata", () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          el.src = canvas.toDataURL("image/png");
+        });
+      }
+    }, 0);
+
+    return thumbnailHTML;
+  }).join('');
 }
 
 export function createProjectLink(url) {

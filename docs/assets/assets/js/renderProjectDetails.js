@@ -1,56 +1,69 @@
-// renderProjectDetails.js
 import { tagsMap } from './tagsMap';
 
 export function renderProjectDetails(project, containerId, isThumbnailPage) {
   const container = document.getElementById(containerId);
   const mainImageId = `main-image-${project.id}`;
 
-  // Create the project container
   const projectDiv = document.createElement('div');
   projectDiv.className = 'thumbnail';
 
-  // Render tags
   const tagHTML = project.tags.map(tag => {
     const color = tagsMap[tag] || '#3b8ac4';
     return `<span class="tag" style="background-color: ${color}">${tag}</span>`;
   }).join('');
 
-  // Create the thumbnails HTML
   let thumbnailsHTML = '';
-  [project.mainvisual, ...(project.extravisuals || [])].forEach((img, i) => {
-    const isGif = img.toLowerCase().endsWith('.gif');
+  const visuals = [project.mainvisual, ...(project.extravisuals || [])];
+
+  visuals.forEach((media, i) => {
+    const isGif = media.toLowerCase().endsWith('.gif');
+    const isVideo = /\.(mp4|webm|ogg)$/i.test(media);
     const thumbId = `thumb-${project.id}-${i}`;
 
-    // Generate thumbnail HTML
-    thumbnailsHTML += `
-      <img class="small" id="${thumbId}" src="${img}" onclick="updateMainImage('${mainImageId}', '${img}')">
+    const wrapperHTML = `
+      <div class="small-thumb-wrapper" data-title="${isVideo ? 'Video' : isGif ? 'GIF' : 'Image'}">
+        <img class="small-thumb" id="${thumbId}" src="" onclick="updateMainImage('${mainImageId}', '${media}', ${isVideo})">
+        <span class="${isGif ? 'gif-badge' : isVideo ? 'video-badge' : ''}">${isGif ? 'GIF' : isVideo ? 'VIDEO' : ''}</span>
+      </div>
     `;
+    thumbnailsHTML += wrapperHTML;
 
-    // If it's a GIF, render the first frame preview
-    if (isGif) {
-      setTimeout(() => {
-        const targetEl = document.getElementById(thumbId);
-        if (targetEl) {
-          renderGifPreview(img, targetEl);
-        }
-      }, 0);
-    }
+    setTimeout(() => {
+      const target = document.getElementById(thumbId);
+      if (!target) return;
+
+      if (isGif) {
+        renderGifPreview(media, target);
+      } else if (isVideo) {
+        const video = document.createElement('video');
+        video.src = media;
+        video.crossOrigin = "anonymous";
+        video.addEventListener("loadeddata", () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(video, 0, 0);
+          target.src = canvas.toDataURL("image/png");
+        });
+      } else {
+        target.src = media;
+      }
+    }, 0);
   });
 
-  // Set up the project HTML content
+  // Main media: use image as default (will be replaced if video clicked)
   projectDiv.innerHTML = `
     <div class="project-title">${project.title}</div>
     <div class="subtitle">${project.description}</div>
-    <img id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image">
+    <img id="${mainImageId}" src="${project.mainvisual}" class="main-image" alt="Main Project Image">
     <div class="small-thumbnails">${thumbnailsHTML}</div>
     <div class="tags">${tagHTML}</div>
     <button onclick="openProject(${project.id})">Open Project</button>
   `;
 
-  // Append to container
   container.appendChild(projectDiv);
 
-  // If on the "cell.html" page, set up the detailed page view
   if (!isThumbnailPage) {
     document.getElementById('project-title').innerText = project.title;
     document.getElementById('big-image').src = project.mainvisual;
@@ -60,8 +73,8 @@ export function renderProjectDetails(project, containerId, isThumbnailPage) {
     project.tags.forEach(tag => {
       const span = document.createElement('span');
       span.innerText = tag;
-      span.className = 'tag'; // Apply the tag styles from CSS
-      span.style.backgroundColor = tagsMap[tag] || '#3b8ac4'; // Dynamically set the color
+      span.className = 'tag';
+      span.style.backgroundColor = tagsMap[tag] || '#3b8ac4';
       tagsContainer.appendChild(span);
     });
 
@@ -84,15 +97,32 @@ export function renderProjectDetails(project, containerId, isThumbnailPage) {
   }
 }
 
-export function updateMainImage(imageId, imgSrc) {
-  document.getElementById(imageId).src = imgSrc;
+export function updateMainImage(imageId, mediaSrc, isVideo = false) {
+  const container = document.getElementById(imageId).parentNode;
+  const oldMedia = document.getElementById(imageId);
+  let newMedia;
+
+  if (isVideo) {
+    newMedia.setAttribute('controls', '');
+    newMedia.setAttribute('autoplay', '');
+    newMedia.setAttribute('loop', '');
+    newMedia.setAttribute('muted', ''); // Remove if you want audio
+    newMedia.setAttribute('playsinline', '')
+  } else {
+    newMedia = document.createElement('img');
+    newMedia.src = mediaSrc;
+    newMedia.alt = 'Main Project Image';
+    newMedia.className = 'main-image';
+  }
+
+  newMedia.id = imageId;
+  container.replaceChild(newMedia, oldMedia);
 }
 
 export function renderGifPreview(gifUrl, targetImgEl) {
   const img = new Image();
   img.crossOrigin = "anonymous";
   img.src = gifUrl;
-
   img.onload = function () {
     const canvas = document.createElement("canvas");
     canvas.width = img.width;

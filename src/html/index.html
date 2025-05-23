@@ -32,10 +32,36 @@
     <!-- Script -->
     <script type="module">
         import { createProjectLink, renderGifPreview, renderTags, generateThumbnails } from '../assets/js/uiUtils.js';
-
+        
         fetch('/data/projects.json')
             .then(response => response.json())
             .then(projects => {
+                window.replaceMainMedia = function (elementId, src) {
+                    const container = document.getElementById(elementId).parentNode;
+                    const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
+
+                    let newMedia;
+                    if (isVideo) {
+                        newMedia = document.createElement('video');
+                        newMedia.setAttribute('src', src);
+                        newMedia.setAttribute('autoplay', '');
+                        newMedia.setAttribute('loop', '');
+                        newMedia.setAttribute('muted', '');
+                        newMedia.setAttribute('playsinline', '');
+                        newMedia.className = 'main-image';
+                    } else {
+                        newMedia = document.createElement('img');
+                        newMedia.setAttribute('src', src);
+                        newMedia.setAttribute('alt', 'Main Project Image');
+                        newMedia.className = 'main-image';
+                    }
+
+                    newMedia.id = elementId;
+
+                    const oldMedia = document.getElementById(elementId);
+                    container.replaceChild(newMedia, oldMedia);
+                };
+
                 const container = document.getElementById('project-list');
 
                 projects.forEach((project, index) => {
@@ -51,18 +77,23 @@
                         allVisuals,
                         mainImageId,
                         index,
-                        `document.getElementById('${mainImageId}').src='{img}'`
+                        `replaceMainMedia('${mainImageId}', '{img}')`
                     );
 
+                    const isMainVideo = /\.(mp4|webm|ogg)$/i.test(project.mainvisual);
+                    const mainMediaHTML = isMainVideo
+                        ? `<video id="${mainImageId}" src="${project.mainvisual}" autoplay loop muted playsinline class="main-image"></video>`
+                        : `<img id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image" loading="lazy" class="main-image" />`;
+
                     projectDiv.innerHTML = `
-                        <img loading="lazy" id="${mainImageId}" src="${project.mainvisual}" alt="Main Project Image" class="main-image" />
+                        ${mainMediaHTML}
                         <div class="small-thumbnails">${thumbnailsHTML}</div>
                         <h2 class="project-title">${project.title}</h2>
-                        <div class="project-links"></div> <!-- Moved here -->
+                        <div class="project-links"></div>
                         <div class="subtitle">${project.description}</div>
                         <div class="tags">${tagHTML}</div>
                         <button onclick="openProject(${index})">Open Project</button>
-                        `;
+                    `;
 
                     const linkContainer = projectDiv.querySelector('.project-links');
                     if (Array.isArray(project.link)) {
@@ -71,10 +102,10 @@
                             linkContainer.appendChild(linkElement);
                         });
                     }
-
                     container.appendChild(projectDiv);
                 });
             });
+
 
         window.openProject = function (projectId) {
             window.location.href = 'cell.html?id=' + projectId;

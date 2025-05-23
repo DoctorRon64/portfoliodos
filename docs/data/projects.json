@@ -52,7 +52,8 @@
     "description": "A solo project where I created a custom Digital Audio Workstation (DAW) in Unity, focusing on intuitive UI and efficient data handling.",
     "mainvisual": "../assets/img/gifs/tool.gif",
     "extravisuals": [
-      "../assets/img/thumb/tool.png"
+      "../assets/img/thumb/tool.png",
+      "../assets/img/videos/Tool Tutorial.mp4"
     ],
     "link": [
       "https://github.com/DoctorRon64/Kernmodule-Production-Tools",
