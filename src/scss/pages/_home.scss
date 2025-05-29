@@ -1,0 +1,61 @@
+@use "../abstracts/theme" as *;
+
+body {
+  font-family: $font-family-primary, 'Helvetica Neue', sans-serif;
+  background: $light;
+  color: $dark;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+a:focus,
+button:focus {
+  outline: 2px dashed $primary-color;
+  outline-offset: 2px;
+}
+
+// Animations
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-container {
+  text-align: center;
+  padding: 4rem 2rem;
+
+  .home-title {
+    font-size: $title-size-large;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: $primary-color;
+  }
+
+  .home-subtitle {
+    font-size: $title-size-medium;
+    color: $primary-color;
+    font-family: $font-family-secondary, sans-serif;
+  }
+}
+
+// Projects Grid
+.home-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1920px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

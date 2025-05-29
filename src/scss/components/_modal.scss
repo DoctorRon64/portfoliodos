@@ -1,0 +1,68 @@
+@use "../abstracts/theme" as *;
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  &.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-content {
+    max-width: 900px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 2rem;
+    background: white;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+  }
+}
+
+.extra-info {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+
+  li {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+
+    strong {
+      color: $primary-color;
+    }
+  }
+}
+
+.extra-info {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+
+  li {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+
+    strong {
+      color: $primary-color;
+    }
+  }
+}

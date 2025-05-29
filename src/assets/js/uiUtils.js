@@ -42,7 +42,7 @@ export function generateThumbnails(images, mainImageId, index, clickHandlerTempl
     if (isGif) badgeHTML = '<span class="gif-badge">GIF</span>';
     if (isVideo) badgeHTML = '<span class="play-badge">▶</span>';
 
-    const clickHandler = clickHandlerTemplate.replace('{img}', img);
+    const clickHandler = clickHandlerTemplate.replace('{img}', `'${img.replace(/'/g, "\\'")}'`);
 
     let thumbnailHTML = `
       <div class="small-thumb-wrapper" data-title="${isVideo ? 'Video' : isGif ? 'GIF' : 'Image'}">

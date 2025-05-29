@@ -1,0 +1,35 @@
+@use "../abstracts/theme" as *;
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: $secondary-color;
+  color: white;
+  font-family: $font-family-secondary, sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  .nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+  }
+
+  .nav-links a {
+    margin-left: 2rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+
+    &:hover,
+    &:focus {
+      color: lighten(white, 20%);
+    }
+  }
+}

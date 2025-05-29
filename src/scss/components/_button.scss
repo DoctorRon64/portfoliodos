@@ -1,0 +1,22 @@
+@use "../abstracts/theme" as *;
+
+.button {
+    align-self: flex-start;
+    background: linear-gradient(135deg, $secondary-color, lighten($secondary-color, 8%));
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: $font-family-secondary;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+        background-color: darken($secondary-color, 8%);
+        transform: scale(1.05);
+    }
+}
