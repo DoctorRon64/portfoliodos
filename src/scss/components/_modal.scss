@@ -38,9 +38,8 @@
 }
 
 .extra-info {
-  list-style: none;
   padding: 0;
-  margin: 1rem 0;
+  margin: 0 0 1rem 1rem;
 
   li {
     margin-bottom: 0.5rem;
@@ -52,17 +51,4 @@
   }
 }
 
-.extra-info {
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0;
 
-  li {
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-
-    strong {
-      color: $primary-color;
-    }
-  }
-}

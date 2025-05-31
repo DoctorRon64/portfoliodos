@@ -1,57 +1,73 @@
 import { tagsMap } from './tagsMap.js';
 
 export function renderGifPreview(gifUrl, targetImgEl) {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = gifUrl;
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.src = gifUrl;
 
-    img.onload = function () {
-        const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        targetImgEl.src = canvas.toDataURL("image/png");
+  img.onload = function () {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    targetImgEl.src = canvas.toDataURL("image/png");
 
-        const gifBadge = document.createElement("span");
-        gifBadge.className = "gif-badge";
-        gifBadge.textContent = "GIF";
-        targetImgEl.parentElement.style.position = "relative";
-        targetImgEl.parentElement.appendChild(gifBadge);
-    };
+    const gifBadge = document.createElement("span");
+    gifBadge.className = "gif-badge";
+    gifBadge.textContent = "GIF";
+    targetImgEl.parentElement.style.position = "relative";
+    targetImgEl.parentElement.appendChild(gifBadge);
+  };
 }
 
 export function renderTags(tags) {
-    return tags.map(tag => {
-        const color = tagsMap[tag] || '#3b8ac4';
-        const style = color.startsWith('linear-gradient')
-            ? `background-image: ${color}`
-            : `background-color: ${color}`;
-        return `<span class="tag" style="${style}">${tag}</span>`;
-    }).join('');
+  return tags.map(tag => {
+    const color = tagsMap[tag] || '#3b8ac4';
+    const style = color.startsWith('linear-gradient')
+      ? `background-image: ${color}`
+      : `background-color: ${color}`;
+    return `<span class="tag" style="${style}">${tag}</span>`;
+  }).join('');
 }
 
 // uiUtils.js
-export function generateThumbnails(images, mainImageId, index, clickHandlerTemplate) {
-  return images.map((img, i) => {
+export function generateThumbnails(images, mainImageId, index, clickHandlerFn) {
+  const fragment = document.createDocumentFragment();
+
+  images.forEach((img, i) => {
     const isGif = img.toLowerCase().endsWith('.gif');
     const isVideo = /\.(mp4|webm|ogg)$/i.test(img);
     const thumbId = `thumb-${index}-${i}`;
-    let badgeHTML = '';
 
-    if (isGif) badgeHTML = '<span class="gif-badge">GIF</span>';
-    if (isVideo) badgeHTML = '<span class="play-badge">▶</span>';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'small-thumb-wrapper';
+    wrapper.setAttribute('data-title', isVideo ? 'Video' : isGif ? 'GIF' : 'Image');
 
-    const clickHandler = clickHandlerTemplate.replace('{img}', `'${img.replace(/'/g, "\\'")}'`);
+    const imageEl = document.createElement('img');
+    imageEl.className = 'small-thumb';
+    imageEl.id = thumbId;
+    if (!isVideo) imageEl.src = img;
 
-    let thumbnailHTML = `
-      <div class="small-thumb-wrapper" data-title="${isVideo ? 'Video' : isGif ? 'GIF' : 'Image'}">
-        <img class="small-thumb" id="${thumbId}" src="${isVideo ? '' : img}" onclick="${clickHandler}">
-        ${badgeHTML}
-      </div>
-    `;
+    // ✅ Attach click handler to wrapper instead of just image
+    wrapper.addEventListener('click', () => clickHandlerFn(mainImageId, img));
 
-    // Lazy render previews for videos and GIFs
+    wrapper.appendChild(imageEl);
+
+    // Badges
+    if (isGif) {
+      const badge = document.createElement('span');
+      badge.className = 'gif-badge';
+      badge.textContent = 'GIF';
+      wrapper.appendChild(badge);
+    } else if (isVideo) {
+      const badge = document.createElement('span');
+      badge.className = 'play-badge';
+      badge.textContent = '▶';
+      wrapper.appendChild(badge);
+    }
+
+    // Lazy render previews
     setTimeout(() => {
       const el = document.getElementById(thumbId);
       if (isGif && el) {
@@ -71,8 +87,10 @@ export function generateThumbnails(images, mainImageId, index, clickHandlerTempl
       }
     }, 0);
 
-    return thumbnailHTML;
-  }).join('');
+    fragment.appendChild(wrapper);
+  });
+
+  return fragment;
 }
 
 export function createProjectLink(url) {

@@ -53,7 +53,7 @@
     "mainvisual": "../assets/img/gifs/tool.gif",
     "extravisuals": [
       "../assets/img/thumb/tool.png",
-      "../assets/img/videos/Tool Tutorial.mp4"
+      "../assets/img/video/Tool Tutorial.mp4"
     ],
     "link": [
       "https://github.com/DoctorRon64/Kernmodule-Production-Tools",
