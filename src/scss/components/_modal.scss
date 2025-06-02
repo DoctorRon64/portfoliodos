@@ -1,11 +1,12 @@
 @use "../abstracts/theme" as *;
+
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,38 +18,65 @@
   &.open {
     opacity: 1;
     pointer-events: auto;
+
+    .modal-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
   .modal-content {
-    max-width: 900px;
-    width: 95%;
-    max-height: 90vh;
+    max-width: 720px;
+    width: 92%;
+    max-height: 85vh;
     overflow-y: auto;
     position: relative;
-    padding: 2rem;
+    padding: 1.2rem 1.5rem;
     background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    transform: translateY(12px);
+    opacity: 0;
+
+    font-size: 0.92rem;
+    line-height: 1.4;
+
+    @media (max-width: 768px) {
+      padding: 1rem;
+      font-size: 0.88rem;
+    }
   }
 
   .close-modal {
     position: absolute;
-    top: 1rem;
+    top: 0.75rem;
     right: 1rem;
     cursor: pointer;
+    border: none;
+    font-size: .7em;
+    transition: color 0.2s ease;
+    width: 15%;
+
+    &:hover {
+      color: $primary-color;
+    }
   }
 }
 
 .extra-info {
   padding: 0;
-  margin: 0 0 1rem 1rem;
+  margin: 0 0 0.75rem 0;
 
   li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     font-weight: 500;
+    font-size: 0.9rem;
+    list-style-type: disc;
+    list-style-position: inside;
 
     strong {
       color: $primary-color;
     }
   }
 }
-
-

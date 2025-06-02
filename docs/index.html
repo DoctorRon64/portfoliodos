@@ -83,7 +83,7 @@
 
                     const isVideo = /\.(mp4|webm|ogg)$/i.test(project.mainvisual);
                     const mainMediaHTML = isVideo
-                        ? `<video id="${mainId}" src="${project.mainvisual}" playsinline controls class="main-image"></video>`
+                        ? `<video id="${mainId}" src="${project.mainvisual}" autoplay loop muted playsinline controls class="main-image"></video>`
                         : `<img id="${mainId}" src="${project.mainvisual}" alt="Main Project Image" loading="lazy" class="main-image" />`;
 
 
@@ -107,7 +107,9 @@
                         i,
                         replaceMainMedia
                     ));
-                    div.appendChild(thumbsContainer);
+
+                    const tagsEl = div.querySelector('.subtitle');
+                    tagsEl.appendChild(thumbsContainer);
 
                     // Add links
                     const linksContainer = div.querySelector('.project-links');
@@ -128,7 +130,8 @@
             const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
             const newMedia = isVideo
                 ? Object.assign(document.createElement('video'), {
-                    src, autoplay: true, loop: false, muted: false, playsInline: true, controls: true, className: 'main-image', id: elementId
+                    src, autoplay: true, loop: true, muted: true, playsInline: true,
+                    controls: true, className: 'main-image', id: elementId
                 })
                 : Object.assign(document.createElement('img'), {
                     src, alt: 'Main Project Image', className: 'main-image', id: elementId
@@ -139,7 +142,6 @@
         }
 
         function openProject(id) {
-            pauseAllVideos();
             const modal = document.getElementById('projectModal');
             const content = modal.querySelector('.modal-content');
             const project = window.loadedProjects[id];
@@ -166,7 +168,8 @@
             const isVideo = /\.(mp4|webm|ogg)$/i.test(project.mainvisual);
             const mainMediaEl = isVideo
                 ? Object.assign(document.createElement('video'), {
-                    src: project.mainvisual, autoplay: true, loop: false, muted: false, playsInline: true, controls: true, className: 'main-image', id: 'modal-main-image'
+                    src: project.mainvisual, autoplay: true, loop: true, muted: true,
+                    playsInline: true, controls: true, className: 'main-image', id: 'modal-main-image'
                 })
                 : Object.assign(document.createElement('img'), {
                     src: project.mainvisual, alt: project.title, className: 'main-image', id: 'modal-main-image'
@@ -181,7 +184,11 @@
                 id,
                 replaceModalMainMedia
             ));
-            content.appendChild(smallThumbsContainer);
+
+            const tagsE2 = content.querySelector('.project-links');
+            if (tagsE2) {
+                tagsE2.insertAdjacentElement('afterend', smallThumbsContainer);
+            }
 
             const linksContainer = content.querySelector('.project-links');
             if (Array.isArray(project.link)) {
@@ -196,20 +203,13 @@
             content.querySelector('.close-modal').onclick = closeModal;
         }
 
-        function pauseAllVideos() {
-            const videos = document.querySelectorAll('video');
-            videos.forEach(video => {
-                video.pause();
-                video.currentTime = 0;
-            });
-        }
-
         function replaceModalMainMedia(elementId, src) {
             const container = document.getElementById(elementId).parentNode;
             const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
             const newMedia = isVideo
                 ? Object.assign(document.createElement('video'), {
-                    src, autoplay: true, loop: false, muted: false, playsInline: true, controls: true, className: 'main-image', id: elementId
+                    src, autoplay: true, loop: true, muted: true, playsInline: true,
+                    controls: true, className: 'main-image', id: elementId
                 })
                 : Object.assign(document.createElement('img'), {
                     src, alt: 'Main Project Image', className: 'main-image', id: elementId
@@ -219,7 +219,6 @@
         }
 
         function closeModal() {
-            pauseAllVideos();
             const modal = document.getElementById('projectModal');
             modal.classList.remove('open');
             document.body.style.overflow = '';

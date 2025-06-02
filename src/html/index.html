@@ -107,7 +107,9 @@
                         i,
                         replaceMainMedia
                     ));
-                    div.appendChild(thumbsContainer);
+
+                    const tagsEl = div.querySelector('.subtitle');
+                    tagsEl.appendChild(thumbsContainer);
 
                     // Add links
                     const linksContainer = div.querySelector('.project-links');
@@ -182,7 +184,11 @@
                 id,
                 replaceModalMainMedia
             ));
-            content.appendChild(smallThumbsContainer);
+
+            const tagsE2 = content.querySelector('.project-links');
+            if (tagsE2) {
+                tagsE2.insertAdjacentElement('afterend', smallThumbsContainer);
+            }
 
             const linksContainer = content.querySelector('.project-links');
             if (Array.isArray(project.link)) {
