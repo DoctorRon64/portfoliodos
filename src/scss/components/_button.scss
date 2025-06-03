@@ -19,4 +19,9 @@
         background-color: darken($secondary-color, 8%);
         transform: scale(1.05);
     }
+
+    &:focus {
+        outline: 2px dashed $primary-color;
+        outline-offset: 2px;
+    }
 }

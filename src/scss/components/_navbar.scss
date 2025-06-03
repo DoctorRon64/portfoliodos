@@ -5,31 +5,64 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: $secondary-color;
+  background: linear-gradient(90deg, $secondary-color, darken($secondary-color, 10%));
   color: white;
   font-family: $font-family-secondary, sans-serif;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 
   .nav-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.75rem;
+    font-weight: 700;
     color: white;
     text-decoration: none;
-  }
-
-  .nav-links a {
-    margin-left: 2rem;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
 
     &:hover,
     &:focus {
-      color: lighten(white, 20%);
+      color: $primary-color;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      position: relative;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      transition: all 0.3s ease;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 6px;
+        left: 1rem;
+        width: 0%;
+        height: 2px;
+        background-color: $primary-color;
+        transition: width 0.3s ease;
+        border-radius: 1px;
+      }
+
+      &:hover,
+      &:focus {
+        color: lighten(white, 15%);
+        background-color: rgba(white, 0.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+        &::after {
+          width: calc(100% - 2rem); // matches inner width minus padding
+        }
+      }
     }
   }
 }

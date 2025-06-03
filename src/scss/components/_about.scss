@@ -1,0 +1,56 @@
+@use "../abstracts/theme" as *;
+
+// About Me Section
+.about-section {
+  margin: 300px auto 0;
+  padding: 2rem;
+  max-width: 1000px;
+  background-color: $secondary-color;
+  color: $text-color;
+  font-family: $font-family-secondary;
+  line-height: 1.75;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+
+  h2 {
+    font-family: $font-family-primary;
+    font-size: $title-size-medium;
+    color: $dark;
+    margin-bottom: 1.5rem;
+    position: relative;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 40px;
+      height: 4px;
+      background-color: $primary-color;
+      margin-top: 0.5rem;
+      border-radius: 2px;
+    }
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: $text-color;
+
+    strong {
+      color: $primary-color;
+      font-weight: 600;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}

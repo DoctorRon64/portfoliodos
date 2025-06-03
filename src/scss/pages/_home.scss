@@ -1,18 +1,26 @@
 @use "../abstracts/theme" as *;
 
-body {
+.access-denied-message {
+  display: block !important;
+  padding: 2rem;
+  font-family: sans-serif;
+  text-align: center;
+  background: white;
+  color: black;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.home-body {
   font-family: $font-family-primary, 'Helvetica Neue', sans-serif;
   background: $light;
   color: $dark;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
-}
-
-a:focus,
-button:focus {
-  outline: 2px dashed $primary-color;
-  outline-offset: 2px;
 }
 
 // Animations
