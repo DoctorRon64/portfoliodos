@@ -5,7 +5,7 @@ export const tagsMap = {
   "Unity": "linear-gradient(135deg, #222222, #000000)",
   "C#": "linear-gradient(135deg, #68217A, #3f104b)",
   "Photoshop": "linear-gradient(135deg, #31A8FF, #1769aa)",
-  "Animate": "linear-gradient(135deg, #FF5722, #c63d0d)",
+  "Animate": "linear-gradient(135deg, #9a9aff, #00005b)",
   "Illustrator": "linear-gradient(135deg, #FF9A00, #cc7000)",
   "Blender": "linear-gradient(135deg, #F5792A, #bf5314)",
   "CMake": "linear-gradient(135deg, #064F8C, #022b4a)",
@@ -23,4 +23,31 @@ export const tagsMap = {
   "Processing": "linear-gradient(135deg, #006699, #003a5c)",
   "Java": "linear-gradient(135deg, #EA2D2E, #a31f21)",
   "Arduino": "linear-gradient(135deg, #00979D, #005f63)"
+};
+
+export const tagsIconMap = {
+  "c++": "vscode-icons--file-type-cpp3.svg",
+  "sfml": "sfml.png",
+  "opengl": "logos--opengl.svg",
+  "unity": "skill-icons--unity-light.svg",
+  "c#": "devicon--csharp.svg",
+  "photoshop": "skill-icons--photoshop.svg",
+  "animate": "logos--adobe-animate.svg",
+  "illustrator": "skill-icons--illustrator.svg",
+  "blender": "logos--blender.svg",
+  "cmake": "devicon--cmake.svg",
+  "fl studio": "flstudio.png",
+  "aseprite": "aseprite.png",
+  "glm": "glm-logo.svg",
+  "glfw": "glfw.jpg",
+  "html": "devicon--html5.svg",
+  "css": "devicon--css3.svg",
+  "scss": "vscode-icons--file-type-scss2.svg",
+  "javascript": "skill-icons--javascript.svg",
+  "node.js": "skill-icons--nodejs-light.svg",
+  "processing": "skill-icons--processing-light.svg",
+  "java": "skill-icons--java-light.svg",
+  "arduino": "skill-icons--arduino.svg",
+  "stbi": "header.svg",
+  "assimp": "header.svg"
 };

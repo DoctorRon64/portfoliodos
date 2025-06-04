@@ -42,8 +42,7 @@ export function init() {
                     i,
                     replaceMainMedia
                 ));
-                const tagsEl = div.querySelector('.subtitle');
-                tagsEl.appendChild(thumbsContainer);
+                div.appendChild(thumbsContainer);
 
                 // Add links
                 const linksContainer = div.querySelector('.project-links');
@@ -118,10 +117,7 @@ export function init() {
             id,
             replaceModalMainMedia
         ));
-        const tagsE2 = content.querySelector('.project-links');
-        if (tagsE2) {
-            tagsE2.insertAdjacentElement('afterend', smallThumbsContainer);
-        }
+        content.appendChild(smallThumbsContainer);
 
         const linksContainer = content.querySelector('.project-links');
         if (Array.isArray(project.link)) {

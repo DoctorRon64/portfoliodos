@@ -7,6 +7,8 @@
     margin-bottom: .2rem;
 
     .tag {
+        display: inline-flex;
+        align-items: center;
         background-color: $primary-color;
         color: white;
         padding: 0.35rem 0.75rem;
@@ -14,5 +16,12 @@
         font-size: 0.75rem;
         font-family: $font-family-thirdly;
         white-space: nowrap;
+    }
+
+    .tag-icon {
+        width: 1.2em;
+        height: 1.2em;
+        margin-right: .2rem;
+        object-fit: contain;
     }
 }

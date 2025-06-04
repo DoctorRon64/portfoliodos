@@ -1,4 +1,4 @@
-import { tagsMap } from './tagsMap.js';
+import { tagsMap, tagsIconMap } from './tagsMap.js';
 
 export function renderGifPreview(gifUrl, targetImgEl) {
   const img = new Image();
@@ -23,11 +23,20 @@ export function renderGifPreview(gifUrl, targetImgEl) {
 
 export function renderTags(tags) {
   return tags.map(tag => {
-    const color = tagsMap[tag] || '#3b8ac4';
+    const label = tag.trim();
+    const key = label.toLowerCase();
+
+    const color = tagsMap[label] || '#3b8ac4';
     const style = color.startsWith('linear-gradient')
       ? `background-image: ${color}`
       : `background-color: ${color}`;
-    return `<span class="tag" style="${style}">${tag}</span>`;
+
+    const iconFile = tagsIconMap[key];
+    const iconHTML = iconFile
+      ? `<img src="../assets/img/icons/${iconFile}" alt="${label} icon" class="tag-icon" /> `
+      : '';
+
+    return `<span class="tag" style="${style}">${iconHTML}${label}</span>`;
   }).join('');
 }
 
@@ -104,12 +113,12 @@ export function createProjectLink(url) {
   if (urlLower.includes('github')) {
     a.className = 'btn btn-github';
     a.title = urlLower.includes('release') ? "GitHub Build" : "GitHub Source";
-    a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-github.svg" alt="GitHub icon" class="icon" /> ${a.title.split(' ')[1]}`;
+    a.innerHTML = `<img src="/assets/img/icons/tabler--brand-github.svg" alt="GitHub icon" class="icon" /> ${a.title.split(' ')[1]}`;
 
   } else if (urlLower.includes('itch.io') || urlLower.includes('itchio')) {
     a.className = 'btn btn-itchio';
     a.title = "itch.io Build";
-    a.innerHTML = `<img src="/assets/img/icons/tabler/tabler--brand-itch.svg" alt="itch.io icon" class="icon" /> Build`;
+    a.innerHTML = `<img src="/assets/img/icons/tabler--brand-itch.svg" alt="itch.io icon" class="icon" /> Build`;
 
   } else {
     a.textContent = url;

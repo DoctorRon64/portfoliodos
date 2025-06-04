@@ -132,5 +132,26 @@
       "C#",
       "Aseprite"
     ]
+  },
+  {
+    "title": "Procedural Art",
+    "description": "A tiny school project about making procedural animations and generating terrain using the Wave function collapse algorithm.",
+    "mainvisual": "../assets/img/thumb/proceduralart.png",
+    "extravisuals": [
+      "../assets/img/thumb/proceduralart.png"
+    ],
+    "link": [
+      "https://github.com/DoctorRon64/Keuzemodule-Procedural-Art"
+    ],
+    "date": "12/02/2024",
+    "duration": "6 Weeks",
+    "teamSize": 1,
+    "role": "Developer",
+    "status": "Finished Demo",
+    "tags": [
+      "Unity",
+      "C#",
+      "Aseprite"
+    ]
   }
 ]
