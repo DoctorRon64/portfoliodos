@@ -12,12 +12,6 @@ export function renderGifPreview(gifUrl, targetImgEl) {
     const ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0);
     targetImgEl.src = canvas.toDataURL("image/png");
-
-    const gifBadge = document.createElement("span");
-    gifBadge.className = "gif-badge";
-    gifBadge.textContent = "GIF";
-    targetImgEl.parentElement.style.position = "relative";
-    targetImgEl.parentElement.appendChild(gifBadge);
   };
 }
 
@@ -60,21 +54,7 @@ export function generateThumbnails(images, mainImageId, index, clickHandlerFn) {
 
     // ✅ Attach click handler to wrapper instead of just image
     wrapper.addEventListener('click', () => clickHandlerFn(mainImageId, img));
-
     wrapper.appendChild(imageEl);
-
-    // Badges
-    if (isGif) {
-      const badge = document.createElement('span');
-      badge.className = 'gif-badge';
-      badge.textContent = 'GIF';
-      wrapper.appendChild(badge);
-    } else if (isVideo) {
-      const badge = document.createElement('span');
-      badge.className = 'play-badge';
-      badge.textContent = '▶';
-      wrapper.appendChild(badge);
-    }
 
     // Lazy render previews
     setTimeout(() => {

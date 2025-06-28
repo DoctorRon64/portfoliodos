@@ -23,7 +23,6 @@ export function renderProjectDetails(project, containerId, isThumbnailPage) {
     const wrapperHTML = `
       <div class="small-thumb-wrapper" data-title="${isVideo ? 'Video' : isGif ? 'GIF' : 'Image'}">
         <img class="small-thumb" id="${thumbId}" src="" onclick="updateMainImage('${mainImageId}', '${media}', ${isVideo})">
-        <span class="${isGif ? 'gif-badge' : isVideo ? 'video-badge' : ''}">${isGif ? 'GIF' : isVideo ? 'VIDEO' : ''}</span>
       </div>
     `;
     thumbnailsHTML += wrapperHTML;
