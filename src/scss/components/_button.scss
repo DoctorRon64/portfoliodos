@@ -1,27 +1,27 @@
 @use "../abstracts/theme" as *;
 
-.button {
-    align-self: flex-start;
-    background: linear-gradient(135deg, $secondary-color, lighten($secondary-color, 8%));
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    font-family: $font-family-secondary;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+.btn {
+  --button-height: 1.25rem;
+  padding: 0.5rem var(--button-height);
+  font-weight: 700;
+  border-radius: 0.65rem;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
 
-    &:hover {
-        background-color: darken($secondary-color, 8%);
-        transform: scale(1.05);
-    }
+  color: #fff;
+  background-color: var(--bg-color, #333);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 
-    &:focus {
-        outline: 2px dashed $primary-color;
-        outline-offset: 2px;
-    }
+  &:hover,
+  &:focus {
+    background-color: var(#444c56, #555);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    outline: none;
+  }
 }

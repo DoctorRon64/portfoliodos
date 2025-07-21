@@ -80,3 +80,25 @@
     }
   }
 }
+
+.project-meta {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: $primary-color; // define this in your variables, e.g. #666 or #777
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem 2rem;
+
+  p {
+    margin: 0;
+    line-height: 1.4;
+
+    strong {
+      display: block;
+      font-weight: 600;
+      color: #fff; // e.g. #222 or your primary text color
+      margin-bottom: 0.25rem;
+    }
+  }
+}

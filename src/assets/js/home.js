@@ -35,6 +35,17 @@ export function init() {
         const mainMediaHTML = createMainMedia(mainId, project.mainvisual, project.title);
         const buttonClass = isModal ? 'close-project-btn' : 'open-project-btn';
         const buttonText = isModal ? 'Close' : 'Open';
+        const buttonColor = isModal ? 'rgb(255, 55, 0)' : 'rgb(0, 183, 255)';
+        const modalMeta = isModal ? `
+            <div class="project-meta">
+                <div class="description">${project.description || 'N/A'}</div>
+                <p><strong>Date:</strong> ${project.date || 'N/A'}</p>
+                <p><strong>Duration:</strong> ${project.duration || 'N/A'}</p>
+                <p><strong>Team Size:</strong> ${project.teamSize || 'N/A'}</p>
+                <p><strong>Role:</strong> ${project.role || 'N/A'}</p>
+                <p><strong>Status:</strong> ${project.status || 'N/A'}</p>
+            </div>
+        ` : '';
 
         const container = document.createElement('div');
         container.className = isModal ? '' : 'thumbnail';
@@ -49,9 +60,10 @@ export function init() {
                 <div class="tags">${tagsHTML}</div>
             </div>
             <div class="project-actions">
-                <button class="${buttonClass} button" data-id="${i}">${buttonText}</button>
+                <a class="${buttonClass} btn" style="--bg-color: ${buttonColor}; --button-height: 2.1rem;" data-id="${i}">${buttonText}</a>
             </div>
         </div>
+        ${modalMeta}
     `;
 
         // Append project links inside the .project-actions div

@@ -1,7 +1,7 @@
 @use "../abstracts/theme" as *;
 
 .thumbnail {
-  height: 540px; // or any appropriate value
+  height: 85%; // or any appropriate value
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -12,6 +12,10 @@
   transition: transform 0.3s ease,
     box-shadow 0.3s ease;
   cursor: default;
+
+  .description {
+    margin-top:2rem;
+  }
 
   &:hover {
     transform: translateY(-6px);
@@ -60,70 +64,6 @@
     gap: 0.55rem;
     display: flex;
     flex-direction: column;
-
-    button,
-    a {
-      padding: 0.5rem 1.25rem;
-      font-weight: 700;
-      border-radius: 0.65rem;
-      cursor: pointer;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-      border: none;
-      font-size: 1rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-
-      &.open-project-btn {
-        background-color: $primary-color;
-        color: #fff;
-
-        &:hover,
-        &:focus {
-          background-color: darken($primary-color, 12%);
-          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-          outline: none;
-        }
-      }
-
-      &.close-project-btn {
-        background-color: darken($primary-color, 15%);
-        color: #fff;
-
-        &:hover,
-        &:focus {
-          background-color: darken($primary-color, 25%);
-          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
-          outline: none;
-        }
-      }
-
-      &.btn-github {
-        background-color: #24292e;
-        color: #fff;
-
-        &:hover,
-        &:focus {
-          background-color: #444c56;
-          box-shadow: 0 6px 14px rgba(36, 41, 46, 0.3);
-          outline: none;
-        }
-      }
-
-      &.btn-itchio {
-        background-color: #fa5c5c;
-        color: #fff;
-
-        &:hover,
-        &:focus {
-          background-color: #e04444;
-          box-shadow: 0 6px 14px rgba(250, 92, 92, 0.35);
-          outline: none;
-        }
-      }
-    }
   }
 
   .small-thumbnails {
@@ -131,7 +71,6 @@
     max-height: 260px;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
     overflow-y: auto;
     padding-right: 0.6rem;
     border-right: 1px solid #ddd;
