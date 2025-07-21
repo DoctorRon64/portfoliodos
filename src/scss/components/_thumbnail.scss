@@ -1,20 +1,239 @@
 @use "../abstracts/theme" as *;
 
 .thumbnail {
-  background-color: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-  padding: 1rem;
+  height: 540px; // or any appropriate value
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: fadeInUp 0.6s ease forwards;
-  opacity: 0;
-  transform: translateY(10px);
-  animation-delay: calc(var(--i) * 0.1s);
+  padding: 1.25rem 1.5rem;
+  background-color: $white;
+  border-radius: 1.75rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: default;
 
   &:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  }
+
+  .main-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: transform 0.35s ease, filter 0.35s ease;
+    will-change: transform;
+
+    &:hover {
+      transform: scale(1.04);
+      filter: brightness(1.12);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .project-title {
+    font-size: 1.75rem;
+    margin: 0 0 1.2rem 0;
+    font-weight: 700;
+    color: $primary-color;
+    border-bottom: 3px solid lighten($primary-color, 25%);
+    padding-bottom: 0.3rem;
+    letter-spacing: 0.03em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .project-card-content {
+    overflow-y: auto;
+    align-items: flex-start;
+    display: flex;
+    flex: 1;
+    gap: 2.5rem;
+  }
+
+  .project-actions {
+    max-height: 380px;
+    overflow: hidden;
+    gap: 0.55rem;
+    display: flex;
+    flex-direction: column;
+
+    button,
+    a {
+      padding: 0.5rem 1.25rem;
+      font-weight: 700;
+      border-radius: 0.65rem;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+
+      &.open-project-btn {
+        background-color: $primary-color;
+        color: #fff;
+
+        &:hover,
+        &:focus {
+          background-color: darken($primary-color, 12%);
+          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+          outline: none;
+        }
+      }
+
+      &.close-project-btn {
+        background-color: darken($primary-color, 15%);
+        color: #fff;
+
+        &:hover,
+        &:focus {
+          background-color: darken($primary-color, 25%);
+          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+          outline: none;
+        }
+      }
+
+      &.btn-github {
+        background-color: #24292e;
+        color: #fff;
+
+        &:hover,
+        &:focus {
+          background-color: #444c56;
+          box-shadow: 0 6px 14px rgba(36, 41, 46, 0.3);
+          outline: none;
+        }
+      }
+
+      &.btn-itchio {
+        background-color: #fa5c5c;
+        color: #fff;
+
+        &:hover,
+        &:focus {
+          background-color: #e04444;
+          box-shadow: 0 6px 14px rgba(250, 92, 92, 0.35);
+          outline: none;
+        }
+      }
+    }
+  }
+
+  .small-thumbnails {
+    flex-shrink: 0;
+    max-height: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    overflow-y: auto;
+    padding-right: 0.6rem;
+    border-right: 1px solid #ddd;
+    scrollbar-width: thin;
+    scrollbar-color: $primary-color transparent;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $primary-color;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: darken($primary-color, 10%);
+    }
+
+    .small-thumb-wrapper {
+      position: relative;
+      border-radius: 0.6rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &[data-title]:hover::after {
+        content: attr(data-title);
+        position: absolute;
+        bottom: 0.3rem;
+        left: 0.3rem;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        border-radius: 5px;
+        white-space: nowrap;
+        opacity: 1;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 10;
+      }
+
+      &[data-title]::after {
+        content: '';
+        opacity: 0;
+        z-index: 0;
+      }
+
+      .small-thumb {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 0.75rem;
+        border: 2.5px solid transparent;
+        transition: border-color 0.3s ease, transform 0.3s ease;
+      }
+
+      &:hover .small-thumb {
+        border-color: $primary-color;
+        transform: scale(1.1);
+        box-shadow: 0 0 10px $primary-color;
+      }
+    }
+  }
+
+  .bottom-row {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+
+    .tags {
+      max-height: 120px; // or however tall you want
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: $primary-color transparent;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $primary-color;
+        border-radius: 3px;
+      }
+
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+  }
+
+  .right-column {
+    width: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.1rem;
+    /* Placeholder for extra content */
   }
 }

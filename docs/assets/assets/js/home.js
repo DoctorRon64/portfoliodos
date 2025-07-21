@@ -8,66 +8,106 @@ export function init() {
             const container = document.getElementById('project-list');
 
             projects.forEach((project, i) => {
-                const div = document.createElement('div');
-                div.className = 'thumbnail';
-                div.style.setProperty('--i', i);
-
-                const mainId = `main-image-${i}`;
-                const tagsHTML = renderTags(project.tags);
-                const allVisuals = [project.mainvisual, ...(project.extravisuals || [])];
-
-                const isVideo = /\.(mp4|webm|ogg)$/i.test(project.mainvisual);
-                const mainMediaHTML = isVideo
-                    ? `<video id="${mainId}" src="${project.mainvisual}" autoplay loop muted playsinline controls class="main-image"></video>`
-                    : `<img id="${mainId}" src="${project.mainvisual}" alt="Main Project Image" loading="lazy" class="main-image" />`;
-
-
-                div.innerHTML = `
-                    ${mainMediaHTML}
-                    <h2 class="project-title">${project.title}</h2>
-                    <div class="subtitle">${project.description}</div>
-                    <div class="tags">${tagsHTML}</div>
-                    <div class="project-actions">
-                        <div class="project-links"></div>
-                        <button class="open-project-btn button" data-id="${i}">Open Project</button>
-                    </div>
-                `;
-
-                // Thumbnails as fragment
-                const thumbsContainer = document.createElement('div');
-                thumbsContainer.className = 'small-thumbnails';
-                thumbsContainer.appendChild(generateThumbnails(
-                    allVisuals,
-                    mainId,
-                    i,
-                    replaceMainMedia
-                ));
-                div.appendChild(thumbsContainer);
-
-                // Add links
-                const linksContainer = div.querySelector('.project-links');
-                if (Array.isArray(project.link)) {
-                    project.link.forEach(url => {
-                        linksContainer.appendChild(createProjectLink(url));
-                    });
-                }
-
-                // Open modal on button click
-                div.querySelector('.open-project-btn').onclick = () => openProject(i);
-                container.appendChild(div);
+                const projectCard = createProjectCard(project, i);
+                container.appendChild(projectCard);
             });
+        })
+        .catch(err => {
+            console.error('Failed to load projects:', err);
         });
 
+    function createMainMedia(id, src, alt = 'Main Project Image') {
+        const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
+        if (isVideo) {
+            return `
+                <video id="${id}" src="${src}" autoplay loop muted playsinline controls class="main-image"></video>
+            `;
+        }
+        return `
+            <img id="${id}" src="${src}" alt="${alt}" loading="lazy" class="main-image" />
+        `;
+    }
+
+    function createProjectCard(project, i, isModal = false) {
+        const mainId = isModal ? 'modal-main-image' : `main-image-${i}`;
+        const tagsHTML = renderTags(project.tags);
+
+        const mainMediaHTML = createMainMedia(mainId, project.mainvisual, project.title);
+        const buttonClass = isModal ? 'close-project-btn' : 'open-project-btn';
+        const buttonText = isModal ? 'Close' : 'Open';
+
+        const container = document.createElement('div');
+        container.className = isModal ? '' : 'thumbnail';
+        if (!isModal) container.style.setProperty('--i', i);
+
+        container.innerHTML = `
+        ${mainMediaHTML}
+        <h2 class="project-title">${project.title}</h2>
+        <div class="project-card-content">
+            <div class="small-thumbnails"></div>
+            <div class="bottom-row">
+                <div class="tags">${tagsHTML}</div>
+            </div>
+            <div class="project-actions">
+                <button class="${buttonClass} button" data-id="${i}">${buttonText}</button>
+            </div>
+        </div>
+    `;
+
+        // Append project links inside the .project-actions div
+        const linksContainer = container.querySelector('.project-actions');
+        if (Array.isArray(project.link)) {
+            project.link.forEach(url => {
+                linksContainer.appendChild(createProjectLink(url));
+            });
+        }
+
+        // Populate thumbnails inside the existing small-thumbnails div
+        const thumbsContainer = container.querySelector('.small-thumbnails');
+        thumbsContainer.appendChild(generateThumbnails(
+            [project.mainvisual, ...(project.extravisuals || [])],
+            mainId,
+            i,
+            isModal ? replaceModalMainMedia : replaceMainMedia
+        ));
+        highlightThumbnail(thumbsContainer, mainId);
+
+        // Button click handler
+        const btn = container.querySelector(`.${buttonClass}`);
+        if (btn) {
+            btn.onclick = isModal ? closeModal : () => openProject(i);
+        }
+
+        return container;
+    }
+
     function replaceMainMedia(elementId, src) {
+        replaceMedia(elementId, src);
+    }
+
+    function replaceModalMainMedia(elementId, src) {
+        replaceMedia(elementId, src);
+    }
+
+    function replaceMedia(elementId, src) {
         const container = document.getElementById(elementId).parentNode;
         const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
         const newMedia = isVideo
             ? Object.assign(document.createElement('video'), {
-                src, autoplay: true, loop: true, muted: true, playsInline: true,
-                controls: true, className: 'main-image', id: elementId
+                src,
+                autoplay: true,
+                loop: true,
+                muted: true,
+                playsInline: true,
+                controls: true,
+                className: 'main-image',
+                id: elementId
             })
             : Object.assign(document.createElement('img'), {
-                src, alt: 'Main Project Image', className: 'main-image', id: elementId
+                src,
+                alt: 'Main Project Image',
+                className: 'main-image',
+                id: elementId
             });
 
         const old = document.getElementById(elementId);
@@ -80,71 +120,38 @@ export function init() {
         const project = window.loadedProjects[id];
         if (!project) return;
 
-        const allVisuals = [project.mainvisual, ...(project.extravisuals || [])];
+        // Clear previous content
+        content.innerHTML = '';
 
-        // Clear and build modal content
-        content.innerHTML = `
-            <button class="close-modal button">close</button>
-            <h2 class="project-title">${project.title}</h2>
-            <p class="subtitle">${project.description}</p>
-            <ul class="extra-info">
-                <li><strong>Status:</strong> ${project.status || 'N/A'}</li>
-                <li><strong>Role:</strong> ${project.role || 'N/A'}</li>
-                <li><strong>Team Size:</strong> ${project.teamSize || 'N/A'}</li>
-                <li><strong>Date:</strong> ${project.date || 'N/A'}</li>
-                <li><strong>Duration:</strong> ${project.duration || 'N/A'}</li>
-            </ul>
-            <div class="tags">${renderTags(project.tags)}</div>
-            <div class="project-links"></div>
-        `;
-
-        const isVideo = /\.(mp4|webm|ogg)$/i.test(project.mainvisual);
-        const mainMediaEl = isVideo
-            ? Object.assign(document.createElement('video'), {
-                src: project.mainvisual, autoplay: true, loop: true, muted: true,
-                playsInline: true, controls: true, className: 'main-image', id: 'modal-main-image'
-            })
-            : Object.assign(document.createElement('img'), {
-                src: project.mainvisual, alt: project.title, className: 'main-image', id: 'modal-main-image'
-            });
-        content.appendChild(mainMediaEl);
-
-        const smallThumbsContainer = document.createElement('div');
-        smallThumbsContainer.className = 'small-thumbnails';
-        smallThumbsContainer.appendChild(generateThumbnails(
-            allVisuals,
-            'modal-main-image',
-            id,
-            replaceModalMainMedia
-        ));
-        content.appendChild(smallThumbsContainer);
-
-        const linksContainer = content.querySelector('.project-links');
-        if (Array.isArray(project.link)) {
-            project.link.forEach(url => {
-                linksContainer.appendChild(createProjectLink(url));
-            });
-        }
+        // Create modal project card and append to modal content
+        const modalCard = createProjectCard(project, id, true);
+        content.appendChild(modalCard);
 
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
 
-        content.querySelector('.close-modal').onclick = closeModal;
+        // Setup close button in modal header/footer if exists (optional)
+        const extraCloseBtn = modal.querySelector('.close-modal');
+        if (extraCloseBtn) {
+            extraCloseBtn.onclick = closeModal;
+        }
     }
 
-    function replaceModalMainMedia(elementId, src) {
-        const container = document.getElementById(elementId).parentNode;
-        const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
-        const newMedia = isVideo
-            ? Object.assign(document.createElement('video'), {
-                src, autoplay: true, loop: true, muted: true, playsInline: true,
-                controls: true, className: 'main-image', id: elementId
-            })
-            : Object.assign(document.createElement('img'), {
-                src, alt: 'Main Project Image', className: 'main-image', id: elementId
-            });
-        const old = document.getElementById(elementId);
-        container.replaceChild(newMedia, old);
+    function highlightThumbnail(thumbsContainer, mainId) {
+        thumbsContainer.querySelectorAll('.small-thumb-wrapper').forEach(wrapper => {
+            wrapper.onclick = () => {
+                thumbsContainer.querySelectorAll('.small-thumb-wrapper').forEach(w => {
+                    w.querySelector('.small-thumb').style.borderColor = 'transparent';
+                    w.style.boxShadow = 'none';
+                });
+                const img = wrapper.querySelector('.small-thumb');
+                img.style.borderColor = '#3498db'; // or $primary-color hex code
+                wrapper.style.boxShadow = '0 0 12px #3498db';
+                // replace main media
+                const src = img.src;
+                replaceMedia(mainId, src);
+            };
+        });
     }
 
     function closeModal() {
