@@ -1,227 +1,96 @@
 @use "../abstracts/theme" as *;
 
-.main-image-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 1rem;
-  overflow: hidden;
-  cursor: pointer;
-
-  .main-image {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    display: block;
-    border-radius: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transition: transform 0.35s ease, filter 0.35s ease;
-    will-change: transform;
-
-    &:hover {
-      transform: scale(1.04);
-      filter: brightness(1.12);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-  }
-
-  .main-image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(25, 25, 25, 0.68);
-    opacity: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 1rem;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    transform: scale(0.98);
-
-    .eye-icon {
-      width: 2.2rem;
-      height: 2.2rem;
-      background-image: url('/assets/img/icons/mdi--eye.svg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      filter: drop-shadow(0 0 0.5px black);
-      opacity: 0;
-      transform: scale(0.8);
-      transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
-    }
-  }
-
-  &:hover .main-image-overlay {
-    opacity: 1;
-    transform: scale(1);
-    
-    .eye-icon {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-}
-
-.thumbnail {
-  height: 85%; // or any appropriate value
-  overflow: hidden;
+.project-card {
   display: flex;
   flex-direction: column;
-  padding: 1.25rem 1.5rem;
+  align-items: center;
   background-color: $white;
-  border-radius: 1.75rem;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease,
-    box-shadow 0.3s ease;
-  cursor: default;
-
-  .description {
-    margin-top: 2rem;
-  }
+  border-radius: 1.5rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  padding: 0;
+  text-align: center;
 
   &:hover {
     transform: translateY(-6px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .main-image-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    position: relative;
+
+    .main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover .main-image {
+      transform: scale(1.03);
+    }
   }
 
   .project-title {
-    font-size: 1.75rem;
-    margin: 0 0 1.2rem 0;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 600;
     color: $primary-color;
-    border-bottom: 3px solid lighten($primary-color, 25%);
-    padding-bottom: 0.3rem;
-    letter-spacing: 0.03em;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    padding: 1rem 1.25rem;
+    margin: 0;
+    background-color: #f9f9f9;
+    width: 100%;
+    border-top: 1px solid #eee;
+  }
+}
+
+.small-thumb-wrapper {
+  position: relative;
+  border-radius: 0.6rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &[data-title]:hover::after {
+    content: attr(data-title);
+    position: absolute;
+    bottom: 0.3rem;
+    left: 0.3rem;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 10;
   }
 
-  .project-card-content {
-    overflow-y: auto;
-    align-items: flex-start;
-    display: flex;
-    flex: 1;
-    gap: 2.5rem;
+  &[data-title]::after {
+    content: '';
+    opacity: 0;
+    z-index: 0;
   }
 
-  .project-actions {
-    max-height: 380px;
-    overflow: hidden;
-    gap: 0.55rem;
-    display: flex;
-    flex-direction: column;
+  .small-thumb {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    border: 2.5px solid transparent;
+    transition: border-color 0.3s ease, transform 0.3s ease;
   }
 
-  .small-thumbnails {
-    flex-shrink: 0;
-    max-height: 260px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    padding-right: 0.6rem;
-    border-right: 1px solid #ddd;
-    scrollbar-width: thin;
-    scrollbar-color: $primary-color transparent;
-
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: $primary-color;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: darken($primary-color, 10%);
-    }
-
-    .small-thumb-wrapper {
-      position: relative;
-      border-radius: 0.6rem;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-      &[data-title]:hover::after {
-        content: attr(data-title);
-        position: absolute;
-        bottom: 0.3rem;
-        left: 0.3rem;
-        background: rgba(0, 0, 0, 0.8);
-        color: #fff;
-        font-size: 0.7rem;
-        padding: 3px 8px;
-        border-radius: 5px;
-        white-space: nowrap;
-        opacity: 1;
-        pointer-events: none;
-        transition: opacity 0.2s ease;
-        z-index: 10;
-      }
-
-      &[data-title]::after {
-        content: '';
-        opacity: 0;
-        z-index: 0;
-      }
-
-      .small-thumb {
-        width: 64px;
-        height: 64px;
-        object-fit: cover;
-        border-radius: 0.75rem;
-        border: 2.5px solid transparent;
-        transition: border-color 0.3s ease, transform 0.3s ease;
-      }
-
-      &:hover .small-thumb {
-        border-color: $primary-color;
-        transform: scale(1.1);
-        box-shadow: 0 0 10px $primary-color;
-      }
-    }
-  }
-
-  .bottom-row {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.8rem;
-
-    .tags {
-      max-height: 120px; // or however tall you want
-      overflow-y: auto;
-      padding-right: 0.5rem;
-      scrollbar-width: thin;
-      scrollbar-color: $primary-color transparent;
-
-      &::-webkit-scrollbar {
-        width: 6px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: $primary-color;
-        border-radius: 3px;
-      }
-
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-    }
-  }
-
-  .right-column {
-    width: 130px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 1.1rem;
-    /* Placeholder for extra content */
+  &:hover .small-thumb {
+    border-color: $primary-color;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px $primary-color;
   }
 }

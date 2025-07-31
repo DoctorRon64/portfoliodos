@@ -8,34 +8,33 @@ export function init() {
             const container = document.getElementById('project-list');
 
             projects.forEach((project, i) => {
-                const projectCard = createProjectCard(project, i);
-                container.appendChild(projectCard);
+                const card = createProjectCard(project, i);
+                container.appendChild(card);
             });
         })
         .catch(err => {
             console.error('Failed to load projects:', err);
         });
 
-    function createMainMedia(id, src, alt = 'Main Project Image', isModal = false) {
-        const fallback = '/assets/img/placeholder.png';
-        const validSrc = src || fallback;
-        const isVideo = /\.(mp4|webm|ogg)$/i.test(validSrc);
-
-        const mediaHTML = isVideo
-            ? `<video id="${id}" src="${validSrc}" autoplay loop muted playsinline controls aria-label="${alt}" class="main-image"></video>`
-            : `<img id="${id}" src="${validSrc}" alt="${alt}" loading="lazy" class="main-image" />`;
-
-        return isModal
-            ? `<div class="main-image-wrapper">${mediaHTML}</div>` // No overlay in modal
-            : `<div class="main-image-wrapper">${mediaHTML}<div class="main-image-overlay"><i class="eye-icon"></i></div></div>`;
-    }
-
+    // ----- Card Creation -----
     function createProjectCard(project, i, isModal = false) {
         const mainId = isModal ? 'modal-main-image' : `main-image-${i}`;
-        const tagsHTML = renderTags(project.tags);
         const mainMediaHTML = createMainMedia(mainId, project.mainvisual, project.title, isModal);
 
-        const modalMeta = isModal ? `
+        if (!isModal) {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.style.setProperty('--i', i);
+            card.innerHTML = `${mainMediaHTML}<h2 class="project-title">${project.title}</h2>`;
+            card.onclick = () => openProject(i);
+            return card;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'modal-card';
+        const tagsHTML = renderTags(project.tags);
+
+        container.innerHTML = `
             <div class="modal-header">
                 <h2 class="project-title">${project.title}</h2>
                 <button class="close-modal" aria-label="Close modal">&times;</button>
@@ -51,30 +50,13 @@ export function init() {
                         <li><strong>Role:</strong> ${project.role || 'N/A'}</li>
                         <li><strong>Status:</strong> ${project.status || 'N/A'}</li>
                     </ul>
+                    <div class="tags">${tagsHTML}</div>
+                    <div class="small-thumbnails"></div>
                     <div class="project-actions"></div>
                 </div>
             </div>
-
-        ` : '';
-
-        const container = document.createElement('div');
-        container.className = isModal ? '' : 'thumbnail';
-        if (!isModal) container.style.setProperty('--i', i);
-
-        container.innerHTML = `
-        ${isModal ? '' : `<h2 class="project-title">${project.title}</h2>`}
-        ${isModal ? '' : mainMediaHTML}
-        <div class="project-card-content">
-        <div class="small-thumbnails"></div>
-        <div class="bottom-row">
-        <div class="tags">${tagsHTML}</div>
-        </div>
-        <div class="project-actions"></div>
-        </div>
-        ${modalMeta}
         `;
 
-        // Append project links
         const linksContainer = container.querySelector('.project-actions');
         if (Array.isArray(project.link)) {
             project.link.forEach(url => {
@@ -82,36 +64,30 @@ export function init() {
             });
         }
 
-        // Populate thumbnails
         const thumbsContainer = container.querySelector('.small-thumbnails');
         if (thumbsContainer) {
-            thumbsContainer.appendChild(generateThumbnails(
-                [project.mainvisual, ...(project.extravisuals || [])],
-                mainId,
-                i,
-                isModal ? replaceModalMainMedia : replaceMainMedia
-            ));
+            const images = [project.mainvisual, ...(project.extravisuals || [])];
+            thumbsContainer.appendChild(generateThumbnails(images, mainId, i, replaceModalMainMedia));
             highlightThumbnail(thumbsContainer, mainId);
         }
 
-        // Modal opening
-        if (!isModal) {
-            const wrapper = container.querySelector('.main-image-wrapper');
-            if (wrapper) {
-                wrapper.style.cursor = 'pointer';
-                wrapper.onclick = () => openProject(i);
-            }
-        }
-
+        container.querySelector('.close-modal').onclick = closeModal;
         return container;
     }
 
-    function replaceMainMedia(elementId, src) {
-        replaceMedia(elementId, src);
-    }
+    // ----- Main/Modal Media -----
+    function createMainMedia(id, src, alt = 'Main Project Image', isModal = false) {
+        const fallback = '/assets/img/placeholder.png';
+        const validSrc = src || fallback;
+        const isVideo = /\.(mp4|webm|ogg)$/i.test(validSrc);
 
-    function replaceModalMainMedia(elementId, src) {
-        replaceMedia(elementId, src);
+        const mediaHTML = isVideo
+            ? `<video id="${id}" src="${validSrc}" autoplay loop muted playsinline controls aria-label="${alt}" class="main-image"></video>`
+            : `<img id="${id}" src="${validSrc}" alt="${alt}" loading="lazy" class="main-image" />`;
+
+        return isModal
+            ? `<div class="main-image-wrapper">${mediaHTML}</div>`
+            : `<div class="main-image-wrapper">${mediaHTML}<div class="main-image-overlay"><i class="eye-icon"></i></div></div>`;
     }
 
     function replaceMedia(elementId, src) {
@@ -142,6 +118,10 @@ export function init() {
         if (old) container.replaceChild(newMedia, old);
     }
 
+    const replaceMainMedia = (id, src) => replaceMedia(id, src);
+    const replaceModalMainMedia = (id, src) => replaceMedia(id, src);
+
+    // ----- Modal -----
     function openProject(id) {
         const modal = document.getElementById('projectModal');
         const content = modal.querySelector('.modal-content');
@@ -149,22 +129,20 @@ export function init() {
         if (!project) return;
 
         content.innerHTML = '';
-
         const modalCard = createProjectCard(project, id, true);
         content.appendChild(modalCard);
-
-        // Add close button dynamically
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'close-modal';
-        closeBtn.setAttribute('aria-label', 'Close modal');
-        closeBtn.innerHTML = '&times;';
-        closeBtn.onclick = closeModal;
-        content.appendChild(closeBtn);
 
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
     }
 
+    function closeModal() {
+        const modal = document.getElementById('projectModal');
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // ----- Thumbnail Highlighting -----
     function highlightThumbnail(thumbsContainer, mainId) {
         thumbsContainer.querySelectorAll('.small-thumb-wrapper').forEach(wrapper => {
             const img = wrapper.querySelector('.small-thumb');
@@ -172,8 +150,8 @@ export function init() {
 
             wrapper.onclick = () => {
                 thumbsContainer.querySelectorAll('.small-thumb-wrapper').forEach(w => {
-                    const i = w.querySelector('.small-thumb');
-                    if (i) i.style.borderColor = 'transparent';
+                    const thumb = w.querySelector('.small-thumb');
+                    if (thumb) thumb.style.borderColor = 'transparent';
                     w.style.boxShadow = 'none';
                 });
 
@@ -184,12 +162,7 @@ export function init() {
         });
     }
 
-    function closeModal() {
-        const modal = document.getElementById('projectModal');
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-    }
-
+    // ----- Event Listeners -----
     window.addEventListener('click', e => {
         const modal = document.getElementById('projectModal');
         if (e.target === modal) closeModal();
