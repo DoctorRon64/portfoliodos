@@ -1,104 +1,132 @@
-@use "../abstracts/theme" as *;
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-
-  &.open {
-    opacity: 1;
-    pointer-events: auto;
-
-    .modal-content {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  .modal-content {
-    max-width: 720px;
-    width: 92%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    padding: 1.2rem 1.5rem;
-    background: white;
-    border-radius: 0.75rem;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
-    transition: transform 0.25s ease, opacity 0.25s ease;
-    transform: translateY(12px);
+/* Modal Overlay */
+#projectModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 15, 15, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    visibility: hidden;
     opacity: 0;
-
-    font-size: 0.92rem;
-    line-height: 1.4;
-
-    @media (max-width: 768px) {
-      padding: 1rem;
-      font-size: 0.88rem;
-    }
-  }
-
-  .close-modal {
-    position: absolute;
-    top: 0.75rem;
-    right: 1rem;
-    cursor: pointer;
-    border: none;
-    font-size: .7em;
-    transition: color 0.2s ease;
-    width: 15%;
-
-    &:hover {
-      color: $primary-color;
-    }
-  }
+    transition: opacity 0.3s ease;
 }
 
-.extra-info {
-  padding: 0;
-  margin: 0 0 0.75rem 0;
-
-  li {
-    margin-bottom: 0.4rem;
-    font-weight: 500;
-    font-size: 0.9rem;
-    list-style-type: disc;
-    list-style-position: inside;
-
-    strong {
-      color: $primary-color;
-    }
-  }
+#projectModal.open {
+    visibility: visible;
+    opacity: 1;
 }
 
-.project-meta {
-  margin-top: 1.5rem;
-  font-size: 0.95rem;
-  color: $primary-color; // define this in your variables, e.g. #666 or #777
+/* Modal Content */
+.modal-content {
+    background: #ffffff;
+    color: #333;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.3s ease-in-out;
+}
 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem 2rem;
+/* Modal Header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-  p {
+.modal-header h2 {
     margin: 0;
-    line-height: 1.4;
+    font-size: 1.75rem;
+    color: #222;
+}
 
-    strong {
-      display: block;
-      font-weight: 600;
-      color: #fff; // e.g. #222 or your primary text color
-      margin-bottom: 0.25rem;
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+/* Modal Body */
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-image-wrapper {
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.main-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Modal Details */
+.modal-details {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.5;
+}
+
+.modal-details .description {
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.meta-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+
+.meta-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .modal-content {
+        padding: 16px;
     }
-  }
+
+    .modal-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .close-modal {
+        font-size: 1.5rem;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

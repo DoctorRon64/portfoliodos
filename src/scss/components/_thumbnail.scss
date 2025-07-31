@@ -1,5 +1,71 @@
 @use "../abstracts/theme" as *;
 
+.main-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+
+  .main-image {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: transform 0.35s ease, filter 0.35s ease;
+    will-change: transform;
+
+    &:hover {
+      transform: scale(1.04);
+      filter: brightness(1.12);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .main-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(25, 25, 25, 0.68);
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: scale(0.98);
+
+    .eye-icon {
+      width: 2.2rem;
+      height: 2.2rem;
+      background-image: url('/assets/img/icons/mdi--eye.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      filter: drop-shadow(0 0 0.5px black);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+    }
+  }
+
+  &:hover .main-image-overlay {
+    opacity: 1;
+    transform: scale(1);
+    
+    .eye-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
 .thumbnail {
   height: 85%; // or any appropriate value
   overflow: hidden;
@@ -14,29 +80,12 @@
   cursor: default;
 
   .description {
-    margin-top:2rem;
+    margin-top: 2rem;
   }
 
   &:hover {
     transform: translateY(-6px);
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
-  }
-
-  .main-image {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    border-radius: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transition: transform 0.35s ease, filter 0.35s ease;
-    will-change: transform;
-
-    &:hover {
-      transform: scale(1.04);
-      filter: brightness(1.12);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
   }
 
   .project-title {
