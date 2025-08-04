@@ -36,5 +36,24 @@
             "title": "Over Mij",
             "description": "Gegroet! Mijn naam is Philip ik ben een Nederlandse 🇳🇱 student en ik volg game development op de HKU. Ik ben super gepassioneerd over het maken van games, het componeren van muziek, tekenen, en het verkennen van nieuwe vaardigheden en kennis. Ik probeer mijzelf te specializeren in code Architectuur en Game audio."
         }
+    },
+    "es": {
+        "title": "La Cartera",
+        "headerTitle": "Philip's cartera",
+        "headerSubtitle": "Desarrollador de juegos & Compositor de audio",
+        "accessDenied": {
+            "title": "🔒 acceso denegado",
+            "message": "No tiene permiso para ver este cartera"
+        },
+        "nav": {
+            "logo": "Philipdeveloper.com",
+            "projects": "Proyectos",
+            "about": "Sobre mí",
+            "contact": "Contacto"
+        },
+        "about": {
+            "title": "Sobre mí",
+            "description": "¡Saludos! Mi nombre es Philip y soy un estudiante universitario holandés 🇳🇱 siguiendo el programa de desarrollo de juegos en la HKU (Universidad de las Artes de Utrecht). Me apasiona hacer juegos, crear música, dibujar arte y explorar nuevas habilidades y conocimientos. Trato de especializarme en Arquitectura de código y Audio de juegos."
+        }
     }
 }
