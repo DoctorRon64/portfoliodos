@@ -1,0 +1,40 @@
+{
+    "en": {
+        "title": "Portfolio",
+        "headerTitle": "Philip's Portfolio",
+        "headerSubtitle": "Game Developer & Audio Composer",
+        "accessDenied": {
+            "title": "🔒 Access Denied",
+            "message": "You don’t have permission to view this portfolio."
+        },
+        "nav": {
+            "logo": "Philipdeveloper.com",
+            "projects": "Projects",
+            "about": "About",
+            "contact": "Contact"
+        },
+        "about": {
+            "title": "About Me",
+            "description": "Greetings! My name is Philip am a Dutch 🇳🇱 college student following the game development program at the HKU (Utrecht University of the Arts). I'm incredibly passionate about making games, creating music, drawing art and exploring new skills and knowledge. I try to specialize in code Architecture and Game Audio."
+        }
+    },
+    "nl": {
+        "title": "Portfolio",
+        "headerTitle": "Philip's Portfolio",
+        "headerSubtitle": "Gameontwikkelaar & Audio Composer",
+        "accessDenied": {
+            "title": "🔒 Toegang Geweigerd",
+            "message": "Je hebt geen toestemming om deze portfolio te bekijken."
+        },
+        "nav": {
+            "logo": "Philipdeveloper.com",
+            "projects": "Projecten",
+            "about": "Over Mij",
+            "contact": "Contact"
+        },
+        "about": {
+            "title": "Over Mij",
+            "description": "Gegroet! Mijn naam is Philip ik ben een Nederlandse 🇳🇱 student en ik volg game development op de HKU. Ik ben super gepassioneerd over het maken van games, het componeren van muziek, tekenen, en het verkennen van nieuwe vaardigheden en kennis. Ik probeer mijzelf te specializeren in code Architectuur en Game audio."
+        }
+    }
+}

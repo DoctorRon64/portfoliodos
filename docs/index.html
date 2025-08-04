@@ -10,6 +10,7 @@
 
     <script type="module">
         import { init } from '../assets/js/home.js';
+        import { loadLanguage } from '../assets/js/lang.js';
 
         const params = new URLSearchParams(location.search);
         const validKey = 'open';
@@ -45,6 +46,8 @@
         `;
             document.body.appendChild(message);
         } else {
+            const lang = params.get('lang') || 'en';
+            loadLanguage(lang);
             init();
         }
     </script>
@@ -52,18 +55,21 @@
 
 <body class="home-body">
     <nav class="navbar">
-        <div class="nav-logo">philipdeveloper.com</div>
-        <div class="nav-links">
-            <a href="#project-list">Projects</a>
-            <a href="#about">About</a>
-            <a href="#Contact">Contact</a>
+        <div id="nav-logo" class="nav-logo">WebsiteLink</div>
+        <div id="nav-links" class="nav-links">
+            <a id="nav-projects" class="nav-projects" href="#project-list">Projects</a>
+            <a id="nav-about" class="nav-about" href="#about">About</a>
+            <a id="nav-contact" class="nav-contact" href="#Contact">Contact</a>
         </div>
     </nav>
 
+    <button onclick="location.search='?key=open&lang=en'">English</button>
+    <button onclick="location.search='?key=open&lang=nl'">Nederlands</button>
+
     <!-- Header -->
     <header class="home-container">
-        <div class="home-title">Philip's Portfolio</div>
-        <div class="home-subtitle">Game Developer & Audio Composer</div>
+        <div class="home-title" id="header-title">Titel</div>
+        <div class="home-subtitle" id="header-subtitle">Subtitle</div>
     </header>
 
     <!-- Modal -->
@@ -102,14 +108,34 @@
     <section class="home-projects" id="project-list"></section>
 
     <section id="about" class="about-section">
-        <h2>About Me</h2>
-        <p>
-            Greetings! My name is Philip. I am a Dutch 🇳🇱 college student following the game development program at
-            the HKU (Utrecht University of the Arts).
-            I'm incredibly passionate about making games, creating music, drawing art and exploring new skills and
-            knowledge. I try to specialize in code Architecture and Game Audio.
+        <h2 id="about-title">About Me</h2>
+        <p id="about-description">
+            some text
         </p>
     </section>
+
+    <script>
+        async function loadLanguage(lang = 'nl') {
+            const response = await fetch('../data/home.json');
+            const data = await response.json();
+            const text = data[lang];
+
+            document.title = text.title;
+            document.getElementById('header-title').textContent = text.headerTitle;
+            document.getElementById('header-subtitle').textContent = text.headerSubtitle;
+
+            document.getElementById('nav-projects').textContent = text.nav.projects;
+            document.getElementById('nav-about').textContent = text.nav.about;
+            document.getElementById('nav-contact').textContent = text.nav.contact;
+
+            document.getElementById('about-title').textContent = text.about.title;
+            document.getElementById('about-description').textContent = text.about.description;
+        }
+    </script>
+
+    <script>
+        import { loadLanguage } from '../assets/js/lang.js';
+    </script>
 </body>
 
 </html>
