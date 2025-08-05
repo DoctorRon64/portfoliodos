@@ -26,6 +26,14 @@ export async function loadLanguage(lang = 'en') {
         document.getElementById('about-title').textContent = text.about.title;
         document.getElementById('about-description').textContent = text.about.description;
 
+        window.labels = {
+            date: text.labels.date,
+            duration: text.labels.duration,
+            teamSize: text.labels.teamSize,
+            role: text.labels.role,
+            status: text.labels.status
+        };
+
         // You can extend this to modal content, project tags, etc.
     } catch (error) {
         console.error('Failed to load language data:', error);

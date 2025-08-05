@@ -1,13 +1,15 @@
 import { createProjectLink, renderTags, generateThumbnails } from '../assets/js/uiUtils.js';
 
-export function init() {
+export function init(lang = 'en') {
     fetch('/data/projects.json')
         .then(res => res.json())
         .then(projects => {
-            window.loadedProjects = projects;
+            const allprojects = projects[lang] || projects['en'];
+            window.loadedProjects = allprojects;
             const container = document.getElementById('project-list');
+            container.innerHTML = '';
 
-            projects.forEach((project, i) => {
+            allprojects.forEach((project, i) => {
                 const card = createProjectCard(project, i);
                 container.appendChild(card);
             });
@@ -30,33 +32,50 @@ export function init() {
             return card;
         }
 
+        // Modal version
         const container = document.createElement('div');
         container.className = 'modal-card';
+
         const tagsHTML = renderTags(project.tags);
 
-        container.innerHTML = `
+        // --- HEADER ---
+        const headerHTML = `
             <div class="modal-header">
                 <h2 class="project-title">${project.title}</h2>
                 <button class="close-modal" aria-label="Close modal">&times;</button>
             </div>
+        `;
+
+        // --- BODY (main image + meta) ---
+        const bodyHTML = `
             <div class="modal-body">
                 ${mainMediaHTML}
                 <div class="modal-details">
                     <p class="description">${project.description || 'N/A'}</p>
                     <ul class="meta-list">
-                        <li><strong>Date:</strong> ${project.date || 'N/A'}</li>
-                        <li><strong>Duration:</strong> ${project.duration || 'N/A'}</li>
-                        <li><strong>Team Size:</strong> ${project.teamSize || 'N/A'}</li>
-                        <li><strong>Role:</strong> ${project.role || 'N/A'}</li>
-                        <li><strong>Status:</strong> ${project.status || 'N/A'}</li>
+                        <li><strong>${window.labels.date}:</strong> ${project.date || 'N/A'}</li>
+                        <li><strong>${window.labels.duration}:</strong> ${project.duration || 'N/A'}</li>
+                        <li><strong>${window.labels.teamSize}:</strong> ${project.teamSize || 'N/A'}</li>
+                        <li><strong>${window.labels.role}:</strong> ${project.role || 'N/A'}</li>
+                        <li><strong>${window.labels.status}:</strong> ${project.status || 'N/A'}</li>
                     </ul>
-                    <div class="tags">${tagsHTML}</div>
-                    <div class="small-thumbnails"></div>
-                    <div class="project-actions"></div>
                 </div>
             </div>
-        `;
+    `;
 
+        // --- FOOTER (tags + thumbs + actions) ---
+        const footerHTML = `
+        <div class="modal-footer">
+            <div class="tags">${tagsHTML}</div>
+            <div class="small-thumbnails"></div>
+            <div class="project-actions"></div>
+        </div>
+    `;
+
+        // Combine and inject all into modal
+        container.innerHTML = headerHTML + bodyHTML + footerHTML;
+
+        // Add links
         const linksContainer = container.querySelector('.project-actions');
         if (Array.isArray(project.link)) {
             project.link.forEach(url => {
@@ -64,10 +83,13 @@ export function init() {
             });
         }
 
+        // Add thumbnails
         const thumbsContainer = container.querySelector('.small-thumbnails');
         if (thumbsContainer) {
             const images = [project.mainvisual, ...(project.extravisuals || [])];
-            thumbsContainer.appendChild(generateThumbnails(images, mainId, i, replaceModalMainMedia));
+            thumbsContainer.appendChild(
+                generateThumbnails(images, mainId, i, replaceModalMainMedia)
+            );
             highlightThumbnail(thumbsContainer, mainId);
         }
 

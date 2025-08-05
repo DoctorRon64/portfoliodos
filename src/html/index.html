@@ -48,7 +48,7 @@
         } else {
             const lang = params.get('lang') || 'en';
             loadLanguage(lang);
-            init();
+            init(lang);
         }
     </script>
 </head>
@@ -63,27 +63,46 @@
         </div>
     </nav>
 
-    <button class="btn" onclick="location.search='?key=open&lang=en'">English</button>
-    <button class="btn" onclick="location.search='?key=open&lang=nl'">Nederlands</button>
-    <button class="btn" onclick="location.search='?key=open&lang=es'">Español</button>
+    <!-- Language Buttons -->
+    <div class="language-switcher">
+        <button class="lang-btn" data-lang="en">🇬🇧 </button>
+        <button class="lang-btn" data-lang="nl">🇳🇱 </button>
+        <button class="lang-btn" data-lang="es">🇪🇸 </button>
+    </div>
+    <script>
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                const key = 'open';
+                window.location.search = `?key=${key}&lang=${lang}`;
+            });
+        });
+    </script>
 
     <!-- Header -->
     <header class="home-container">
-        <div class="home-title" id="header-title">Titel</div>
+        <div class="home-title" id="header-title">Please enable Js for this site</div>
         <div class="home-subtitle" id="header-subtitle">Subtitle</div>
     </header>
+
+    <section id="about" class="about-section">
+        <div id="about-title">About Me</div>
+        <p id="about-description">
+            some text
+        </p>
+    </section>
 
     <!-- Modal -->
     <div id="projectModal" class="modal">
         <div class="modal-content thumbnail"> <!-- reuse .thumbnail here -->
             <button class="close-modal">&times;</button>
-            <img src="main-image-url.jpg" alt="Project Main" class="main-image" />
+            <img alt="Project Main" class="main-image" />
             <div class="small-thumbnails">
                 <div class="small-thumb-wrapper" data-title="Thumb 1">
-                    <img src="thumb1.jpg" alt="Thumb 1" class="small-thumb" />
+                    <img alt="Thumb 1" class="small-thumb" />
                 </div>
                 <div class="small-thumb-wrapper" data-title="Thumb 2">
-                    <img src="thumb2.jpg" alt="Thumb 2" class="small-thumb" />
+                    <img alt="Thumb 2" class="small-thumb" />
                 </div>
             </div>
             <h2 class="project-title">Project Title</h2>
@@ -107,36 +126,6 @@
 
     <!-- Projects -->
     <section class="home-projects" id="project-list"></section>
-
-    <section id="about" class="about-section">
-        <h2 id="about-title">About Me</h2>
-        <p id="about-description">
-            some text
-        </p>
-    </section>
-
-    <script>
-        async function loadLanguage(lang = 'nl') {
-            const response = await fetch('../data/home.json');
-            const data = await response.json();
-            const text = data[lang];
-
-            document.title = text.title;
-            document.getElementById('header-title').textContent = text.headerTitle;
-            document.getElementById('header-subtitle').textContent = text.headerSubtitle;
-
-            document.getElementById('nav-projects').textContent = text.nav.projects;
-            document.getElementById('nav-about').textContent = text.nav.about;
-            document.getElementById('nav-contact').textContent = text.nav.contact;
-
-            document.getElementById('about-title').textContent = text.about.title;
-            document.getElementById('about-description').textContent = text.about.description;
-        }
-    </script>
-
-    <script>
-        import { loadLanguage } from '../assets/js/lang.js';
-    </script>
 </body>
 
 </html>

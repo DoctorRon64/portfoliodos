@@ -16,6 +16,13 @@
         "about": {
             "title": "About Me",
             "description": "Greetings! My name is Philip am a Dutch 🇳🇱 college student following the game development program at the HKU (Utrecht University of the Arts). I'm incredibly passionate about making games, creating music, drawing art and exploring new skills and knowledge. I try to specialize in code Architecture and Game Audio."
+        },
+        "labels": {
+            "date": "Date",
+            "duration": "Duration",
+            "teamSize": "Team Size",
+            "role": "Roles",
+            "status": "Status"
         }
     },
     "nl": {
@@ -35,11 +42,18 @@
         "about": {
             "title": "Over Mij",
             "description": "Gegroet! Mijn naam is Philip ik ben een Nederlandse 🇳🇱 student en ik volg game development op de HKU. Ik ben super gepassioneerd over het maken van games, het componeren van muziek, tekenen, en het verkennen van nieuwe vaardigheden en kennis. Ik probeer mijzelf te specializeren in code Architectuur en Game audio."
+        },
+        "labels": {
+            "date": "Datum",
+            "duration": "Duur",
+            "teamSize": "Team grootte",
+            "role": "Rolen",
+            "status": "Status"
         }
     },
     "es": {
         "title": "La Cartera",
-        "headerTitle": "Philip's cartera",
+        "headerTitle": "Philip's Cartera",
         "headerSubtitle": "Desarrollador de juegos & Compositor de audio",
         "accessDenied": {
             "title": "🔒 acceso denegado",
@@ -54,6 +68,13 @@
         "about": {
             "title": "Sobre mí",
             "description": "¡Saludos! Mi nombre es Philip y soy un estudiante universitario holandés 🇳🇱 siguiendo el programa de desarrollo de juegos en la HKU (Universidad de las Artes de Utrecht). Me apasiona hacer juegos, crear música, dibujar arte y explorar nuevas habilidades y conocimientos. Trato de especializarme en Arquitectura de código y Audio de juegos."
+        },
+        "labels": {
+            "date": "Fecha",
+            "duration": "Duración",
+            "teamSize": "Tamaño del equipo",
+            "role": "Roles",
+            "status": "Estado"
         }
     }
 }
