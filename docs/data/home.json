@@ -1,21 +1,105 @@
 {
     "en": {
-        "title": "Portfolio",
-        "headerTitle": "Philip's Portfolio",
+        "title": "Philip - Game Developer & Audio Composer Portfolio",
+        "headerTitle": "Philip",
         "headerSubtitle": "Game Developer & Audio Composer",
+        "heroDescription": "Specializing in Code Architecture and Game Audio Development",
         "accessDenied": {
             "title": "🔒 Access Denied",
-            "message": "You don’t have permission to view this portfolio."
+            "message": "You don't have permission to view this portfolio."
         },
         "nav": {
-            "logo": "Philipdeveloper.com",
-            "projects": "Projects",
-            "about": "About",
+            "logo": "Philip Developer",
+            "about": "Home",
+            "projects": "Portfolio",
             "contact": "Contact"
         },
         "about": {
-            "title": "About Me",
-            "description": "Greetings! My name is Philip am a Dutch 🇳🇱 college student following the game development program at the HKU (Utrecht University of the Arts). I'm incredibly passionate about making games, creating music, drawing art and exploring new skills and knowledge. I try to specialize in code Architecture and Game Audio."
+            "title": "Professional Background",
+            "description": "I am Philip, a dedicated Game Development student at the HKU (Utrecht University of the Arts), specializing in Code Architecture and Game Audio Development. My academic focus combines technical programming expertise with creative audio composition, enabling me to create immersive gaming experiences through both code and sound.",
+            "education": {
+                "title": "Education",
+                "institution": "HKU - Utrecht University of the Arts",
+                "degree": "Bachelor of Game Development",
+                "specialization": "Specialization: Code Architecture & Game Audio"
+            }
+        },
+        "featured": {
+            "title": "Portfolio Highlights",
+            "subtitle": "Showcasing my technical achievements and creative projects",
+            "viewAll": "View Complete Portfolio"
+        },
+        "hero": {
+            "viewWork": "View Portfolio",
+            "learnMore": "About Me"
+        },
+        "contact": {
+            "ctaTitle": "Interested in Collaboration?",
+            "ctaDescription": "Let's discuss potential opportunities for game development projects, audio composition, or technical collaboration",
+            "ctaButton": "Contact Me"
+        },
+        "stats": [
+            {
+                "number": "35+",
+                "label": "Projects Completed"
+            },
+            {
+                "number": "4+",
+                "label": "Years Experience"
+            },
+            {
+                "number": "3+",
+                "label": "Programming Languages"
+            },
+            {
+                "number": "5+",
+                "label": "Game Engines"
+            }
+        ],
+        "skills": {
+            "title": "Technical Skills & Expertise",
+            "categories": [
+                {
+                    "title": "Programming Languages",
+                    "tags": [
+                        "C++",
+                        "C#",
+                        "JavaScript",
+                        "Python",
+                        "Java"
+                    ]
+                },
+                {
+                    "title": "Game Development",
+                    "tags": [
+                        "Unity",
+                        "Godot",
+                        "OpenGL",
+                        "SFML",
+                        "GLFW"
+                    ]
+                },
+                {
+                    "title": "Web Technologies",
+                    "tags": [
+                        "HTML5",
+                        "CSS3",
+                        "SCSS",
+                        "Node.js",
+                        "MySQL"
+                    ]
+                },
+                {
+                    "title": "Design & Tools",
+                    "tags": [
+                        "Photoshop",
+                        "Illustrator",
+                        "Blender",
+                        "Krita",
+                        "Aseprite"
+                    ]
+                }
+            ]
         },
         "labels": {
             "date": "Date",
@@ -26,22 +110,106 @@
         }
     },
     "nl": {
-        "title": "Portfolio",
-        "headerTitle": "Philip's Portfolio",
+        "title": "Philip - Gameontwikkelaar & Audio Composer Portfolio",
+        "headerTitle": "Philip",
         "headerSubtitle": "Gameontwikkelaar & Audio Composer",
+        "heroDescription": "Gespecialiseerd in Code Architectuur en Game Audio Ontwikkeling",
         "accessDenied": {
             "title": "🔒 Toegang Geweigerd",
             "message": "Je hebt geen toestemming om deze portfolio te bekijken."
         },
         "nav": {
-            "logo": "Philipdeveloper.com",
-            "projects": "Projecten",
-            "about": "Over Mij",
+            "logo": "Philip Developer",
+            "about": "Home",
+            "projects": "Portfolio",
             "contact": "Contact"
         },
         "about": {
-            "title": "Over Mij",
-            "description": "Gegroet! Mijn naam is Philip ik ben een Nederlandse 🇳🇱 student en ik volg game development op de HKU. Ik ben super gepassioneerd over het maken van games, het componeren van muziek, tekenen, en het verkennen van nieuwe vaardigheden en kennis. Ik probeer mijzelf te specializeren in code Architectuur en Game audio."
+            "title": "Professionele Achtergrond",
+            "description": "Ik ben Philip, een toegewijde Game Development student aan de HKU (Hogeschool voor de Kunsten Utrecht), gespecialiseerd in Code Architectuur en Game Audio Ontwikkeling. Mijn academische focus combineert technische programmeerexpertise met creatieve audiocompositie, waardoor ik meeslepende gaming ervaringen kan creëren door zowel code als geluid.",
+            "education": {
+                "title": "Opleiding",
+                "institution": "HKU - Hogeschool voor de Kunsten Utrecht",
+                "degree": "Bachelor of Game Development",
+                "specialization": "Specialisatie: Code Architectuur & Game Audio"
+            }
+        },
+        "featured": {
+            "title": "Portfolio Hoogtepunten",
+            "subtitle": "Een showcase van mijn technische prestaties en creatieve projecten",
+            "viewAll": "Bekijk Volledige Portfolio"
+        },
+        "hero": {
+            "viewWork": "Bekijk Portfolio",
+            "learnMore": "Over Mij"
+        },
+        "contact": {
+            "ctaTitle": "Geïnteresseerd in Samenwerking?",
+            "ctaDescription": "Laten we bespreken over mogelijke kansen voor game development projecten, audio compositie, of technische samenwerking",
+            "ctaButton": "Neem Contact Op"
+        },
+        "stats": [
+            {
+                "number": "35+",
+                "label": "Projecten Voltooid"
+            },
+            {
+                "number": "4+",
+                "label": "Jaren Ervaring"
+            },
+            {
+                "number": "3+",
+                "label": "Programmeertalen"
+            },
+            {
+                "number": "5+",
+                "label": "Game Engines"
+            }
+        ],
+        "skills": {
+            "title": "Technische Vaardigheden & Expertise",
+            "categories": [
+                {
+                    "title": "Programmeertalen",
+                    "tags": [
+                        "C++",
+                        "C#",
+                        "JavaScript",
+                        "Python",
+                        "Java"
+                    ]
+                },
+                {
+                    "title": "Gameontwikkeling",
+                    "tags": [
+                        "Unity",
+                        "Godot",
+                        "OpenGL",
+                        "SFML",
+                        "GLFW"
+                    ]
+                },
+                {
+                    "title": "Web Technologieën",
+                    "tags": [
+                        "HTML5",
+                        "CSS3",
+                        "SCSS",
+                        "Node.js",
+                        "MySQL"
+                    ]
+                },
+                {
+                    "title": "Design & Tools",
+                    "tags": [
+                        "Photoshop",
+                        "Illustrator",
+                        "Blender",
+                        "Krita",
+                        "Aseprite"
+                    ]
+                }
+            ]
         },
         "labels": {
             "date": "Datum",
@@ -52,22 +220,106 @@
         }
     },
     "es": {
-        "title": "La Cartera",
-        "headerTitle": "Philip's Cartera",
-        "headerSubtitle": "Desarrollador de juegos & Compositor de audio",
+        "title": "Philip - Desarrollador de Juegos & Compositor de Audio Portfolio",
+        "headerTitle": "Philip",
+        "headerSubtitle": "Desarrollador de Juegos & Compositor de Audio",
+        "heroDescription": "Especializado en Arquitectura de Código y Desarrollo de Audio para Juegos",
         "accessDenied": {
-            "title": "🔒 acceso denegado",
-            "message": "No tiene permiso para ver este cartera"
+            "title": "🔒 Acceso Denegado",
+            "message": "No tiene permiso para ver este portfolio."
         },
         "nav": {
-            "logo": "Philipdeveloper.com",
-            "projects": "Proyectos",
-            "about": "Sobre mí",
+            "logo": "Philip Developer",
+            "about": "Inicio",
+            "projects": "Portfolio",
             "contact": "Contacto"
         },
         "about": {
-            "title": "Sobre mí",
-            "description": "¡Saludos! Mi nombre es Philip y soy un estudiante universitario holandés 🇳🇱 siguiendo el programa de desarrollo de juegos en la HKU (Universidad de las Artes de Utrecht). Me apasiona hacer juegos, crear música, dibujar arte y explorar nuevas habilidades y conocimientos. Trato de especializarme en Arquitectura de código y Audio de juegos."
+            "title": "Antecedentes Profesionales",
+            "description": "Soy Philip, un estudiante dedicado de Desarrollo de Juegos en la HKU (Universidad de las Artes de Utrecht), especializado en Arquitectura de Código y Desarrollo de Audio para Juegos. Mi enfoque académico combina experiencia técnica en programación con composición creativa de audio, permitiéndome crear experiencias de juego inmersivas a través del código y el sonido.",
+            "education": {
+                "title": "Educación",
+                "institution": "HKU - Universidad de las Artes de Utrecht",
+                "degree": "Licenciatura en Desarrollo de Juegos",
+                "specialization": "Especialización: Arquitectura de Código y Audio para Juegos"
+            }
+        },
+        "featured": {
+            "title": "Destacados del Portfolio",
+            "subtitle": "Mostrando mis logros técnicos y proyectos creativos",
+            "viewAll": "Ver Portfolio Completo"
+        },
+        "hero": {
+            "viewWork": "Ver Portfolio",
+            "learnMore": "Sobre Mí"
+        },
+        "contact": {
+            "ctaTitle": "¿Interesado en Colaboración?",
+            "ctaDescription": "Discutamos oportunidades potenciales para proyectos de desarrollo de juegos, composición de audio, o colaboración técnica",
+            "ctaButton": "Contáctame"
+        },
+        "stats": [
+            {
+                "number": "35+",
+                "label": "Proyectos Completados"
+            },
+            {
+                "number": "4+",
+                "label": "Años de Experiencia"
+            },
+            {
+                "number": "3+",
+                "label": "Lenguajes de Programación"
+            },
+            {
+                "number": "5+",
+                "label": "Motores de Juego"
+            }
+        ],
+        "skills": {
+            "title": "Habilidades Técnicas y Experiencia",
+            "categories": [
+                {
+                    "title": "Lenguajes de Programación",
+                    "tags": [
+                        "C++",
+                        "C#",
+                        "JavaScript",
+                        "Python",
+                        "Java"
+                    ]
+                },
+                {
+                    "title": "Desarrollo de Juegos",
+                    "tags": [
+                        "Unity",
+                        "Godot",
+                        "OpenGL",
+                        "SFML",
+                        "GLFW"
+                    ]
+                },
+                {
+                    "title": "Tecnologías Web",
+                    "tags": [
+                        "HTML5",
+                        "CSS3",
+                        "SCSS",
+                        "Node.js",
+                        "MySQL"
+                    ]
+                },
+                {
+                    "title": "Diseño y Herramientas",
+                    "tags": [
+                        "Photoshop",
+                        "Illustrator",
+                        "Blender",
+                        "Krita",
+                        "Aseprite"
+                    ]
+                }
+            ]
         },
         "labels": {
             "date": "Fecha",

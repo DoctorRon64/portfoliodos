@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Loading...</title>
+    <link rel="icon" href="/src/assets/img/websiteicon.gif" type="image/x-icon" />
+    <link rel="stylesheet" href="/docs/assets/css/app.css" />
+
+    <script type="module">
+        import { initProjects } from '/src/assets/js/projects.js';
+        import { loadLanguage } from '/src/assets/js/lang.js';
+        import { createLanguageSwitcher } from '/docs/assets/js/languageSwitcher.js';
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(location.search);
+            const lang = params.get('lang') || 'en';
+
+            try {
+                await loadLanguage(lang);
+                initProjects(lang);
+
+                // Initialize professional language switcher
+                const languageSwitcher = createLanguageSwitcher('.language-switcher', {
+                    currentLang: lang, // Set the current language explicitly
+                    onLanguageChange: async (newLang) => {
+                        await loadLanguage(newLang);
+                        initProjects(newLang);
+                    },
+                    compact: true
+                });
+            } catch (error) {
+                console.error('Failed to initialize projects page:', error);
+            }
+        });
+    </script>
+</head>
+
+<body class="projects-body">
+    <nav class="navbar">
+        <div id="nav-logo" class="nav-logo">Loading...</div>
+        <div id="nav-links" class="nav-links">
+            <a id="nav-about" class="nav-about" href="index.html">Loading...</a>
+            <a id="nav-projects" class="nav-projects" href="projects.html">Loading...</a>
+            <a id="nav-contact" class="nav-contact" href="contact.html">Loading...</a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="projects-header">
+        <h1 id="projects-title">Loading...</h1>
+        <p id="projects-subtitle">Loading...</p>
+    </header>
+
+    <!-- Professional Language Switcher -->
+    <div class="language-switcher"></div>
+
+    <!-- Projects List -->
+    <section class="projects-list" id="projects-container">
+        <!-- Projects will be loaded here -->
+    </section>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+
+            <!-- Main Media Display -->
+            <div class="main-media-container">
+                <video id="main-video" class="main-video" controls style="display: none;">
+                    <source src="" type="video/mp4">
+                    <source src="" type="video/webm">
+                    Your browser does not support the video tag.
+                </video>
+                <img id="main-image" class="main-image" alt="Project Main" style="display: none;" />
+            </div>
+
+            <!-- Thumbnail Navigation -->
+            <div class="thumbnail-navigation">
+                <div class="thumbnails-container" id="thumbnails-container">
+                    <!-- Thumbnails will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Project Information -->
+            <div class="project-info">
+                <h2 id="modal-project-title" class="project-title">Loading...</h2>
+                <p id="modal-project-description" class="project-description">Loading...</p>
+
+                <!-- Tags -->
+                <div class="tags" id="modal-tags">
+                    <!-- Tags will be loaded here -->
+                </div>
+
+                <!-- Project Links -->
+                <div class="project-links" id="modal-links">
+                    <!-- Links will be loaded here -->
+                </div>
+
+                <!-- Extra Information -->
+                <div class="extra-info" id="modal-extra-info">
+                    <!-- Extra info will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

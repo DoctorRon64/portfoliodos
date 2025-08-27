@@ -1,4 +1,4 @@
-import { tagsMap } from './tagsMap';
+import { tagsMap, tagsIconMap } from './tagsMap';
 
 export function renderProjectDetails(project, containerId, isThumbnailPage) {
   const container = document.getElementById(containerId);
@@ -9,7 +9,26 @@ export function renderProjectDetails(project, containerId, isThumbnailPage) {
 
   const tagHTML = project.tags.map(tag => {
     const color = tagsMap[tag] || '#3b8ac4';
-    return `<span class="tag" style="background-color: ${color}">${tag}</span>`;
+    const icon = tagsIconMap[tag.toLowerCase()] || null;
+    const isGradient = color.includes('linear-gradient');
+
+    // Bepaal tag categorie voor styling
+    let tagCategory = 'tag-tech';
+    if (tag.toLowerCase().includes('photoshop') || tag.toLowerCase().includes('illustrate') || tag.toLowerCase().includes('blender')) {
+      tagCategory = 'tag-design';
+    } else if (tag.toLowerCase().includes('unity') || tag.toLowerCase().includes('game') || tag.toLowerCase().includes('sfml')) {
+      tagCategory = 'tag-game';
+    } else if (tag.toLowerCase().includes('cmake') || tag.toLowerCase().includes('tool')) {
+      tagCategory = 'tag-tool';
+    }
+
+    const iconHTML = icon ? `<img src="/assets/img/icons/${icon}" class="tag-icon" alt="${tag} icon">` : '';
+
+    if (isGradient) {
+      return `<span class="tag ${tagCategory}" style="--tag-gradient: ${color}; background: ${color};">${iconHTML}${tag}</span>`;
+    } else {
+      return `<span class="tag ${tagCategory}" style="background-color: ${color};">${iconHTML}${tag}</span>`;
+    }
   }).join('');
 
   let thumbnailsHTML = '';
@@ -51,11 +70,23 @@ export function renderProjectDetails(project, containerId, isThumbnailPage) {
     }, 0);
   });
 
-  // Main media: use image as default (will be replaced if video clicked)
+  // Main media: determine if it's video, gif, or image
+  const isMainVideo = project.mainvisual.includes('.mp4') || project.mainvisual.includes('.webm');
+  const isMainGif = project.mainvisual.includes('.gif');
+
+  let mainMediaHTML;
+  if (isMainVideo) {
+    mainMediaHTML = `<video id="${mainImageId}" class="main-video" autoplay muted loop><source src="${project.mainvisual}" type="video/mp4"></video>`;
+  } else if (isMainGif) {
+    mainMediaHTML = `<img id="${mainImageId}" src="${project.mainvisual}" class="main-image" alt="Main Project Image" style="pointer-events: none;">`;
+  } else {
+    mainMediaHTML = `<img id="${mainImageId}" src="${project.mainvisual}" class="main-image" alt="Main Project Image">`;
+  }
+
   projectDiv.innerHTML = `
     <div class="project-title">${project.title}</div>
     <div class="subtitle">${project.description}</div>
-    <img id="${mainImageId}" src="${project.mainvisual}" class="main-image" alt="Main Project Image">
+    ${mainMediaHTML}
     <div class="small-thumbnails">${thumbnailsHTML}</div>
     <div class="tags">${tagHTML}</div>
     <button onclick="openProject(${project.id})">Open Project</button>
@@ -71,9 +102,43 @@ export function renderProjectDetails(project, containerId, isThumbnailPage) {
     const tagsContainer = document.getElementById('project-tags');
     project.tags.forEach(tag => {
       const span = document.createElement('span');
-      span.innerText = tag;
-      span.className = 'tag';
-      span.style.backgroundColor = tagsMap[tag] || '#3b8ac4';
+
+      const color = tagsMap[tag] || '#3b8ac4';
+      const icon = tagsIconMap[tag.toLowerCase()] || null;
+      const isGradient = color.includes('linear-gradient');
+
+      // Bepaal tag categorie voor styling
+      let tagCategory = 'tag-tech';
+      if (tag.toLowerCase().includes('photoshop') || tag.toLowerCase().includes('illustrate') || tag.toLowerCase().includes('blender')) {
+        tagCategory = 'tag-design';
+      } else if (tag.toLowerCase().includes('unity') || tag.toLowerCase().includes('game') || tag.toLowerCase().includes('sfml')) {
+        tagCategory = 'tag-game';
+      } else if (tag.toLowerCase().includes('cmake') || tag.toLowerCase().includes('tool')) {
+        tagCategory = 'tag-tool';
+      }
+
+      span.className = `tag ${tagCategory}`;
+
+      if (isGradient) {
+        span.style.setProperty('--tag-gradient', color);
+        span.style.background = color;
+      } else {
+        span.style.backgroundColor = color;
+      }
+
+      // Voeg icoon toe als het bestaat
+      if (icon) {
+        const iconImg = document.createElement('img');
+        iconImg.src = `/assets/img/icons/${icon}`;
+        iconImg.className = 'tag-icon';
+        iconImg.alt = `${tag} icon`;
+        span.appendChild(iconImg);
+      }
+
+      // Voeg tekst toe
+      const textNode = document.createTextNode(tag);
+      span.appendChild(textNode);
+
       tagsContainer.appendChild(span);
     });
 
@@ -102,11 +167,14 @@ export function updateMainImage(imageId, mediaSrc, isVideo = false) {
   let newMedia;
 
   if (isVideo) {
+    newMedia = document.createElement('video');
+    newMedia.src = mediaSrc;
     newMedia.setAttribute('controls', '');
     newMedia.setAttribute('autoplay', '');
     newMedia.setAttribute('loop', '');
     newMedia.setAttribute('muted', ''); // Remove if you want audio
-    newMedia.setAttribute('playsinline', '')
+    newMedia.setAttribute('playsinline', '');
+    newMedia.className = 'main-video';
   } else {
     newMedia = document.createElement('img');
     newMedia.src = mediaSrc;

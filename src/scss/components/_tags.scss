@@ -17,6 +17,67 @@
         font-size: 0.75rem;
         font-family: $font-family-thirdly;
         white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        
+        // Hover effecten
+        &:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            filter: brightness(1.1);
+        }
+        
+        // Active state
+        &:active {
+            transform: translateY(0) scale(1.02);
+            transition: all 0.1s ease;
+        }
+        
+        // Focus state voor toegankelijkheid
+        &:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+        
+        // Gradient achtergrond ondersteuning
+        &[style*="linear-gradient"] {
+            background-image: var(--tag-gradient);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            
+            &:hover {
+                background-size: 150% 150%;
+                animation: gradientShift 1.5s ease infinite;
+            }
+        }
+        
+        // Glow effect voor bepaalde tag types
+        &.tag-tech {
+            box-shadow: 0 2px 8px rgba(59, 138, 196, 0.3);
+            
+            &:hover {
+                box-shadow: 0 8px 25px rgba(59, 138, 196, 0.5);
+            }
+        }
+        
+        &.tag-design {
+            box-shadow: 0 2px 8px rgba(255, 154, 0, 0.3);
+            
+            &:hover {
+                box-shadow: 0 8px 25px rgba(255, 154, 0, 0.5);
+            }
+        }
+        
+        &.tag-game {
+            box-shadow: 0 2px 8px rgba(139, 195, 74, 0.3);
+            
+            &:hover {
+                box-shadow: 0 8px 25px rgba(139, 195, 74, 0.5);
+            }
+        }
     }
 
     .tag-icon {
@@ -24,5 +85,142 @@
         height: 1.8em;
         margin-right: .2rem;
         object-fit: contain;
+        transition: transform 0.3s ease;
     }
+    
+    .tag:hover .tag-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+}
+
+// Zorg ervoor dat alle tags de juiste styling hebben, ongeacht waar ze staan
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    
+    .tag {
+        display: inline-flex;
+        align-items: center;
+        background-color: $primary-color;
+        color: white !important; // Forceer witte tekst
+        padding: .25rem .75rem;
+        border-radius: 20px;
+        font-size: .8rem;
+        font-weight: 500;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        
+        // Hover effecten
+        &:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            filter: brightness(1.1);
+            color: white !important; // Behoud witte tekst bij hover
+        }
+        
+        // Active state
+        &:active {
+            transform: translateY(0) scale(1.02);
+            transition: all 0.1s ease;
+        }
+        
+        // Focus state voor toegankelijkheid
+        &:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+        
+        // Gradient achtergrond ondersteuning
+        &[style*="linear-gradient"] {
+            background-image: var(--tag-gradient);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            
+            &:hover {
+                background-size: 150% 150%;
+                animation: gradientShift 1.5s ease infinite;
+            }
+        }
+        
+        // Glow effect voor bepaalde tag types
+        &.tag-tech {
+            box-shadow: 0 2px 8px rgba(59, 138, 196, 0.3);
+            
+            &:hover {
+                box-shadow: 0 8px 25px rgba(59, 138, 196, 0.5);
+            }
+        }
+        
+        &.tag-design {
+            box-shadow: 0 2px 8px rgba(255, 154, 0, 0.3);
+            
+            &:hover {
+                box-shadow: 0 8px 25px rgba(255, 154, 0, 0.5);
+            }
+        }
+        
+        &.tag-game {
+            box-shadow: 0 2px 8px rgba(139, 195, 74, 0.3);
+            
+            &:hover {
+                box-shadow: 0 8px 25px rgba(139, 195, 74, 0.5);
+            }
+        }
+        
+        &.tag-tool {
+            box-shadow: 0 2px 8px rgba(67, 233, 123, 0.3);
+            
+            &:hover {
+                box-shadow: 0 8px 25px rgba(67, 233, 123, 0.5);
+            }
+        }
+    }
+    
+    .tag-icon {
+        width: 1.8em;
+        height: 1.8em;
+        margin-right: .2rem;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+    
+    .tag:hover .tag-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+}
+
+// Gradient animatie
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+// Speciale tag styling voor verschillende categorieën
+.tag-category-programming {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.tag-category-design {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+}
+
+.tag-category-game {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+}
+
+.tag-category-tool {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important;
 }

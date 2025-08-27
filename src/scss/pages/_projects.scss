@@ -1,0 +1,128 @@
+@use "../abstracts/theme" as *;
+
+.projects-body {
+    font-family: $font-family-primary, 'Helvetica Neue', sans-serif;
+    background: $light;
+    color: $dark;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+.projects-header {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, $primary-color, $secondary-color);
+    color: $white;
+
+    h1 {
+        font-size: $title-size-large;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: $title-size-medium;
+        opacity: 0.9;
+    }
+}
+
+.projects-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+
+    .project-item {
+        background: $white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+
+            .project-thumbnail {
+                width: 140px;
+                height: 78.75px;
+                border-radius: 8px;
+                object-fit: cover;
+                flex-shrink: 0;
+            }
+
+            .project-info {
+                flex: 1;
+
+                .project-title {
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    color: $primary-color;
+                    margin-bottom: 0.5rem;
+                }
+
+                .project-meta {
+                    display: flex;
+                    gap: 1rem;
+                    font-size: 0.9rem;
+                    color: $text-color;
+                    opacity: 0.8;
+
+                    span {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.25rem;
+                    }
+                }
+            }
+        }
+
+        .project-description {
+            color: $text-color;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+
+            .tag {
+                background: $secondary-color;
+                color: $white;
+                padding: 0.25rem 0.75rem;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-list {
+        padding: 1rem;
+
+        .project-item {
+            .project-header {
+                flex-direction: column;
+                text-align: center;
+
+                .project-thumbnail {
+                    width: 180px;
+                    height: 101.25px;
+                }
+            }
+        }
+    }
+}

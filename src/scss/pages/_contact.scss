@@ -1,0 +1,238 @@
+@use "../abstracts/theme" as *;
+
+.contact-body {
+    font-family: $font-family-primary, 'Helvetica Neue', sans-serif;
+    background: $light;
+    color: $dark;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+.contact-header {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, $primary-color, $secondary-color);
+    color: $white;
+
+    h1 {
+        font-size: $title-size-large;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: $title-size-medium;
+        opacity: 0.9;
+    }
+}
+
+.contact-info {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .contact-card {
+        background: $white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid rgba($primary-color, 0.1);
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, $primary-color, $secondary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        &:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba($primary-color, 0.3);
+
+            &::before {
+                transform: scaleX(1);
+            }
+        }
+
+        // Card specific styling
+        &.email-card {
+            border-left: 4px solid #EA4335;
+
+            .contact-icon {
+                border-color: rgba(234, 67, 53, 0.3);
+            }
+        }
+
+        &.github-card {
+            border-left: 4px solid #333;
+
+            .contact-icon {
+                border-color: rgba(51, 51, 51, 0.3);
+            }
+        }
+
+        &.linkedin-card {
+            border-left: 4px solid #0077B5;
+
+            .contact-icon {
+                border-color: rgba(0, 119, 181, 0.3);
+            }
+        }
+
+        &.spotify-card {
+            border-left: 4px solid #1DB954;
+
+            .contact-icon {
+                border-color: rgba(29, 185, 84, 0.3);
+            }
+        }
+
+        &.itchio-card {
+            border-left: 4px solid #FA5C5C;
+
+            .contact-icon {
+                border-color: rgba(250, 92, 92, 0.3);
+            }
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            padding: 12px;
+            background: $white;
+            border: 2px solid rgba($primary-color, 0.1);
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                transition: all 0.3s ease;
+            }
+
+            &:hover img {
+                transform: scale(1.1);
+            }
+        }
+
+        .contact-content {
+            text-align: center;
+            margin-bottom: 1.5rem;
+
+            h3 {
+                font-size: 1.4rem;
+                font-weight: 700;
+                color: $primary-color;
+                margin-bottom: 0.5rem;
+                font-family: $font-family-secondary, sans-serif;
+            }
+
+            p {
+                font-size: 1rem;
+                color: $text-color;
+                margin: 0;
+                opacity: 0.8;
+            }
+        }
+
+        .contact-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, $primary-color, $secondary-color);
+            color: $white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 15px rgba($primary-color, 0.3);
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba($primary-color, 0.4);
+                background: linear-gradient(135deg, $secondary-color, $primary-color);
+            }
+
+            .btn-icon {
+                width: 18px;
+                height: 18px;
+                object-fit: contain;
+                filter: brightness(0) saturate(100%) invert(100%);
+                transition: transform 0.3s ease;
+            }
+
+            .btn-text {
+                font-weight: 600;
+            }
+
+            &:hover .btn-icon {
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-info {
+        padding: 2rem 1rem;
+        gap: 1.5rem;
+
+        .contact-card {
+            padding: 1.5rem;
+
+            .contact-icon {
+                width: 50px;
+                height: 50px;
+                padding: 10px;
+                margin-bottom: 1rem;
+            }
+
+            .contact-content {
+                h3 {
+                    font-size: 1.2rem;
+                }
+
+                p {
+                    font-size: 0.9rem;
+                }
+            }
+
+            .contact-action-btn {
+                padding: 0.6rem 1.25rem;
+                font-size: 0.9rem;
+
+                .btn-icon {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+    }
+}

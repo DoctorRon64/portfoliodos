@@ -1,13 +1,15 @@
 //pages
 @forward "pages/home";
+@forward "pages/projects";
+@forward "pages/contact";
 
 //components
 @forward "components/tags";
 @forward "components/modal";
 @forward "components/navbar";
-
 @forward "components/button";
-@forward "components/languageButtons";
-
+@forward "components/languageSwitcher";
 @forward "components/about";
 @forward "components/thumbnail";
+@forward "components/projectCard";
+@forward "components/featuredProjects";

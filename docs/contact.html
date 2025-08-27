@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Loading...</title>
+    <link rel="icon" href="/src/assets/img/websiteicon.gif" type="image/x-icon" />
+    <link rel="stylesheet" href="/docs/assets/css/app.css" />
+
+    <script type="module">
+        import { initContact } from '/src/assets/js/contact.js';
+        import { loadLanguage } from '/src/assets/js/lang.js';
+        import { tagsMap, tagsIconMap } from '/src/assets/js/tagsMap.js';
+        import { createLanguageSwitcher } from '/docs/assets/js/languageSwitcher.js';
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(location.search);
+            const lang = params.get('lang') || 'en';
+
+            try {
+                await loadLanguage(lang);
+                initContact(lang);
+
+                // Initialize professional language switcher
+                const languageSwitcher = createLanguageSwitcher('#language-switcher-container', {
+                    currentLang: lang, // Set the current language explicitly
+                    onLanguageChange: async (newLang) => {
+                        await loadLanguage(newLang);
+                        initContact(newLang);
+                    },
+                    compact: true
+                });
+            } catch (error) {
+                console.error('Failed to initialize contact page:', error);
+            }
+        });
+    </script>
+</head>
+
+<body class="contact-body">
+    <nav class="navbar">
+        <div id="nav-logo" class="nav-logo">Loading...</div>
+        <div id="nav-links" class="nav-links">
+            <a id="nav-about" class="nav-about" href="index.html">Loading...</a>
+            <a id="nav-projects" class="nav-projects" href="projects.html">Loading...</a>
+            <a id="nav-contact" class="nav-contact" href="contact.html">Loading...</a>
+        </div>
+    </nav>
+
+
+    <!-- Header -->
+    <header class="contact-header">
+        <h1 id="contact-title">Loading...</h1>
+        <p id="contact-subtitle">Loading...</p>
+    </header>
+
+    <!-- Language Buttons -->
+    <div id="language-switcher-container"></div>
+
+    <!-- Contact Information -->
+    <section class="contact-info">
+        <div class="contact-card email-card">
+            <div class="contact-icon">
+                <img src="/src/assets/img/icons/fxemoji--email.svg" alt="Email" />
+            </div>
+            <div class="contact-content">
+                <h3 id="contact-email-title">Loading...</h3>
+                <p id="contact-email">Loading...</p>
+            </div>
+            <a href="mailto:your.email@example.com" class="contact-action-btn">
+                <img src="/src/assets/img/icons/fxemoji--email.svg" alt="Send" class="btn-icon" />
+                <span class="btn-text">Loading...</span>
+            </a>
+        </div>
+
+        <div class="contact-card github-card">
+            <div class="contact-icon">
+                <img src="/src/assets/img/icons/tabler--brand-github.svg" alt="GitHub" />
+            </div>
+            <div class="contact-content">
+                <h3 id="contact-github-title">Loading...</h3>
+                <p id="contact-github-link">Loading...</p>
+            </div>
+            <a href="https://github.com/yourusername" target="_blank" class="contact-action-btn">
+                <img src="/src/assets/img/icons/tabler--brand-github.svg" alt="GitHub" class="btn-icon" />
+                <span class="btn-text">Loading...</span>
+            </a>
+        </div>
+
+        <div class="contact-card linkedin-card">
+            <div class="contact-icon">
+                <img src="/src/assets/img/icons/tabler--brand-linkedin.svg" alt="LinkedIn" />
+            </div>
+            <div class="contact-content">
+                <h3 id="contact-linkedin-title">Loading...</h3>
+                <p id="contact-linkedin-link">Loading...</p>
+            </div>
+            <a href="https://linkedin.com/in/yourusername" target="_blank" class="contact-action-btn">
+                <img src="/src/assets/img/icons/tabler--brand-linkedin.svg" alt="LinkedIn" class="btn-icon" />
+                <span class="btn-text">Loading...</span>
+            </a>
+        </div>
+
+        <div class="contact-card spotify-card">
+            <div class="contact-icon">
+                <img src="../assets/img/icons/tabler--brand-spotify.svg" alt="Spotify" />
+            </div>
+            <div class="contact-content">
+                <h3 id="contact-spotify-title">Loading...</h3>
+                <p id="contact-spotify-link">Loading...</p>
+            </div>
+            <a href="https://open.spotify.com/artist/yourusername" target="_blank" class="contact-action-btn">
+                <img src="../assets/img/icons/tabler--brand-spotify.svg" alt="Spotify" class="btn-icon" />
+                <span class="btn-text">Loading...</span>
+            </a>
+        </div>
+
+        <div class="contact-card itchio-card">
+            <div class="contact-icon">
+                <img src="../assets/img/icons/tabler--brand-itch.svg" alt="Itch.io" />
+            </div>
+            <div class="contact-content">
+                <h3 id="contact-itchio-title">Loading...</h3>
+                <p id="contact-itchio-link">Loading...</p>
+            </div>
+            <a href="https://doctor-ron.itch.io/" target="_blank" class="contact-action-btn">
+                <img src="../assets/img/icons/tabler--brand-itch.svg" alt="Itch.io" class="btn-icon" />
+                <span class="btn-text">Loading...</span>
+            </a>
+        </div>
+    </section>
+</body>
+
+</html>

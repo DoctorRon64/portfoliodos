@@ -44,7 +44,7 @@ export const tagsIconMap = {
   "css": "devicon--css3.svg",
   "scss": "vscode-icons--file-type-scss2.svg",
   "javascript": "skill-icons--javascript.svg",
-  "json" : "lucide--file-json.svg",
+  "json": "lucide--file-json.svg",
   "node.js": "skill-icons--nodejs-light.svg",
   "processing": "skill-icons--processing-light.svg",
   "java": "skill-icons--java-light.svg",

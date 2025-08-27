@@ -1,0 +1,89 @@
+{
+    "en": {
+        "title": "Contact",
+        "subtitle": "Get in touch with me",
+        "email": {
+            "title": "Email",
+            "value": "y2t1l3mt5@mozmail.com",
+            "url": "mailto:y2t1l3mt5@mozmail.com"
+        },
+        "github": {
+            "title": "GitHub",
+            "value": "DoctorRon64",
+            "url": "https://github.com/DoctorRon64"
+        },
+        "linkedin": {
+            "title": "LinkedIn",
+            "value": "philip",
+            "url": "https://www.linkedin.com/in/gamedev-gamecomposer-84272130b/"
+        },
+        "itchio": {
+            "title": "Itch.io",
+            "value": "doctor-ron",
+            "url": "https://doctor-ron.itch.io/"
+        },
+        "spotify": {
+            "title": "Spotify",
+            "value": "Listen to my music",
+            "url": "https://open.spotify.com/artist/6szCm5FAd4pBlQw6US2DPw?si=tF8kTzDnS-mFpSLxSeZKBQ"
+        }
+    },
+    "nl": {
+        "title": "Contact",
+        "subtitle": "Neem contact met me op",
+        "email": {
+            "title": "Email",
+            "value": "y2t1l3mt5@mozmail.com",
+            "url": "mailto:y2t1l3mt5@mozmail.com"
+        },
+        "github": {
+            "title": "GitHub",
+            "value": "DoctorRon64",
+            "url": "https://github.com/DoctorRon64"
+        },
+        "linkedin": {
+            "title": "LinkedIn",
+            "value": "philip",
+            "url": "https://www.linkedin.com/in/gamedev-gamecomposer-84272130b/"
+        },
+        "itchio": {
+            "title": "Itch.io",
+            "value": "doctor-ron",
+            "url": "https://doctor-ron.itch.io/"
+        },
+        "spotify": {
+            "title": "Spotify",
+            "value": "Listen to my music",
+            "url": "https://open.spotify.com/artist/6szCm5FAd4pBlQw6US2DPw?si=tF8kTzDnS-mFpSLxSeZKBQ"
+        }
+    },
+    "es": {
+        "title": "Contacto",
+        "subtitle": "Ponte en contacto conmigo",
+        "email": {
+            "title": "Email",
+            "value": "y2t1l3mt5@mozmail.com",
+            "url": "mailto:y2t1l3mt5@mozmail.com"
+        },
+        "github": {
+            "title": "GitHub",
+            "value": "DoctorRon64",
+            "url": "https://github.com/DoctorRon64"
+        },
+        "linkedin": {
+            "title": "LinkedIn",
+            "value": "philip",
+            "url": "https://www.linkedin.com/in/gamedev-gamecomposer-84272130b/"
+        },
+        "itchio": {
+            "title": "Itch.io",
+            "value": "doctor-ron",
+            "url": "https://doctor-ron.itch.io/"
+        },
+        "spotify": {
+            "title": "Spotify",
+            "value": "Listen to my music",
+            "url": "https://open.spotify.com/artist/6szCm5FAd4pBlQw6US2DPw?si=tF8kTzDnS-mFpSLxSeZKBQ"
+        }
+    }
+}

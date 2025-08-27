@@ -4,128 +4,162 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> Portfolio</title>
-    <link rel="icon" href="/assets/img/websiteicon.gif" type="image/x-icon" />
-    <link rel="stylesheet" href="/assets/css/app.css" />
+    <meta name="description"
+        content="Philip - Game Developer & Audio Composer Portfolio | HKU Game Development Student | Specializing in Code Architecture and Game Audio" />
+    <meta name="keywords" content="game developer, audio composer, HKU, game development, portfolio, Philip" />
+    <meta name="author" content="Philip" />
+    <title id="page-title">Loading...</title>
+    <link rel="icon" href="/src/assets/img/websiteicon.gif" type="image/x-icon" />
+    <link rel="stylesheet" href="/docs/assets/css/app.css" />
 
     <script type="module">
-        import { init } from '../assets/js/home.js';
-        import { loadLanguage } from '../assets/js/lang.js';
+        console.log('Index.html script starting...');
+        import { init } from '/src/assets/js/home.js';
+        import { loadLanguage } from '/src/assets/js/lang.js';
+        import { createLanguageSwitcher } from '/docs/assets/js/languageSwitcher.js';
 
-        const params = new URLSearchParams(location.search);
-        const validKey = 'open';
-        window.hasAccess = params.get('key') === validKey;
+        console.log('All imports successful');
 
-        if (!window.hasAccess) {
-            const style = document.createElement('style');
-            style.textContent = `
-            body > * {
-                display: none !important;
-            }
-            .access-denied-message {
-                display: flex !important;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                flex-direction: column;
-                font-family: sans-serif;
-                background: white;
-                color: black;
-                margin: 0;
-                padding: 2rem;
-                text-align: center;
-            }
-        `;
-            document.head.appendChild(style);
-
-            const message = document.createElement('div');
-            message.className = 'access-denied-message';
-            message.innerHTML = `
-            <h2>🔒 Access Denied</h2>
-            <p>You don’t have permission to view this portfolio.</p>
-        `;
-            document.body.appendChild(message);
-        } else {
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('DOMContentLoaded event fired');
+            const params = new URLSearchParams(location.search);
             const lang = params.get('lang') || 'en';
-            loadLanguage(lang);
-            init(lang);
-        }
+            console.log('Language from URL:', lang);
+
+            try {
+                console.log('Calling loadLanguage...');
+                await loadLanguage(lang);
+                console.log('loadLanguage completed, calling init...');
+                init(lang);
+                console.log('init completed');
+
+                // Initialize professional language switcher AFTER language is loaded
+                const languageSwitcher = createLanguageSwitcher('.language-switcher', {
+                    currentLang: lang, // Set the current language explicitly
+                    onLanguageChange: async (newLang) => {
+                        console.log('Language changed to:', newLang);
+                        await loadLanguage(newLang);
+                        init(newLang);
+                    },
+                    compact: true
+                });
+                console.log('Language switcher initialized with language:', lang);
+            } catch (error) {
+                console.error('Failed to initialize page:', error);
+            }
+        });
     </script>
 </head>
 
 <body class="home-body">
     <nav class="navbar">
-        <div id="nav-logo" class="nav-logo">WebsiteLink</div>
+        <div id="nav-logo" class="nav-logo">Loading...</div>
         <div id="nav-links" class="nav-links">
-            <a id="nav-projects" class="nav-projects" href="#project-list">Projects</a>
-            <a id="nav-about" class="nav-about" href="#about">About</a>
-            <a id="nav-contact" class="nav-contact" href="#Contact">Contact</a>
+            <a id="nav-about" class="nav-about" href="index.html">Loading...</a>
+            <a id="nav-projects" class="nav-projects" href="projects.html">Loading...</a>
+            <a id="nav-contact" class="nav-contact" href="contact.html">Loading...</a>
         </div>
     </nav>
 
-    <!-- Language Buttons -->
-    <div class="language-switcher">
-        <button class="lang-btn" data-lang="en">🇬🇧 </button>
-        <button class="lang-btn" data-lang="nl">🇳🇱 </button>
-        <button class="lang-btn" data-lang="es">🇪🇸 </button>
-    </div>
-    <script>
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const lang = btn.getAttribute('data-lang');
-                const key = 'open';
-                window.location.search = `?key=${key}&lang=${lang}`;
-            });
-        });
-    </script>
-
-    <!-- Header -->
-    <header class="home-container">
-        <div class="home-title" id="header-title">Please enable Js for this site</div>
-        <div class="home-subtitle" id="header-subtitle">Subtitle</div>
-    </header>
-
-    <section id="about" class="about-section">
-        <div id="about-title">About Me</div>
-        <p id="about-description">
-            some text
-        </p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <!-- Professional Animated Pattern Background -->
+            <div class="pattern-grid">
+                <div class="pattern-line" style="--delay: 0s"></div>
+                <div class="pattern-line" style="--delay: 0.2s"></div>
+                <div class="pattern-line" style="--delay: 0.4s"></div>
+                <div class="pattern-line" style="--delay: 0.6s"></div>
+                <div class="pattern-line" style="--delay: 0.8s"></div>
+            </div>
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+                <div class="shape shape-5"></div>
+            </div>
+            <div class="hero-particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-title" id="header-title">Loading...</div>
+            <div class="hero-subtitle" id="header-subtitle">Loading...</div>
+            <div class="hero-description" id="hero-description">
+                Loading...
+            </div>
+            <div class="hero-actions">
+                <a href="#portfolio" class="btn btn-primary" id="hero-view-work">Loading...</a>
+                <a href="#about" class="btn btn-secondary" id="hero-learn-more">Loading...</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
     </section>
 
-    <!-- Modal -->
-    <div id="projectModal" class="modal">
-        <div class="modal-content thumbnail"> <!-- reuse .thumbnail here -->
-            <button class="close-modal">&times;</button>
-            <img alt="Project Main" class="main-image" />
-            <div class="small-thumbnails">
-                <div class="small-thumb-wrapper" data-title="Thumb 1">
-                    <img alt="Thumb 1" class="small-thumb" />
-                </div>
-                <div class="small-thumb-wrapper" data-title="Thumb 2">
-                    <img alt="Thumb 2" class="small-thumb" />
-                </div>
-            </div>
-            <h2 class="project-title">Project Title</h2>
-            <p class="subtitle">Project subtitle or description</p>
-            <div class="tags">
-                <span class="tag" style="background-color: #e74c3c;">Tag1</span>
-                <span class="tag" style="background-color: #3498db;">Tag2</span>
-            </div>
-            <div class="project-links">
-                <a href="#" class="btn btn-github" target="_blank">GitHub</a>
-                <a href="#" class="btn btn-itchio" target="_blank">Itch.io</a>
-            </div>
-            <ul class="extra-info">
-                <li><strong>Date:</strong> 2024-01-01</li>
-                <li><strong>Duration:</strong> 3 months</li>
-                <li><strong>Team Size:</strong> 5</li>
-                <li><strong>Status:</strong> Completed</li>
-            </ul>
-        </div>
-    </div>
+    <!-- Professional Language Switcher -->
+    <div class="language-switcher"></div>
 
-    <!-- Projects -->
-    <section class="home-projects" id="project-list"></section>
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <div class="about-header">
+                <h2 id="about-title">Loading...</h2>
+                <div class="about-underline"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p id="about-description">
+                        Loading...
+                    </p>
+                    <div class="about-education">
+                        <h3 id="education-title">Loading...</h3>
+                        <p><strong id="education-institution">Loading...</strong><br>
+                            <span id="education-degree">Loading...</span><br>
+                            <span id="education-specialization">Loading...</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="about-stats" id="about-stats">
+                    <!-- Professional stats will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section">
+        <div class="skills-container">
+            <h2 class="skills-title" id="skills-title">Loading...</h2>
+            <div class="skills-grid" id="skills-grid">
+                <!-- Professional skills will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="featured-projects">
+        <div class="featured-header">
+            <h2 id="featured-title">Loading...</h2>
+            <p class="featured-subtitle" id="featured-subtitle">Loading...</p>
+        </div>
+        <div class="featured-grid" id="featured-projects-container">
+            <!-- Portfolio projects will be loaded here -->
+        </div>
+        <div class="view-all-projects">
+            <a href="projects.html" class="btn btn-primary" id="view-all-projects">Loading...</a>
+        </div>
+    </section>
+
+    <!-- Professional Contact CTA Section -->
+    <section class="contact-cta">
+        <div class="cta-container">
+            <h2 id="cta-title">Loading...</h2>
+            <p id="cta-description">Loading...</p>
+            <a href="contact.html" class="btn btn-primary" id="cta-button">Loading...</a>
+        </div>
+    </section>
 </body>
 
 </html>

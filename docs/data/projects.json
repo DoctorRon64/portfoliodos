@@ -15,6 +15,7 @@
       "teamSize": 1,
       "role": "Developer",
       "status": "Finished",
+      "featured": true,
       "tags": [
         "C++",
         "OpenGL",
@@ -40,6 +41,7 @@
       "teamSize": 3,
       "role": "Artist",
       "status": "Finished Demo",
+      "featured": true,
       "tags": [
         "Unity",
         "C#",
@@ -54,7 +56,7 @@
       "mainvisual": "../assets/img/gifs/tool.gif",
       "extravisuals": [
         "../assets/img/thumb/tool.png",
-        "../assets/img/video/Tool Tutorial.mp4"
+        "../assets/img/video/Tool Tutorial-1.webm"
       ],
       "link": [
         "https://github.com/DoctorRon64/Kernmodule-Production-Tools",
@@ -65,6 +67,7 @@
       "teamSize": 1,
       "role": "Developer, UI Designer",
       "status": "Finished Tool",
+      "featured": true,
       "tags": [
         "Unity",
         "C#",

@@ -4,329 +4,1164 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Add Project</title>
+    <title>Project Editor - Philip's Portfolio</title>
     <link rel="icon" href="/assets/img/websiteicon.gif" type="image/x-icon" />
     <link rel="stylesheet" href="/assets/css/app.css" />
     <style>
         :root {
-            --color-primary: #007bff;
-            --color-secondary: #0056b3;
-            --color-light: #f9f9f9;
-            --color-dark: #222;
-            --color-success: #28a745;
-            --color-error: #dc3545;
-            --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --font-secondary: 'Georgia', serif;
-            --border-radius: 6px;
-            --transition-speed: 0.3s;
+            --primary-color: #007bff;
+            --primary-hover: #0056b3;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --warning-color: #ffc107;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+            --border-color: #dee2e6;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            --shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            --border-radius: 0.5rem;
+            --transition: all 0.3s ease;
         }
 
-        body.editorbody {
+        body.editor-body {
             margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        .editor-container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem 1rem;
-            font-family: var(--font-primary);
-            background: var(--color-light);
-            color: var(--color-dark);
-            font-size: 1rem;
-            line-height: 1.5;
-            display: flex;
-            justify-content: center;
         }
 
-        form#projectForm {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-            box-sizing: border-box;
+        .editor-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
         }
 
-        form fieldset {
-            border: 1px solid #ddd;
-            padding: 1rem 1.5rem 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: var(--border-radius);
-        }
-
-        form legend {
+        .editor-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
             font-weight: 700;
-            padding: 0 0.5rem;
-            color: var(--color-primary);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.6rem;
-            font-weight: 600;
-            color: var(--color-dark);
+        .editor-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
         }
 
-        input[type="text"],
-        input[type="number"],
-        textarea {
-            width: 100%;
-            padding: 0.5rem 0.75rem;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            border: 1px solid #bbb;
+        .editor-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .editor-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-section {
+            background: white;
             border-radius: var(--border-radius);
-            box-sizing: border-box;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: border-color var(--transition-speed);
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        textarea:focus {
-            border-color: var(--color-primary);
-            outline: none;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-            font-family: var(--font-primary);
-            font-style: normal;
-        }
-
-        /* File input with label styled as button */
-        .file-input-wrapper {
-            position: relative;
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
-            display: inline-block;
-            margin-left: 0.5rem;
         }
 
-        .file-input-wrapper input[type="file"] {
-            font-size: 100px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .file-input-label {
-            border: 1px solid var(--color-primary);
-            color: var(--color-primary);
-            background: transparent;
-            padding: 0.4rem 0.8rem;
-            border-radius: var(--border-radius);
-            cursor: pointer;
+        .form-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1.5rem 2rem;
+            margin: 0;
+            font-size: 1.25rem;
             font-weight: 600;
-            user-select: none;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        .form-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group label.required::after {
+            content: " *";
+            color: var(--error-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            box-sizing: border-box;
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .form-control.error {
+            border-color: var(--error-color);
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+
+        .form-control.success {
+            border-color: var(--success-color);
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .file-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            background: var(--light-bg);
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary-color);
+            background: rgba(0, 123, 255, 0.05);
+        }
+
+        .file-upload-area.dragover {
+            border-color: var(--primary-color);
+            background: rgba(0, 123, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        .file-upload-icon {
+            font-size: 3rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .file-upload-text {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-hint {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .uploaded-files {
+            margin-top: 1rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 0.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .file-item .file-name {
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .file-item .remove-file {
+            background: var(--error-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .remove-file:hover {
+            background: #c82333;
+            transform: scale(1.1);
+        }
+
+        .tags-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            min-height: 50px;
+            background: white;
+        }
+
+        .tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: tagSlideIn 0.3s ease;
+        }
+
+        .tag .remove-tag {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+            padding: 0;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .tag .remove-tag:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .tags-input input {
+            border: none;
+            outline: none;
+            flex: 1;
+            min-width: 100px;
             font-size: 0.9rem;
         }
 
-        .file-input-label:hover {
-            background-color: var(--color-primary);
-            color: white;
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
         }
 
-        button[type="submit"] {
-            display: inline-block;
-            background-color: var(--color-primary);
-            color: white;
-            font-weight: 700;
+        .btn {
             padding: 0.75rem 1.5rem;
             border: none;
             border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 1.1rem;
-            transition: background-color var(--transition-speed);
-            margin-top: 1rem;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        button[type="submit"]:hover {
-            background-color: var(--color-secondary);
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
         }
 
-        #status {
-            margin-top: 1rem;
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .preview-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .preview-header {
+            background: var(--dark-bg);
+            color: white;
+            padding: 1.5rem 2rem;
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .preview-body {
+            padding: 2rem;
+        }
+
+        .preview-placeholder {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 3rem 1rem;
+        }
+
+        .preview-placeholder .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .preview-project {
+            animation: fadeIn 0.5s ease;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 200px;
+            background: var(--light-bg);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border: 2px dashed var(--border-color);
+        }
+
+        .preview-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+        }
+
+        .preview-title {
+            font-size: 1.25rem;
             font-weight: 700;
-            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
-        #status.success {
-            color: var(--color-success);
+        .preview-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
         }
 
-        #status.error {
-            color: var(--color-error);
+        .preview-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
         }
 
-        #output {
-            background: #f0f0f0;
+        .preview-tag {
+            background: var(--light-bg);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .preview-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .preview-meta span {
+            margin-right: 1rem;
+        }
+
+        .status-message {
             padding: 1rem;
             border-radius: var(--border-radius);
-            font-family: monospace;
-            white-space: pre-wrap;
-            max-height: 250px;
-            overflow-y: auto;
             margin-top: 1rem;
-            box-shadow: inset 0 0 5px #ccc;
+            font-weight: 600;
+            text-align: center;
+            animation: slideIn 0.3s ease;
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            body.editorbody {
+        .status-message.success {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        .status-message.error {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--error-color);
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+
+        .status-message.warning {
+            background: rgba(255, 193, 7, 0.1);
+            color: var(--warning-color);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .validation-error {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .form-section.collapsed .form-body {
+            display: none;
+        }
+
+        .form-section.collapsed .form-header::after {
+            content: " ▼";
+            float: right;
+            transition: var(--transition);
+        }
+
+        .form-section:not(.collapsed) .form-header::after {
+            content: " ▲";
+            float: right;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes tagSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .editor-container {
                 padding: 1rem;
             }
 
-            form#projectForm {
-                padding: 1rem;
+            .editor-header h1 {
+                font-size: 2rem;
+            }
+
+            .form-body {
+                padding: 1.5rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
         }
     </style>
 </head>
 
-<body class="editorbody">
+<body class="editor-body">
+    <div class="editor-container">
+        <div class="editor-header">
+            <h1>🚀 Project Editor</h1>
+            <p>Maak en bewerk je portfolio projecten</p>
+        </div>
+
+        <div class="editor-content">
+            <!-- Form Section -->
+            <div class="form-section">
     <form id="projectForm" novalidate>
-        <fieldset>
-            <legend>Basic Info</legend>
+                    <!-- Basic Info -->
+                    <div class="form-section">
+                        <h3 class="form-header">📝 Basis Informatie</h3>
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label for="title" class="required">Project Titel</label>
+                                <input type="text" id="title" class="form-control"
+                                    placeholder="Voer de project titel in" required />
+                                <div class="validation-error" id="title-error"></div>
+                            </div>
 
-            <label for="title">Title <span aria-hidden="true" style="color: red;">*</span></label>
-            <input type="text" id="title" placeholder="Project Title" required aria-required="true" />
+                            <div class="form-group">
+                                <label for="description" class="required">Beschrijving</label>
+                                <textarea id="description" class="form-control" placeholder="Beschrijf je project..."
+                                    required></textarea>
+                                <div class="validation-error" id="description-error"></div>
+                            </div>
+                        </div>
+                    </div>
 
-            <label for="description">Description</label>
-            <textarea id="description" placeholder="Write a summary description"></textarea>
-        </fieldset>
+                    <!-- Visuals -->
+                    <div class="form-section">
+                        <h3 class="form-header">🖼️ Visuele Elementen</h3>
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label for="mainvisual" class="required">Hoofdafbeelding</label>
+                                <div class="file-upload-area" id="mainVisualUpload">
+                                    <div class="file-upload-icon">📁</div>
+                                    <div class="file-upload-text">Sleep bestanden hierheen of klik om te selecteren
+                                    </div>
+                                    <div class="file-upload-hint">Ondersteunde formaten: JPG, PNG, GIF, MP4, WEBM</div>
+                                    <input type="file" id="mainvisualFile" class="file-input"
+                                        accept="image/*,video/*" />
+                                </div>
+                                <input type="text" id="mainvisual" class="form-control"
+                                    placeholder="Of voer een URL in" />
+                                <div class="validation-error" id="mainvisual-error"></div>
+                            </div>
 
-        <fieldset>
-            <legend>Visuals</legend>
+                            <div class="form-group">
+                                <label for="extravisuals">Extra Afbeeldingen</label>
+                                <div class="file-upload-area" id="extraVisualsUpload">
+                                    <div class="file-upload-icon">🖼️</div>
+                                    <div class="file-upload-text">Sleep meerdere bestanden hierheen</div>
+                                    <div class="file-upload-hint">Je kunt meerdere bestanden tegelijk selecteren</div>
+                                    <input type="file" id="extravisualsFile" class="file-input" accept="image/*,video/*"
+                                        multiple />
+                                </div>
+                                <input type="text" id="extravisuals" class="form-control"
+                                    placeholder="Of voer URLs in, gescheiden door komma's" />
+                            </div>
+                        </div>
+                    </div>
 
-            <label for="mainvisual">Main Visual (URL or file)</label>
-            <input type="text" id="mainvisual" placeholder="../assets/img/[file]" aria-describedby="mainVisualHelp" />
-            <div class="file-input-wrapper">
-                <label class="file-input-label" for="mainvisualFile">Choose File</label>
-                <input type="file" id="mainvisualFile" accept="image/*" />
+                    <!-- Project Details -->
+                    <div class="form-section">
+                        <h3 class="form-header">⚙️ Project Details</h3>
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label for="link">Links</label>
+                                <input type="text" id="link" class="form-control"
+                                    placeholder="GitHub, Itch.io, demo links..." />
             </div>
 
-            <label for="extravisuals">Extra Visuals (comma separated URLs)</label>
-            <input type="text" id="extravisuals" placeholder="../assets/img/[file], ../assets/img/[file]" aria-describedby="extraVisualHelp" />
-            <div class="file-input-wrapper">
-                <label class="file-input-label" for="extravisualsFile">Choose Files</label>
-                <input type="file" id="extravisualsFile" accept="image/*" multiple />
+                            <div class="form-group">
+                                <label for="date">Datum</label>
+                                <input type="text" id="date" class="form-control" placeholder="bijv. December 2024" />
             </div>
-        </fieldset>
 
-        <fieldset>
-            <legend>Additional Info</legend>
+                            <div class="form-group">
+                                <label for="duration">Duur</label>
+                                <input type="text" id="duration" class="form-control"
+                                    placeholder="bijv. 3 weken, 2 maanden" />
+                            </div>
 
-            <label for="link">Links (comma separated)</label>
-            <input type="text" id="link" placeholder="example.com, github.com" />
+                            <div class="form-group">
+                                <label for="teamSize">Team Grootte</label>
+                                <input type="number" id="teamSize" class="form-control" placeholder="1" min="1" />
+                            </div>
 
-            <label for="date">Date</label>
-            <input type="text" id="date" placeholder="11/09/2001" />
+                            <div class="form-group">
+                                <label for="role">Rol</label>
+                                <input type="text" id="role" class="form-control"
+                                    placeholder="bijv. Lead Developer, Artist" />
+                            </div>
 
-            <label for="duration">Duration</label>
-            <input type="text" id="duration" placeholder="5 weeks, 2 days, 1 month" />
+                            <div class="form-group">
+                                <label for="statusInput">Status</label>
+                                <select id="statusInput" class="form-control">
+                                    <option value="">Selecteer status</option>
+                                    <option value="Completed">Voltooid</option>
+                                    <option value="In Progress">In Ontwikkeling</option>
+                                    <option value="On Hold">Gepauzeerd</option>
+                                    <option value="Planning">In Planning</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-            <label for="teamSize">Team Size</label>
-            <input type="number" id="teamSize" placeholder="e.g. 1" min="1" />
+                    <!-- Tags -->
+                    <div class="form-section">
+                        <h3 class="form-header">🏷️ Tags</h3>
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label for="tags">Technologieën & Tools</label>
+                                <div class="tags-input" id="tagsContainer">
+                                    <input type="text" id="tagsInput" placeholder="Voeg tags toe..." />
+                                </div>
+                                <div class="validation-error" id="tags-error"></div>
+                            </div>
+                        </div>
+                    </div>
 
-            <label for="role">Role</label>
-            <input type="text" id="role" placeholder="Developer" />
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="previewBtn">👁️ Preview</button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <span class="btn-text">💾 Project Opslaan</span>
+                            <span class="loading" style="display: none;"></span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="exportBtn">📤 Exporteer Projecten</button>
+                    </div>
+                </form>
 
-            <label for="status">Status</label>
-            <input type="text" id="statusInput" placeholder="Running" />
-        </fieldset>
+                <div id="status" class="status-message" style="display: none;"></div>
+            </div>
 
-        <fieldset>
-            <legend>Tags</legend>
+            <!-- Preview Section -->
+            <div class="preview-section">
+                <h3 class="preview-header">👁️ Project Preview</h3>
+                <div class="preview-body">
+                    <div id="previewContent" class="preview-placeholder">
+                        <div class="icon">👁️</div>
+                        <p>Vul het formulier in om een preview te zien</p>
+                    </div>
+                </div>
+            </div>
 
-            <label for="tags">Tags (comma separated)</label>
-            <input type="text" id="tags" placeholder="Unity, C#" />
-        </fieldset>
-
-        <button type="submit">Add Project</button>
-
-        <div id="status" role="alert" aria-live="polite"></div>
-        <pre id="output" aria-live="polite"></pre>
-    </form>
+            <!-- Local Projects Section -->
+            <div class="preview-section" style="margin-top: 2rem;">
+                <h3 class="preview-header">💾 Lokale Projecten</h3>
+                <div class="preview-body">
+                    <div id="localProjectsContent">
+                        <div class="preview-placeholder">
+                            <div class="icon">📁</div>
+                            <p>Nog geen projecten opgeslagen</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        const form = document.getElementById("projectForm");
-        const output = document.getElementById("output");
-        const status = document.getElementById("status");
+        class ProjectEditor {
+            constructor() {
+                this.form = document.getElementById('projectForm');
+                this.previewContent = document.getElementById('previewContent');
+                this.localProjectsContent = document.getElementById('localProjectsContent');
+                this.status = document.getElementById('status');
+                this.submitBtn = document.getElementById('submitBtn');
+                this.previewBtn = document.getElementById('previewBtn');
+                this.exportBtn = document.getElementById('exportBtn');
 
-        // File input handlers
-        document.getElementById("mainvisualFile").addEventListener("change", e => {
-            const file = e.target.files[0];
-            if (file) {
-                const fileName = file.name;
-                const isGif = fileName.toLowerCase().endsWith(".gif");
-                const folder = isGif ? "gifs" : "thumb";
-                document.getElementById("mainvisual").value = `../assets/img/${folder}/${fileName}`;
+                this.initializeEventListeners();
+                this.setupFileUploads();
+                this.setupTagsInput();
+                this.loadLocalProjects();
             }
-        });
 
-        document.getElementById("extravisualsFile").addEventListener("change", e => {
-            const files = Array.from(e.target.files);
-            const paths = files.map(file => {
-                const isGif = file.name.toLowerCase().endsWith(".gif");
-                const folder = isGif ? "gifs" : "thumb";
+            initializeEventListeners() {
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+                this.previewBtn.addEventListener('click', () => this.updatePreview());
+                this.exportBtn.addEventListener('click', () => this.exportProjects());
+
+                // Real-time validation
+                this.form.querySelectorAll('input, textarea, select').forEach(input => {
+                    input.addEventListener('blur', () => this.validateField(input));
+                    input.addEventListener('input', () => this.clearFieldError(input));
+                });
+            }
+
+            setupFileUploads() {
+                const mainUpload = document.getElementById('mainVisualUpload');
+                const extraUpload = document.getElementById('extraVisualsUpload');
+                const mainFile = document.getElementById('mainvisualFile');
+                const extraFile = document.getElementById('extravisualsFile');
+
+                // Main visual upload
+                this.setupFileUpload(mainUpload, mainFile, (file) => {
+                    document.getElementById('mainvisual').value = this.generateFilePath(file);
+                });
+
+                // Extra visuals upload
+                this.setupFileUpload(extraUpload, extraFile, (files) => {
+                    const paths = Array.from(files).map(file => this.generateFilePath(file));
+                    const input = document.getElementById('extravisuals');
+                    input.value = paths.join(', ');
+                });
+            }
+
+            setupFileUpload(uploadArea, fileInput, callback) {
+                // Click to select
+                uploadArea.addEventListener('click', () => fileInput.click());
+
+                // Drag and drop
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('dragover');
+                });
+
+                uploadArea.addEventListener('dragleave', () => {
+                    uploadArea.classList.remove('dragover');
+                });
+
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('dragover');
+
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        callback(files);
+                    }
+                });
+
+                // File selection
+                fileInput.addEventListener('change', (e) => {
+                    const files = e.target.files;
+                    if (files.length > 0) {
+                        callback(files);
+                    }
+                });
+            }
+
+            generateFilePath(file) {
+                const isVideo = file.type.startsWith('video/');
+                const isGif = file.name.toLowerCase().endsWith('.gif');
+
+                let folder = 'thumb';
+                if (isVideo) folder = 'video';
+                else if (isGif) folder = 'gifs';
+
                 return `../assets/img/${folder}/${file.name}`;
-            });
+            }
 
-            const input = document.getElementById("extravisuals");
-            const existing = input.value.trim();
+            setupTagsInput() {
+                const container = document.getElementById('tagsContainer');
+                const input = document.getElementById('tagsInput');
 
-            const combined = existing
-                ? existing.split(",").map(p => p.trim()).concat(paths).filter(Boolean)
-                : paths;
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ',') {
+                        e.preventDefault();
+                        this.addTag(input.value.trim());
+                        input.value = '';
+                    }
+                });
 
-            const uniquePaths = [...new Set(combined)];
+                input.addEventListener('blur', () => {
+                    if (input.value.trim()) {
+                        this.addTag(input.value.trim());
+                        input.value = '';
+                    }
+                });
+            }
 
-            input.value = uniquePaths.join(", ");
-        });
+            addTag(text) {
+                if (!text || text.length < 2) return;
 
-        form.addEventListener("submit", e => {
+                const container = document.getElementById('tagsContainer');
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.innerHTML = `
+                    ${text}
+                    <button class="remove-tag" onclick="this.parentElement.remove()">&times;</button>
+                `;
+
+                container.insertBefore(tag, container.lastElementChild);
+            }
+
+            validateField(field) {
+                const value = field.value.trim();
+                const errorElement = document.getElementById(`${field.id}-error`);
+
+                if (!errorElement) return;
+
+                let isValid = true;
+                let errorMessage = '';
+
+                switch (field.id) {
+                    case 'title':
+                        if (!value) {
+                            isValid = false;
+                            errorMessage = 'Titel is verplicht';
+                        } else if (value.length < 3) {
+                            isValid = false;
+                            errorMessage = 'Titel moet minimaal 3 karakters bevatten';
+                        }
+                        break;
+                    case 'description':
+                        if (!value) {
+                            isValid = false;
+                            errorMessage = 'Beschrijving is verplicht';
+                        } else if (value.length < 10) {
+                            isValid = false;
+                            errorMessage = 'Beschrijving moet minimaal 10 karakters bevatten';
+                        }
+                        break;
+                    case 'mainvisual':
+                        if (!value) {
+                            isValid = false;
+                            errorMessage = 'Hoofdafbeelding is verplicht';
+                        }
+                        break;
+                }
+
+                if (!isValid) {
+                    field.classList.add('error');
+                    field.classList.remove('success');
+                    errorElement.textContent = errorMessage;
+                } else {
+                    field.classList.remove('error');
+                    field.classList.add('success');
+                    errorElement.textContent = '';
+                }
+
+                return isValid;
+            }
+
+            clearFieldError(field) {
+                field.classList.remove('error', 'success');
+                const errorElement = document.getElementById(`${field.id}-error`);
+                if (errorElement) errorElement.textContent = '';
+            }
+
+            validateForm() {
+                const requiredFields = ['title', 'description', 'mainvisual'];
+                let isValid = true;
+
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (!this.validateField(field)) {
+                        isValid = false;
+                    }
+                });
+
+                return isValid;
+            }
+
+            getFormData() {
+                const getVal = id => document.getElementById(id).value.trim();
+                const getTags = () => {
+                    const tags = document.querySelectorAll('#tagsContainer .tag');
+                    return Array.from(tags).map(tag => tag.textContent.replace('×', '').trim());
+                };
+
+                return {
+                    title: getVal('title'),
+                    description: getVal('description'),
+                    mainvisual: getVal('mainvisual'),
+                    extravisuals: getVal('extravisuals').split(',').map(v => v.trim()).filter(Boolean),
+                    link: getVal('link').split(',').map(v => v.trim()).filter(Boolean),
+                    date: getVal('date'),
+                    duration: getVal('duration'),
+                    teamSize: parseInt(getVal('teamSize'), 10) || 0,
+                    role: getVal('role'),
+                    status: getVal('statusInput'),
+                    tags: getTags()
+                };
+            }
+
+            updatePreview() {
+                const data = this.getFormData();
+
+                if (!data.title || !data.description) {
+                    this.showStatus('Vul eerst de verplichte velden in om een preview te zien', 'warning');
+                    return;
+                }
+
+                const previewHTML = this.generatePreviewHTML(data);
+                this.previewContent.innerHTML = previewHTML;
+                this.previewContent.className = 'preview-project';
+            }
+
+            generatePreviewHTML(data) {
+                const imagePreview = data.mainvisual ?
+                    `<img src="${data.mainvisual}" alt="${data.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : '';
+
+                const fallbackImage = `<div class="preview-image">Geen afbeelding</div>`;
+
+                return `
+                    <div class="preview-image">
+                        ${imagePreview}
+                        ${fallbackImage}
+                    </div>
+                    <div class="preview-title">${data.title}</div>
+                    <div class="preview-description">${data.description}</div>
+                    ${data.tags.length > 0 ? `
+                        <div class="preview-tags">
+                            ${data.tags.map(tag => `<span class="preview-tag">${tag}</span>`).join('')}
+                        </div>
+                    ` : ''}
+                    <div class="preview-meta">
+                        ${data.date ? `<span>📅 ${data.date}</span>` : ''}
+                        ${data.duration ? `<span>⏱️ ${data.duration}</span>` : ''}
+                        ${data.teamSize > 0 ? `<span>👥 ${data.teamSize}</span>` : ''}
+                        ${data.role ? `<span>🎭 ${data.role}</span>` : ''}
+                        ${data.status ? `<span>📊 ${data.status}</span>` : ''}
+                    </div>
+                `;
+            }
+
+            async handleSubmit(e) {
             e.preventDefault();
 
-            const getVal = id => document.getElementById(id).value.trim();
+                if (!this.validateForm()) {
+                    this.showStatus('Controleer de fouten in het formulier', 'error');
+                    return;
+                }
 
-            // Use "statusInput" for status field (to avoid id clash)
-            const data = {
-                title: getVal("title"),
-                description: getVal("description"),
-                mainvisual: getVal("mainvisual"),
-                extravisuals: getVal("extravisuals").split(",").map(v => v.trim()).filter(Boolean),
-                link: getVal("link").split(",").map(v => v.trim()).filter(Boolean),
-                date: getVal("date"),
-                duration: getVal("duration"),
-                teamSize: parseInt(getVal("teamSize"), 10) || 0,
-                role: getVal("role"),
-                status: getVal("statusInput"),
-                tags: getVal("tags").split(",").map(v => v.trim()).filter(Boolean)
-            };
+                const data = this.getFormData();
+                this.setLoading(true);
 
-            output.textContent = JSON.stringify(data, null, 2);
-            status.textContent = "Sending...";
-            status.className = "";
+                try {
+                    // Probeer eerst de server
+                    const response = await fetch('http://localhost:3000/add', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
 
-            fetch("http://localhost:3000/add", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            })
-                .then(res => res.json())
-                .then(result => {
-                    status.textContent = result.message || "Saved!";
-                    status.className = "success";
-                    form.reset();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                })
-                .catch(err => {
-                    status.textContent = "Error saving project.";
-                    status.className = "error";
-                    console.error("Fetch error:", err);
-                });
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        this.showStatus(result.message || 'Project succesvol opgeslagen op server!', 'success');
+                        this.resetForm();
+                    } else {
+                        throw new Error(result.message || 'Fout bij opslaan op server');
+                    }
+                } catch (error) {
+                    console.error('Server error:', error);
+
+                    // Fallback: sla lokaal op
+                    this.saveLocally(data);
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+
+            saveLocally(data) {
+                try {
+                    // Haal bestaande projecten op uit localStorage
+                    const existingProjects = JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
+
+                    // Voeg nieuw project toe met timestamp
+                    const projectWithId = {
+                        ...data,
+                        id: Date.now(),
+                        timestamp: new Date().toISOString()
+                    };
+
+                    existingProjects.push(projectWithId);
+
+                    // Sla op in localStorage
+                    localStorage.setItem('portfolioProjects', JSON.stringify(existingProjects));
+
+                    this.showStatus('Project lokaal opgeslagen! Gebruik "Exporteer Projecten" om te downloaden.', 'success');
+                    this.resetForm();
+
+                } catch (localError) {
+                    console.error('Local storage error:', localError);
+                    this.showStatus('Fout bij lokaal opslaan. Probeer het opnieuw.', 'error');
+                }
+            }
+
+            resetForm() {
+                this.form.reset();
+                this.previewContent.innerHTML = `
+                    <div class="preview-placeholder">
+                        <div class="icon">👁️</div>
+                        <p>Vul het formulier in om een preview te zien</p>
+                    </div>
+                `;
+                this.previewContent.className = 'preview-placeholder';
+
+                // Clear tags
+                document.querySelectorAll('#tagsContainer .tag').forEach(tag => tag.remove());
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            setLoading(loading) {
+                const btnText = this.submitBtn.querySelector('.btn-text');
+                const loadingSpinner = this.submitBtn.querySelector('.loading');
+
+                if (loading) {
+                    btnText.style.display = 'none';
+                    loadingSpinner.style.display = 'inline-block';
+                    this.submitBtn.disabled = true;
+                } else {
+                    btnText.style.display = 'inline';
+                    loadingSpinner.style.display = 'none';
+                    this.submitBtn.disabled = false;
+                }
+            }
+
+            showStatus(message, type) {
+                this.status.textContent = message;
+                this.status.className = `status-message ${type}`;
+                this.status.style.display = 'block';
+
+                setTimeout(() => {
+                    this.status.style.display = 'none';
+                }, 5000);
+            }
+
+            loadLocalProjects() {
+                try {
+                    const projects = JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
+                    this.displayLocalProjects(projects);
+                } catch (error) {
+                    console.error('Error loading local projects:', error);
+                    this.displayLocalProjects([]);
+                }
+            }
+
+            displayLocalProjects(projects) {
+                if (projects.length === 0) {
+                    this.localProjectsContent.innerHTML = `
+                        <div class="preview-placeholder">
+                            <div class="icon">📁</div>
+                            <p>Nog geen projecten opgeslagen</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const projectsHTML = projects.map(project => `
+                    <div class="local-project-item" style="margin-bottom: 1rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); background: var(--light-bg);">
+                        <div style="font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary);">${project.title}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">${project.description.substring(0, 100)}${project.description.length > 100 ? '...' : ''}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                            📅 ${new Date(project.timestamp).toLocaleDateString('nl-NL')}
+                            ${project.tags.length > 0 ? ` | 🏷️ ${project.tags.slice(0, 3).join(', ')}` : ''}
+                        </div>
+                        <button onclick="this.parentElement.remove(); editor.removeLocalProject(${project.id})" 
+                                style="margin-top: 0.5rem; background: var(--error-color); color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                            🗑️ Verwijder
+                        </button>
+                    </div>
+                `).join('');
+
+                this.localProjectsContent.innerHTML = projectsHTML;
+            }
+
+            removeLocalProject(projectId) {
+                try {
+                    const projects = JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
+                    const filteredProjects = projects.filter(p => p.id !== projectId);
+                    localStorage.setItem('portfolioProjects', JSON.stringify(filteredProjects));
+                    this.loadLocalProjects();
+                    this.showStatus('Project verwijderd!', 'success');
+                } catch (error) {
+                    console.error('Error removing project:', error);
+                    this.showStatus('Fout bij verwijderen van project', 'error');
+                }
+            }
+
+            exportProjects() {
+                try {
+                    const projects = JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
+
+                    if (projects.length === 0) {
+                        this.showStatus('Geen projecten om te exporteren', 'warning');
+                        return;
+                    }
+
+                    // Maak JSON bestand
+                    const dataStr = JSON.stringify(projects, null, 2);
+                    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+                    // Download link
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(dataBlob);
+                    link.download = `portfolio-projects-${new Date().toISOString().split('T')[0]}.json`;
+                    link.click();
+
+                    this.showStatus(`${projects.length} projecten geëxporteerd!`, 'success');
+
+                } catch (error) {
+                    console.error('Export error:', error);
+                    this.showStatus('Fout bij exporteren van projecten', 'error');
+                }
+            }
+        }
+
+        // Initialize editor when DOM is loaded
+        let editor;
+        document.addEventListener('DOMContentLoaded', () => {
+            editor = new ProjectEditor();
         });
     </script>
 </body>
+
 </html>
